@@ -68,6 +68,14 @@ body {
 	line-height: 1.6;
 }
 
+/* Todas as páginas menos a Home/About (--gw-bg-gradient-2, sem o trecho
+   escuro do topo). "home" é a classe que o WordPress já adiciona no <body>
+   sozinho quando a página é a "front page" do site (Configurações →
+   Leitura) — não precisa de nada extra no PHP pra isso funcionar. */
+body:not(.home) {
+	background-image: var(--gw-bg-gradient-2);
+}
+
 img {
 	display: block;
 	max-width: 100%;
@@ -96,6 +104,17 @@ img {
 		#121D2B 95%
 	);
 
+	/* Mesmo degradê, mas sem o trecho escuro do topo (0%–2%) — usado nas
+	   páginas que não são a Home/About (ver "body:not(.home)" abaixo). */
+	--gw-bg-gradient-2: linear-gradient(
+		to bottom,
+		#9F9282 15%,
+		#6b6058 70%,
+		#3a3a3c 85%,
+		#16202d 90%,
+		#121D2B 95%
+	);
+
 	/* Fontes */
 	--gw-font-display: "GT Sectra Display", Georgia, "Times New Roman", serif;
 	--gw-font-text: "Roboto", Arial, Helvetica, sans-serif;
@@ -115,6 +134,17 @@ img {
 	/* Respiro padrão do miolo de conteúdo (dentro dos 70%) */
 	--gw-content-padding-inline: clamp(1.25rem, 6vw, 10rem);
 	--gw-content-padding-block: clamp(2rem, 3vh, 6rem);
+
+	/* Altura renderizada do logo do menu (largura 8.75rem × proporção real
+	   do arquivo, 200x47 — ver o atributo width/height da <img> em
+	   template-parts/layout/site-menu.php) e espaço entre o fim do logo e
+	   o começo do menu (.gw-menu__nav) — ver assets/css/layout.css.
+	   Somados, dão o quanto o conteúdo (.gw-content) precisa "descer" pra
+	   começar alinhado com o início do menu, não com o do logo. Valor do
+	   espaço em vh (não um número fixo) pra acompanhar a mesma lógica que
+	   já existia antes aqui (distribuído conforme a altura da tela). */
+	--gw-menu-logo-height: calc(8.75rem * 47 / 200);
+	--gw-menu-nav-offset: clamp(3rem, 22vh, 14rem);
 
 	/* Tipografia fluida — títulos grandes do Figma usam 60px/60px (font/line-height) */
 	--gw-text-title-xl: clamp(2.25rem, 1.4rem + 3vw, 5rem);
@@ -198,11 +228,11 @@ b {
 	}
 
 	.gw-mb-lg {
-		margin-bottom: 30px;
+		margin-bottom: 40px;
 	}
 
 	.gw-mb-md {
-		margin-bottom: 30px;
+		margin-bottom: 40px;
 	}
 
 	.gw-mb-s {

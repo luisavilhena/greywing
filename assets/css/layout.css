@@ -42,7 +42,6 @@
 .gw-menu__top {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	height: 100%;
 }
 
@@ -56,6 +55,22 @@
 	display: block;
 	width: 100%;
 	height: auto;
+}
+
+/* Espaço fixo entre o logo e o começo do menu — ver --gw-menu-nav-offset em
+   base.css. Antes esse espaço vinha do justify-content:space-between do
+   pai (.gw-menu__top), o que fazia a posição do menu variar de acordo com
+   a altura da tela — sem controle nenhum, dava pra saber onde ele
+   começava. Fixando assim, .gw-content consegue "descer" o mesmo tanto e
+   começar alinhado com o início do menu (ver .gw-content). */
+.gw-menu__nav {
+	margin-top: var(--gw-menu-nav-offset);
+}
+
+/* "Invest now" continua grudado no fim da coluna do menu — antes vinha do
+   space-between do pai, agora com margin-top:auto no próprio item. */
+.gw-menu__invest {
+	margin-top: auto;
 }
 
 .gw-menu__nav ul {
@@ -158,6 +173,13 @@
 	flex-direction: column;
 	width: 100%;
 	min-width: 0; /* evita que imagens/texto estourem a coluna em telas pequenas */
+	/* Alinha o começo do conteúdo com o começo do menu (.gw-menu__nav), não
+	   com o do logo: a primeira linha de conteúdo (.gw-row) já tem o mesmo
+	   padding-top que a coluna do menu (--gw-content-padding-block) — esse
+	   padding extra aqui é só o "logo + espaço até o menu" que falta pra
+	   completar a mesma altura. Ver --gw-menu-logo-height/--gw-menu-nav-offset
+	   em base.css. */
+	padding-top: calc(var(--gw-menu-logo-height) + var(--gw-menu-nav-offset));
 }
 
 /* Cada componente é uma "linha de conteúdo": ocupa a largura toda dos 70%
@@ -183,11 +205,21 @@
    deixa de ser uma coluna fixa lateral pra virar um painel que desliza por
    cima da página, aberto pelo botão hambúrguer. */
 @media (max-width: 56.25em) {
+	.gw-content { 
+		margin-top: 100px;
+	}
 	.gw-row:not(footer){
 		min-height: auto;
 	}
 	.gw-grid {
 		grid-template-columns: 1fr;
+	}
+
+	/* No mobile o menu não fica do lado do conteúdo (vira um painel por
+	   cima da página) — o alinhamento com .gw-menu__nav não faz sentido
+	   aqui, então tira o espaço extra que empurrava o conteúdo pra baixo. */
+	.gw-content {
+		padding-top: 0;
 	}
 
 	/* Barra fixa: logo à esquerda, hambúrguer à direita, sempre visível. */
@@ -200,8 +232,13 @@
 		left: 0;
 		right: 0;
 		z-index: 60;
-		padding: clamp(1rem, 4vw, 1.5rem) clamp(1.25rem, 5vw, 2rem);
-		background: linear-gradient(180deg, var(--gw-color-bg) 0%, transparent 100%);
+		padding: 40px 20px;
+		background: linear-gradient(
+			to bottom,
+			rgb(18 29 43 / 100%) 10%,
+			rgb(18 29 43 / 30%) 85%,
+			rgb(18 29 43 / 0%) 100%
+		);
 	}
 
 	.gw-mobile-header__logo {

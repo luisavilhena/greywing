@@ -52,11 +52,12 @@
 /* Texto pequeno, empurrado pro fim da coluna pelo space-between —
    fonte fixa de 10px (menor que o texto normal, tipo aviso legal). */
 .gw-split-image__small-text {
-	font-size: 10px;
+	font-size: 12px;
 	line-height: 100%;
+	margin-top: 20px;
 }
 .gw-split-image__small-text p{
-	line-height: 12px;
+	line-height: 14px;
 }
 
 .gw-split-image__small-text p + p {
