@@ -29,11 +29,11 @@ if ( greywing_disclaimer_has_valid_consent() ) {
 	return;
 }
 
-$title          = get_field( 'title', 'option' );
-$text           = get_field( 'text', 'option' );
-$accept_label   = get_field( 'accept_label', 'option' );
-$reject_label   = get_field( 'reject_label', 'option' );
-$reject_message = get_field( 'reject_message', 'option' );
+$title          = get_field( 'disclaimer_title', 'option' );
+$text           = get_field( 'disclaimer_text', 'option' );
+$accept_label   = get_field( 'disclaimer_accept_label', 'option' );
+$reject_label   = get_field( 'disclaimer_reject_label', 'option' );
+$reject_message = get_field( 'disclaimer_reject_message', 'option' );
 
 if ( ! $title && ! $text ) {
 	return;

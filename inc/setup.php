@@ -110,3 +110,17 @@ function greywing_login_menu_item_attributes( $atts, $item ) {
 	return $atts;
 }
 add_filter( 'nav_menu_link_attributes', 'greywing_login_menu_item_attributes', 10, 2 );
+
+/**
+ * Classe extra no <body> da página de Contato — usada só pra dar a ela um
+ * degradê de fundo próprio (escuro no topo → claro embaixo), diferente do
+ * degradê padrão das outras páginas que não são a Home/About. Ver
+ * "body.gw-page--contact" em assets/css/base.css.
+ */
+function greywing_contact_page_body_class( $classes ) {
+	if ( is_page( 'contact' ) ) {
+		$classes[] = 'gw-page--contact';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'greywing_contact_page_body_class' );

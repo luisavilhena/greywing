@@ -92,7 +92,7 @@ function greywing_get_visitor_ip() {
  * cliente, pra não permitir gravar consentimento associado à versão errada.
  */
 function greywing_disclaimer_current_version() {
-	$version = function_exists( 'get_field' ) ? get_field( 'version', 'option' ) : '';
+	$version = function_exists( 'get_field' ) ? get_field( 'disclaimer_version', 'option' ) : '';
 	return $version ? $version : '1.0';
 }
 

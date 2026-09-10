@@ -76,6 +76,13 @@ body:not(.home) {
 	background-image: var(--gw-bg-gradient-2);
 }
 
+/* Página de Contato: degradê próprio, escuro no topo → claro embaixo —
+   sobrescreve o "body:not(.home)" acima (mesma especificidade, uma classe;
+   vale por vir depois no arquivo). */
+body.gw-page--contact {
+	background-image: var(--gw-bg-gradient-contact);
+}
+
 img {
 	display: block;
 	max-width: 100%;
@@ -113,6 +120,17 @@ img {
 		#3a3a3c 85%,
 		#16202d 90%,
 		#121D2B 95%
+	);
+
+	/* Mesmas cores do --gw-bg-gradient-2, na ordem inversa — escuro no topo,
+	   claro embaixo. Só a página de Contato usa (ver "body.gw-page--contact"
+	   abaixo e greywing_contact_page_body_class() em inc/setup.php). */
+	--gw-bg-gradient-contact: linear-gradient(
+		to bottom,
+		#121D2B 0%,
+		#3a3a3c 15%,
+		#6b6058 30%,
+		#9F9282 85%
 	);
 
 	/* Fontes */

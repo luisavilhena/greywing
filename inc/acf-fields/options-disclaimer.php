@@ -18,6 +18,13 @@ function greywing_register_disclaimer_options() {
 		return;
 	}
 
+	// Nomes dos campos com prefixo "disclaimer_": Options Pages do ACF
+	// salvam cada campo de nível superior direto na tabela wp_options
+	// usando o NOME do campo (ex.: "options_title"), sem separar por grupo
+	// de campos — um campo "title" aqui e um campo "title" em
+	// options-login.php escreviam na mesma linha do banco, e um
+	// sobrescrevia o outro. Foi exatamente isso que fez o popup de Login
+	// mostrar o texto deste aviso.
 	acf_add_local_field_group(
 		array(
 			'key'      => 'group_greywing_disclaimer_options',
@@ -26,7 +33,7 @@ function greywing_register_disclaimer_options() {
 				array(
 					'key'          => 'field_gwdis_version',
 					'label'        => 'Versão do aviso',
-					'name'         => 'version',
+					'name'         => 'disclaimer_version',
 					'type'         => 'text',
 					'instructions' => 'Muda sempre que o texto do aviso mudar de forma relevante (ex.: "1.0", "1.1", "2.0"). Quem já aceitou uma versão anterior vê o aviso de novo, mesmo dentro dos 15 dias do cookie — é o que garante que o consentimento salvo corresponde ao texto que a pessoa realmente leu.',
 					'default_value' => '1.0',
@@ -34,30 +41,30 @@ function greywing_register_disclaimer_options() {
 				array(
 					'key'   => 'field_gwdis_title',
 					'label' => 'Título',
-					'name'  => 'title',
+					'name'  => 'disclaimer_title',
 					'type'  => 'text',
 				),
 				greywing_field_richtext(
 					'field_gwdis_text',
-					'text',
+					'disclaimer_text',
 					'Texto (parágrafos, lista numerada, links...)',
 					'Pra criar a lista numerada, use o botão de lista da barra de ferramentas. Pra negrito e links, selecione o trecho e use os botões correspondentes.'
 				),
 				array(
 					'key'   => 'field_gwdis_accept_label',
 					'label' => 'Texto do botão de aceitar',
-					'name'  => 'accept_label',
+					'name'  => 'disclaimer_accept_label',
 					'type'  => 'text',
 				),
 				array(
 					'key'   => 'field_gwdis_reject_label',
 					'label' => 'Texto do botão de não aceitar',
-					'name'  => 'reject_label',
+					'name'  => 'disclaimer_reject_label',
 					'type'  => 'text',
 				),
 				greywing_field_richtext(
 					'field_gwdis_reject_message',
-					'reject_message',
+					'disclaimer_reject_message',
 					'Mensagem ao clicar em "não aceitar"',
 					'Aparece abaixo dos botões quando a pessoa clica que não atende aos critérios.'
 				),

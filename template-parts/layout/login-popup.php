@@ -16,9 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$title  = get_field( 'title', 'option' );
-$text   = get_field( 'text', 'option' );
-$button = get_field( 'button', 'option' );
+$title  = get_field( 'login_title', 'option' );
+$text   = get_field( 'login_text', 'option' );
+$button = get_field( 'login_button', 'option' );
 
 if ( ! $title && ! $text && ! $button ) {
 	return;
