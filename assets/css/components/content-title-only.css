@@ -1,0 +1,16 @@
+/**
+ * Componente: Só título, especial — este título NÃO ocupa o espaço das
+ * 2 colunas, fica mais contido/em destaque (alinhado à esquerda).
+ * Template: template-parts/content/content-title-only.php
+ */
+
+.gw-title-only__title {
+	max-width: min(48ch, 60%);
+	font-size: var(--gw-text-title-lg);
+}
+
+@media (max-width: 40em) {
+	.gw-title-only__title {
+		max-width: 100%;
+	}
+}

@@ -1,0 +1,124 @@
+/**
+ * Componente: Informações de contato — título + blocos (rótulo + texto) +
+ * link.
+ * Template: template-parts/content/content-contact-info.php
+ *
+ * O site inteiro usa 2 colunas dentro da área de conteúdo — aqui tudo fica
+ * só na primeira (50%), a segunda fica vazia de propósito (por isso não
+ * existe um grid de 2 colunas aqui, só um max-width de metade).
+ *
+ * O painel deslizante do formulário usa o componente genérico
+ * assets/css/components/drawer.css (classes .gw-drawer*) — aqui só ficam
+ * os estilos específicos dos campos do Contact Form 7.
+ */
+
+.gw-contact-info__col {
+	max-width: 50%;
+}
+
+.gw-contact-info__title {
+	font-size: var(--gw-text-title-lg);
+}
+
+.gw-contact-info__blocks {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gw-space-sm);
+	margin-bottom: var(--gw-space-md);
+}
+
+.gw-contact-info__label {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	font-size: var(--gw-text-body);
+	margin-bottom: var(--gw-space-2xs);
+}
+
+.gw-contact-info__text {
+	font-size: var(--gw-text-body);
+}
+
+.gw-contact-info__link {
+	display: inline-block;
+	font-family: var(--gw-font-text);
+	font-weight: 700;
+	font-size: var(--gw-text-body);
+	color: var(--gw-color-text);
+	text-decoration: none;
+}
+
+@media (max-width: 40em) {
+	.gw-contact-info__col {
+		max-width: 100%;
+	}
+}
+
+/**
+ * Campos do formulário (Contact Form 7) — escopado dentro do painel pra não
+ * afetar outro CF7 que apareça em outro lugar do site no futuro.
+ */
+.gw-drawer__body .wpcf7-form-control-wrap {
+	display: block;
+	margin-bottom: var(--gw-space-sm);
+}
+
+.gw-drawer__body input.wpcf7-form-control,
+.gw-drawer__body textarea.wpcf7-form-control {
+	display: block;
+	width: 100%;
+	background-color: transparent;
+	border: 0.5px solid var(--gw-color-text);
+	color: var(--gw-color-text);
+	font-family: var(--gw-font-text);
+	font-size: 16px;
+	font-weight: 300;
+	padding: 15px 17px;
+}
+
+.gw-drawer__body textarea.wpcf7-form-control {
+	min-height: 8rem;
+	resize: vertical;
+}
+
+.gw-drawer__body .wpcf7-form-control::placeholder {
+	color: var(--gw-color-text);
+	font-family: var(--gw-font-text);
+	font-size: 16px;
+	font-weight: 300;
+	opacity: 0.6;
+}
+
+@media (max-width: 40em) {
+	.gw-drawer__body input.wpcf7-form-control,
+	.gw-drawer__body textarea.wpcf7-form-control,
+	.gw-drawer__body .wpcf7-form-control::placeholder {
+		font-size: 14px;
+	}
+}
+
+.gw-drawer__body input.wpcf7-form-control:focus,
+.gw-drawer__body textarea.wpcf7-form-control:focus {
+	outline: none;
+	border-color: var(--gw-color-muted);
+}
+
+/* Botão de enviar — mesmo padrão dos outros botões do site (borda fina,
+   fundo transparente); no hover/foco/clique inverte pra fundo claro. */
+.gw-drawer__body input[type="submit"] {
+	display: inline-block;
+	background-color: transparent;
+	border: 0.5px solid var(--gw-color-text);
+	color: var(--gw-color-text);
+	font-family: var(--gw-font-text);
+	font-size: var(--gw-text-body);
+	padding: var(--gw-space-xs) var(--gw-space-lg);
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.gw-drawer__body input[type="submit"]:hover,
+.gw-drawer__body input[type="submit"]:focus,
+.gw-drawer__body input[type="submit"]:active {
+	background-color: var(--gw-color-text); /* #dcd7ca */
+	color: var(--gw-color-bg); /* #121d2b */
+}

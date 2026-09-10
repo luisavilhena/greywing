@@ -1,0 +1,30 @@
+/**
+ * Componente: Título + texto + imagem.
+ * Template: template-parts/content/content-title-text-image.php
+ */
+
+.gw-title-text-image__title {
+	font-size: var(--gw-text-title-lg);
+	/* Espaço abaixo definido pelo campo "Espaço abaixo do título" (classe .gw-mb-*, em base.css) */
+}
+
+.gw-title-text-image__text {
+	font-size: var(--gw-text-body);
+	max-width: 65ch;
+	margin-bottom: var(--gw-space-md);
+}
+
+.gw-title-text-image__image img {
+	width: 100%;
+}
+
+/* Abaixo de 40em o pai vira flex column só pra dar efeito à ordem
+   escolhida no campo "Ordem da imagem no mobile" (.gw-mobile-order-invert,
+   ver assets/css/base.css) — sem isso a propriedade "order" não faz nada,
+   porque os filhos já são empilhados normalmente (fluxo de bloco comum). */
+@media (max-width: 40em) {
+	.gw-title-text-image {
+		display: flex;
+		flex-direction: column;
+	}
+}

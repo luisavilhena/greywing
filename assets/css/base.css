@@ -1,0 +1,262 @@
+/**
+ * Base do tema Greywing.
+ *
+ * 1) Reset simples.
+ * 2) Variáveis globais (cores, fontes, espaçamentos e tipografia fluida).
+ *    Espaçamento e tamanhos de fonte usam clamp() com vh/vw/% para serem
+ *    responsivos sem precisar de uma media query para cada ajuste fino —
+ *    as media queries entram só para mudanças de estrutura (ver layout.css
+ *    e cada CSS de componente).
+ * 3) Tipografia base (h1–h6, p, etc.).
+ * 4) Utilitários de espaço abaixo do título (.gw-mb-*), usados por vários
+ *    componentes — ver greywing_field_title_spacing() em
+ *    inc/acf-fields/shared-fields.php.
+ * 5) Utilitários de imagem no mobile (ordem, alinhamento, largura) — ver
+ *    greywing_field_mobile_order()/mobile_align()/mobile_width() em
+ *    inc/acf-fields/shared-fields.php.
+ *
+ * O espaço extra abaixo da seção inteira era um campo do ACF (.gw-pb-*,
+ * Nenhum/SM/LG por componente) — agora é fixo pra toda seção, direto em
+ * .gw-row (ver assets/css/layout.css), no valor "LG" que era o maior.
+ */
+
+/* 1) Reset ------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth; /* clicar num sub-item do menu rola suave até a seção */
+	/* Dar um background próprio ao <html> impede o navegador de "propagar"
+	   o fundo do <body> pro canvas/viewport inteiro — sem isso, o
+	   background-size em % do body é calculado de forma instável e o
+	   degradê não respeita a altura real da página. */
+	background-color: var(--gw-color-bg);
+}
+
+body {
+	min-height: 100vh;
+	background-color: var(--gw-color-bg);
+	/* Degradê único e contínuo do início ao fim da página (não repete):
+	   background-size 100% 100% estica o degradê pela altura real do body,
+	   que é a altura de todo o conteúdo, não só da viewport. */
+	background-image: var(--gw-bg-gradient);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	color: var(--gw-color-text);
+	font-family: var(--gw-font-text);
+	font-weight: 300;
+	font-size: var(--gw-text-body);
+	line-height: 1.6;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* 2) Variáveis globais --------------------------------------------------- */
+
+:root {
+	/* Cores extraídas do Figma (Greywing_About_Desktop) */
+	--gw-color-bg: #121d2b; /* azul-marinho escuro de fundo */
+	--gw-color-text: #dcd7ca; /* creme/bege, cor de texto padrão */
+	--gw-color-muted: #beb09d; /* tom bege mais escuro, usado em destaques pontuais (ex: item de menu ativo) */
+	--gw-color-border: rgba(220, 215, 202, 0.16);
+
+	/* Degradê que reproduz a sensação do fundo do Figma (lá é uma imagem
+	   granulada escuro→claro, repetida verticalmente) sem usar imagem nenhuma. */
+	--gw-bg-gradient: linear-gradient(
+		to bottom,
+		#121D2B 0%,
+		#3a3a3c 2%,
+		#9F9282 15%,
+		#6b6058 70%,
+		#3a3a3c 85%,
+		#16202d 90%,
+		#121D2B 95%
+	);
+
+	/* Fontes */
+	--gw-font-display: "GT Sectra Display", Georgia, "Times New Roman", serif;
+	--gw-font-text: "Roboto", Arial, Helvetica, sans-serif;
+
+	/* Estrutura de 3 colunas: 30% menu + 70% conteúdo */
+	--gw-menu-width: 30%;
+	--gw-content-width: 70%;
+
+	/* Espaçamentos fluidos: clamp(mínimo, ideal em vw/vh, máximo) */
+	--gw-space-2xs: clamp(0.5rem, 1vw, 0.75rem);
+	--gw-space-xs: clamp(0.75rem, 1.5vw, 1.25rem);
+	--gw-space-sm: clamp(1.25rem, 2.5vw, 2rem);
+	--gw-space-md: clamp(2rem, 4vw, 3rem);
+	--gw-space-lg: clamp(4rem, 4vw + 7vh, 12rem);
+	--gw-space-xl: clamp(14rem, 8vw + 20vh, 20rem);
+
+	/* Respiro padrão do miolo de conteúdo (dentro dos 70%) */
+	--gw-content-padding-inline: clamp(1.25rem, 6vw, 10rem);
+	--gw-content-padding-block: clamp(2rem, 3vh, 6rem);
+
+	/* Tipografia fluida — títulos grandes do Figma usam 60px/60px (font/line-height) */
+	--gw-text-title-xl: clamp(2.25rem, 1.4rem + 3vw, 5rem);
+	--gw-text-title-lg: clamp(40px, 5vw, 60px);
+	--gw-text-title-md: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
+	--gw-text-title-sm: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+	--gw-text-subtitle: clamp(0.95rem, 0.85rem + 0.3vw, 1.125rem);
+	--gw-text-body: clamp(14px, 0.85rem + 0.15vw, 16px);
+}
+
+/* 3) Tipografia base ------------------------------------------------------ */
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: var(--gw-font-display);
+	font-weight: 400;
+	line-height: 100%;
+}
+
+p {
+	font-family: var(--gw-font-text);
+	font-weight: 300;
+	line-height: 20px;
+}
+.wp-block-list {
+	margin: 10px 0;
+    padding-left: 20px;
+}
+
+@media (max-width: 40em) {
+	p {
+		line-height: 18px;
+	}
+}
+
+a {
+	color:var(--gw-color-text);
+}
+
+
+/* Todo parágrafo (em qualquer WYSIWYG do site) tem 10px de distância até o
+   próximo — regra global, não precisa repetir em cada componente. */
+p + p {
+	margin-top: 10px;
+}
+
+strong,
+b {
+	font-weight: 700;
+}
+
+/* 4) Espaço abaixo do título ---------------------------------------------
+ *
+ * Escolhido pelo campo "Espaço abaixo do título" de cada componente (ver
+ * greywing_field_title_spacing() em inc/acf-fields/shared-fields.php).
+ * Valores fixos (não fluidos) porque foram pedidos assim: um valor exato
+ * pra desktop e outro pra mobile, não uma interpolação entre os dois.
+ */
+
+.gw-mb-xl {
+	margin-bottom: 120px;
+}
+
+.gw-mb-lg {
+	margin-bottom: 85px;
+}
+
+.gw-mb-md {
+	margin-bottom: 60px;
+}
+
+.gw-mb-s {
+	margin-bottom: 20px;
+}
+
+@media (max-width: 40em) {
+	.gw-mb-xl {
+		margin-bottom: 30px;
+	}
+
+	.gw-mb-lg {
+		margin-bottom: 30px;
+	}
+
+	.gw-mb-md {
+		margin-bottom: 30px;
+	}
+
+	.gw-mb-s {
+		margin-bottom: 20px;
+	}
+}
+
+/* 5) Imagem no mobile: ordem, alinhamento e largura --------------------
+ *
+ * Usados pelos componentes com título/texto/imagem (título+texto+imagem,
+ * imagem em destaque, texto+imagem dividida) — ver
+ * greywing_field_mobile_order()/mobile_align()/mobile_width() em
+ * inc/acf-fields/shared-fields.php. Só têm efeito abaixo de 40em: acima
+ * disso cada componente usa seu próprio layout de desktop.
+ *
+ * .gw-mobile-order-invert exige que o pai seja flex/grid (é isso que dá
+ * efeito à propriedade "order") — cada CSS de componente garante isso no
+ * próprio breakpoint mobile.
+ *
+ * Seletor repetido (".gw-mobile-w-80.gw-mobile-w-80", não só
+ * ".gw-mobile-w-80"): truque pra dobrar a especificidade sem usar
+ * !important. Título/texto/imagem de alguns componentes já têm sua própria
+ * regra de largura/alinhamento fixa no CSS específico deles — sem isso, uma
+ * escolha explícita do editor aqui podia perder pra essa regra existente
+ * dependendo só da ordem de carregamento do CSS.
+ */
+
+@media (max-width: 40em) {
+	.gw-mobile-order-invert.gw-mobile-order-invert {
+		order: -1;
+	}
+
+	.gw-mobile-align-left.gw-mobile-align-left {
+		margin-right: auto;
+		margin-left: 0;
+	}
+
+	.gw-mobile-align-right.gw-mobile-align-right {
+		margin-left: auto;
+		margin-right: 0;
+	}
+
+	.gw-mobile-w-100.gw-mobile-w-100 {
+		width: 100%;
+	}
+
+	.gw-mobile-w-80.gw-mobile-w-80 {
+		width: 80%;
+	}
+
+	.gw-mobile-w-70.gw-mobile-w-70 {
+		width: 70%;
+	}
+	#special-h2 h2{
+		font-size: 34px;
+	}
+}

@@ -1,0 +1,47 @@
+/**
+ * Componente: Duas colunas (título/subtítulo/texto por coluna), com título
+ * opcional compartilhado acima das duas.
+ * Template: template-parts/content/content-two-columns.php
+ */
+
+.gw-two-columns__title {
+	font-size: var(--gw-text-title-lg);
+	max-width: 100%; /* pode ocupar o tamanho todo da página de conteúdo */
+	/* Espaço abaixo definido pelo campo "Espaço abaixo do título" (classe .gw-mb-*, em base.css) */
+}
+
+.gw-two-columns__title--left {
+	text-align: left;
+}
+
+.gw-two-columns__title--right {
+	text-align: right;
+}
+
+.gw-two-columns__cols {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--gw-space-xl) var(--gw-space-lg);
+}
+
+.gw-two-columns__col-title {
+	font-size: var(--gw-text-title-lg);
+}
+
+.gw-two-columns__subtitle {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	font-size: var(--gw-text-subtitle);
+	margin-bottom: var(--gw-space-2xs);
+}
+
+.gw-two-columns__text {
+	font-size: var(--gw-text-body);
+}
+
+@media (max-width: 40em) {
+	.gw-two-columns__cols {
+		grid-template-columns: 1fr;
+		gap: var(--gw-space-md);
+	}
+}

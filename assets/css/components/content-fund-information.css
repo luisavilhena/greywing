@@ -1,0 +1,71 @@
+/**
+ * Componente: Fund information — título + tabela (rótulo/valor) + link de
+ * download.
+ * Template: template-parts/content/content-fund-information.php
+ */
+
+.gw-fund-information__title {
+	font-size: var(--gw-text-title-lg);
+}
+
+.gw-fund-information__table {
+	width: 100%;
+	max-width: 780px;
+	border-collapse: collapse;
+	font-size: var(--gw-text-body);
+}
+
+.gw-fund-information__table tr {
+	border-bottom: 1px solid var(--gw-color-border);
+}
+
+.gw-fund-information__table th,
+.gw-fund-information__table td {
+	padding: var(--gw-space-2xs) 0;
+	text-align: left;
+	font-weight: 300;
+}
+
+.gw-fund-information__table th {
+	width: 50%;
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+}
+
+.gw-fund-information__download {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--gw-space-2xs);
+	margin-top: var(--gw-space-md);
+	padding: var(--gw-space-xs) var(--gw-space-sm);
+	border: 0.5px solid var(--gw-color-text);
+	background-color: transparent;
+	color: var(--gw-color-text);
+	text-decoration: none;
+	font-size: var(--gw-text-body);
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.gw-fund-information__download-icon {
+	flex-shrink: 0;
+}
+
+.gw-fund-information__download:hover {
+	/* inverte: fundo claro, texto escuro — mesmos tons já usados no
+	   resto do tema (var(--gw-color-text) = #dcd7ca, var(--gw-color-bg) = #121d2b). */
+	background-color: var(--gw-color-text);
+	color: var(--gw-color-bg);
+}
+
+@media (max-width: 40em) {
+	.gw-fund-information__table th,
+	.gw-fund-information__table td {
+		display: block;
+		width: 100%;
+	}
+
+	.gw-fund-information__table td {
+		padding-top: 0;
+		padding-bottom: var(--gw-space-2xs);
+	}
+}

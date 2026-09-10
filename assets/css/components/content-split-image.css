@@ -1,0 +1,81 @@
+/**
+ * Componente: coluna esquerda (título + subtítulo + texto),
+ * coluna direita (imagem).
+ * Template: template-parts/content/content-split-image.php
+ */
+
+.gw-split-image {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 50px var(--gw-space-lg);
+	/* stretch (não start) pra coluna de texto poder ocupar a altura toda
+	   da linha (a mesma altura da imagem) — é isso que dá espaço pro
+	   space-between empurrar o texto pequeno lá pra baixo. */
+	align-items: stretch;
+}
+
+.gw-split-image__text {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.gw-split-image__title {
+	font-size: var(--gw-text-title-lg);
+	/* Espaço abaixo definido pelo campo "Espaço abaixo do título" (classe .gw-mb-*, em base.css) */
+}
+
+.gw-split-image__title-image {
+	margin-bottom: 60px;
+}
+
+.gw-split-image__title-image img {
+	width: auto;
+}
+
+.gw-split-image__subtitle {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	font-size: var(--gw-text-body);
+	margin-bottom: var(--gw-space-2xs);
+}
+
+.gw-split-image__body {
+	font-size: var(--gw-text-body);
+}
+
+.gw-split-image__image img {
+	width: 100%;
+	height: 100%;
+}
+
+/* Texto pequeno, empurrado pro fim da coluna pelo space-between —
+   fonte fixa de 10px (menor que o texto normal, tipo aviso legal). */
+.gw-split-image__small-text {
+	font-size: 10px;
+	line-height: 100%;
+}
+.gw-split-image__small-text p{
+	line-height: 12px;
+}
+
+.gw-split-image__small-text p + p {
+	margin-top: var(--gw-space-2xs);
+	line-height: 100%;
+}
+
+@media (max-width: 40em) {
+	.gw-split-image {
+		grid-template-columns: 1fr;
+	}
+
+	/* Ordem da imagem (antes ou depois do texto) agora é escolhida pelo
+	   campo "Ordem da imagem no mobile" — ver .gw-mobile-order-invert em
+	   base.css. O grid já dá efeito a "order" sozinho, sem precisar de
+	   nenhum display extra aqui (ao contrário dos outros componentes com
+	   imagem, que não são grid/flex por padrão). */
+
+	.gw-split-image__title-image {
+		margin-bottom: 30px;
+	}
+}

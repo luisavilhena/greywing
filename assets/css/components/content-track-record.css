@@ -1,0 +1,77 @@
+/**
+ * Componente: Track record — título + texto + números de performance.
+ * Template: template-parts/content/content-track-record.php
+ */
+
+.gw-track-record__title {
+	font-size: var(--gw-text-title-lg);
+}
+
+.gw-track-record__text {
+	max-width: 65ch;
+	font-size: var(--gw-text-body);
+	margin-bottom: var(--gw-space-md);
+}
+
+.gw-track-record__as-of {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	font-size: var(--gw-text-body);
+	margin-bottom: var(--gw-space-sm);
+}
+
+.gw-track-record__stats {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--gw-space-lg);
+	border-top: 1px solid var(--gw-color-border);
+	border-bottom: 1px solid var(--gw-color-border);
+}
+
+.gw-track-record__stat:last-child {
+	border-bottom: none; /* remove a borda da última linha */
+}
+/* Cada coluna de números fica centralizada — as linhas encolhem pro
+   tamanho do próprio conteúdo (rótulo + gap + valor) e ficam centradas
+   na coluna, em vez de esticadas de ponta a ponta.
+   min-width:0 é essencial aqui: sem isso, o item do grid nunca encolhe
+   abaixo do "tamanho de conteúdo" do rótulo mais longo, o que empurra a
+   coluna pra além dos 50% dela e vaza por cima da coluna vizinha — daí o
+   grid parecer "quebrado" e as bordas ficarem desalinhadas. */
+.gw-track-record__stats-col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	min-width: 0;
+}
+
+.gw-track-record__stat {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	gap: var(--gw-space-md);
+	max-width: 100%; /* nunca mais largo que a própria coluna do grid */
+	border-bottom: 1px solid var(--gw-color-border);
+	padding: var(--gw-space-xs) 0;
+	/* margin-bottom: var(--gw-space-sm); */
+}
+
+.gw-track-record__stat-label {
+	font-size: 16px;
+}
+
+.gw-track-record__stat-value {
+	font-family: var(--gw-font-text);
+	font-weight: 400;
+	font-size: 41px;
+	white-space: nowrap;
+}
+
+@media (max-width: 40em) {
+	.gw-track-record__stats {
+		grid-template-columns: 1fr;
+		gap: 0;
+	}
+}

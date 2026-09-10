@@ -1,0 +1,64 @@
+/**
+ * Componente: Título de largura livre + repeater em zigzag.
+ * Template: template-parts/content/content-zigzag.php
+ *
+ * Regra de posição: o 1º bloco do repeater cai na coluna esquerda, o 2º
+ * na coluna direita, o 3º na esquerda de novo... isso é só o fluxo normal
+ * de um grid de 2 colunas (grid-auto-flow), sem precisar de nada especial
+ * no HTML. O deslocamento vertical dos blocos da direita é o que cria o
+ * efeito "zigzag" (escadinha) entre as colunas.
+ */
+
+.gw-zigzag__title {
+	font-size: var(--gw-text-title-lg);
+	max-width: 100%; /* pode ocupar toda a largura da página de conteúdo */
+	/* Espaço abaixo definido pelo campo "Espaço abaixo do título" (classe .gw-mb-*, em base.css) */
+}
+
+.gw-zigzag__blocks {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: var(--gw-space-md);
+	row-gap: var(--gw-space-lg);
+}
+
+.gw-zigzag__block {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gw-space-xs);
+}
+
+/* blocos da coluna direita (2º, 4º, 6º...) descem um pouco = zigzag */
+.gw-zigzag__block:nth-child(even) {
+	margin-top: var(--gw-space-lg);
+}
+
+/* No Figma os blocos deste componente usam ícones pequenos (não fotos
+   full-width) — por isso a imagem fica limitada, não esticada. Se um bloco
+   precisar de foto grande, prefira o componente título+texto+imagem. */
+.gw-zigzag__block-image img {
+	width: auto;
+	max-width: 5.625rem;
+	max-height: 5.625rem;
+}
+
+.gw-zigzag__block-subtitle {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	font-size: var(--gw-text-body);
+}
+
+.gw-zigzag__block-text {
+	font-size: var(--gw-text-body);
+}
+
+@media (max-width: 40em) {
+	.gw-zigzag__blocks {
+		grid-template-columns: 1fr;
+		row-gap: var(--gw-space-md);
+	}
+
+	.gw-zigzag__block:nth-child(even) {
+		margin-top: 0;
+	}
+}

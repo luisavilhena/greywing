@@ -1,0 +1,14 @@
+/*
+Theme Name:   Greywing
+Theme URI:    https://greywing.com
+Author:       Greywing
+Description:  Tema custom do site Greywing, construído com componentes ACF Pro (Flexible Content). Cada linha de conteúdo da página é um componente independente, com seu próprio arquivo de CSS em assets/css/components/.
+Version:      1.0.0
+Text Domain:  greywing
+*/
+
+/*
+Este arquivo existe apenas para o cabeçalho de identificação do tema (exigido pelo WordPress).
+Todo o CSS real do tema fica separado por arquivo dentro de /assets/css/ e é carregado via
+wp_enqueue_style() em inc/enqueue.php — veja esse arquivo para a lista completa.
+*/

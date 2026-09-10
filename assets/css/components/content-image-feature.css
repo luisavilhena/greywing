@@ -1,0 +1,33 @@
+/**
+ * Componente: Título na coluna direita + imagem em destaque.
+ * Template: template-parts/content/content-image-feature.php
+ */
+
+.gw-image-feature__title {
+	width: fit-content; /* só a largura que o texto precisar, não um valor fixo */
+	max-width: 100%; /* nunca estoura a coluna, se o título for muito longo */
+	margin-left: auto; /* gruda na borda direita */
+	text-align: left; /* se quebrar em mais de uma linha, linhas alinhadas à esquerda */
+	font-size: var(--gw-text-title-lg);
+	/* Espaço abaixo definido pelo campo "Espaço abaixo do título" (classe .gw-mb-*, em base.css) */
+}
+
+.gw-image-feature__image img {
+	width: auto; /* tamanho natural da imagem, sem esticar */
+	/* fica à esquerda por padrão: é um bloco sem margin-left:auto */
+}
+
+@media (max-width: 40em) {
+	/* Vira flex column só pra dar efeito à ordem escolhida no campo "Ordem
+	   da imagem no mobile" (.gw-mobile-order-invert, ver base.css) — sem
+	   isso "order" não faz nada nos filhos. */
+	.gw-image-feature {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.gw-image-feature__title {
+		width: 100%; /* some sobrescrito se o campo "Largura do título no mobile" escolher 80%/70% — ver .gw-mobile-w-* em base.css */
+		margin-left: 0;
+	}
+}

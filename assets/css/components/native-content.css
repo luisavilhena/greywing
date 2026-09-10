@@ -1,0 +1,53 @@
+/**
+ * Conteúdo nativo do WordPress (editor de blocos padrão, sem ACF).
+ * Usado por page-templates/template-legal.php — páginas de texto corrido
+ * longo, ex.: "Important Disclosures & Terms of Use".
+ *
+ * O texto fica numa coluna mais estreita que o resto do site (~660px, como
+ * no Figma), já que é bloco de texto corrido, não conteúdo em 2 colunas.
+ */
+
+.gw-native-content__title {
+	font-size: var(--gw-text-title-lg);
+	margin-bottom: var(--gw-space-lg);
+	max-width: 100%;
+}
+
+.gw-native-content__body {
+	max-width: 45.75rem; /* ~660px, largura do bloco de texto no Figma */
+	font-size: var(--gw-text-body);
+}
+
+/* Cada seção numerada ("1. General", "2. Intended Audience"...) é só um
+   parágrafo em negrito, do mesmo tamanho do texto — não o título grande
+   de GT Sectra Display usado no resto do site — por isso o h2/h3/h4 do
+   editor de blocos leva um reset aqui dentro. */
+.gw-native-content__body h2,
+.gw-native-content__body h3,
+.gw-native-content__body h4 {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	font-size: var(--gw-text-body);
+	line-height: 20px;
+	margin-top: var(--gw-space-md);
+	margin-bottom: var(--gw-space-2xs);
+}
+
+.gw-native-content__body > *:first-child {
+	margin-top: 0;
+}
+
+.gw-native-content__body p + p {
+	margin-top: 10px;
+}
+
+.gw-native-content__body a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+@media (max-width: 40em) {
+	.gw-native-content__body {
+		max-width: 100%;
+	}
+}

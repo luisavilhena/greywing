@@ -1,0 +1,288 @@
+/**
+ * Layout geral da página: grid de 3 colunas.
+ *
+ *  ┌───────────────┬─────────────────────────────────────┐
+ *  │   .gw-menu     │             .gw-content              │
+ *  │  30% — fixo    │   70% — linhas de conteúdo (ACF)     │
+ *  │  na altura da  │                                       │
+ *  │  página (100vh)│                                       │
+ *  └───────────────┴─────────────────────────────────────┘
+ *
+ * O menu (.gw-menu) é montado em template-parts/layout/site-menu.php, a
+ * partir de um menu nativo do WordPress (Aparência → Menus). No mobile ele
+ * vira um painel deslizante, aberto pelo botão hambúrguer (.gw-menu-toggle,
+ * ver template-parts/layout/menu-toggle.php e assets/js/menu.js).
+ *
+ * Cada linha de conteúdo dentro de .gw-content é um componente próprio,
+ * com seu CSS em assets/css/components/*.css.
+ */
+
+.gw-grid {
+	display: grid;
+	grid-template-columns: var(--gw-menu-width) var(--gw-content-width);
+	min-height: 100vh;
+}
+
+.gw-menu {
+	position: sticky;
+	top: 0;
+	align-self: start;
+	height: 100vh;
+}
+
+.gw-menu__inner {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	height: 100%;
+	padding: var(--gw-content-padding-block) clamp(1.5rem, 4vw, 3.75rem);
+	/* overflow-y: auto; se um dia tiver menu mais alto que a tela */
+}
+
+.gw-menu__top {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+}
+
+.gw-menu__logo {
+	display: block;
+	width: 8.75rem;
+	flex-shrink: 0;
+}
+
+.gw-menu__logo img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.gw-menu__nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.gw-menu__nav > ul > li {
+	margin-bottom: var(--gw-space-sm);
+}
+
+.gw-menu__nav a {
+	display: inline-block;
+	font-family: var(--gw-font-text);
+	font-weight: 300;
+	font-size: 1rem;
+	color: var(--gw-color-text);
+	text-decoration: none;
+}
+
+/* "/ " decorativo antes de cada item de topo, como no Figma — só CSS,
+   não faz parte do texto real do item (que continua editável normalmente
+   em Aparência → Menus). */
+.gw-menu__nav > ul > li > a::before {
+	content: "/ ";
+}
+
+.gw-menu__nav > ul > li.current-menu-item > a,
+.gw-menu__nav > ul > li.current_page_item > a,
+.gw-menu__nav > ul > li.current-menu-parent > a {
+	font-weight: 700;
+	color: var(--gw-color-muted);
+}
+
+/* Sub-itens só aparecem quando o item de topo deles é o da página atual. */
+.gw-menu__nav .sub-menu {
+	display: none;
+	margin-top: var(--gw-space-2xs);
+	padding-left: 0.75rem;
+}
+
+.gw-menu__nav > ul > li.current-menu-item > .sub-menu,
+.gw-menu__nav > ul > li.current_page_item > .sub-menu,
+.gw-menu__nav > ul > li.current-menu-parent > .sub-menu {
+	display: block;
+}
+
+.gw-menu__nav .sub-menu li {
+	margin-bottom: var(--gw-space-2xs);
+}
+
+.gw-menu__nav .sub-menu a {
+	font-size: 0.875rem;
+}
+
+/* Marcado via JS (assets/js/menu.js) conforme a seção correspondente
+   passa pela tela — scroll-spy. */
+.gw-menu__nav .sub-menu a.is-active {
+	font-weight: 700;
+	color: var(--gw-color-text);
+}
+
+/* "Invest now" — componente à parte, sem "/ " na frente (no Figma ele não
+   tem o prefixo que os itens de topo têm) e sem lógica de item ativo,
+   já que é só um link solto. Fica embaixo, empurrado pelo
+   justify-content: space-between de .gw-menu__inner. */
+.gw-menu__invest ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.gw-menu__invest a {
+	display: inline-block;
+	font-family: var(--gw-font-text);
+	font-weight: 300;
+	font-size: 1rem;
+	color: var(--gw-color-text);
+	text-decoration: none;
+}
+
+/* Barra fixa do mobile (logo + botão hambúrguer) — escondida no desktop,
+   sempre visível no mobile (menu aberto ou fechado). Ver
+   template-parts/layout/mobile-header.php. */
+.gw-mobile-header {
+	display: none;
+}
+
+.gw-menu-toggle {
+	background: transparent;
+	border: none;
+	padding: 0.5rem;
+	line-height: 0;
+	cursor: pointer;
+}
+
+.gw-content {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-width: 0; /* evita que imagens/texto estourem a coluna em telas pequenas */
+}
+
+/* Cada componente é uma "linha de conteúdo": ocupa a largura toda dos 70%
+   e ganha respiro vertical/horizontal padrão. O respiro horizontal é o
+   que define, na prática, "o tamanho da página" que os títulos podem
+   ocupar (título de largura total = largura útil de .gw-row). */
+.gw-row {
+	width: 100%;
+	padding: var(--gw-content-padding-block) var(--gw-content-padding-inline);
+}
+.gw-row:not(footer){
+	min-height: 90vh;
+	/* Espaço extra abaixo de toda seção de conteúdo, antes da próxima —
+	   era um campo do ACF (Nenhum/SM/LG, por componente), agora é fixo
+	   pra todo mundo no valor "LG" que era o maior. Sobrescreve só o
+	   padding-bottom do "padding" acima (não o resto). Fora do footer:
+	   lá embaixo esse espaço extra só criaria um vão vazio depois do
+	   rodapé, sem servir pra nada. */
+	padding-bottom: 200px;
+}
+
+/* Abaixo de ~900px a página passa a ocupar 100% (empilhada), e o menu
+   deixa de ser uma coluna fixa lateral pra virar um painel que desliza por
+   cima da página, aberto pelo botão hambúrguer. */
+@media (max-width: 56.25em) {
+	.gw-row:not(footer){
+		min-height: auto;
+	}
+	.gw-grid {
+		grid-template-columns: 1fr;
+	}
+
+	/* Barra fixa: logo à esquerda, hambúrguer à direita, sempre visível. */
+	.gw-mobile-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 60;
+		padding: clamp(1rem, 4vw, 1.5rem) clamp(1.25rem, 5vw, 2rem);
+		background: linear-gradient(180deg, var(--gw-color-bg) 0%, transparent 100%);
+	}
+
+	.gw-mobile-header__logo {
+		display: block;
+		width: 7.5rem;
+	}
+
+	.gw-mobile-header__logo img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	/* O logo já aparece na barra fixa (.gw-mobile-header) — dentro do
+	   painel do menu, no mobile, não precisa duplicar. */
+	.gw-menu__logo {
+		display: none;
+	}
+
+	.gw-menu {
+		position: fixed;
+		inset: 0;
+		height: 100vh;
+		z-index: 50;
+		border-right: none;
+		/* Fundo translúcido (não sólido) pra dar pra ver o efeito do blur —
+		   com o fundo 100% opaco não haveria nada "por trás" pra borrar. */
+		background-color: rgba(18, 29, 43, 0.8);
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
+		/* Abre/fecha com fade, não deslizando — visibility com delay garante
+		   que o painel fechado não fique clicável/focável mesmo antes da
+		   opacity chegar a 0 de verdade. */
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+	}
+
+	.gw-menu__inner {
+		padding-top: clamp(5rem, 20vw, 6rem); /* não fica embaixo da barra fixa */
+	}
+
+	body.gw-menu-is-open {
+		overflow: hidden; /* trava o scroll da página com o menu aberto */
+	}
+
+	body.gw-menu-is-open .gw-menu {
+		opacity: 1;
+		visibility: visible;
+		transition: opacity 0.25s ease, visibility 0s linear 0s;
+	}
+
+	/* No mobile não mostra sub-menu nenhum — só os itens de topo. */
+	.gw-menu__nav .sub-menu {
+		display: none !important;
+	}
+
+	.gw-menu__nav > ul > li {
+		margin-bottom: 60px;
+	}
+
+	.gw-menu__nav > ul > li:last-child {
+		margin-bottom: 0;
+	}
+
+	.gw-menu__nav > ul > li > a {
+		font-size: 19px;
+		color: var(--gw-color-text); /* #dcd7ca */
+	}
+
+	.gw-menu__invest a {
+		font-size: 19px;
+		color: var(--gw-color-text);
+	}
+}
+
+/* Mesmo breakpoint das outras escalas de espaçamento fixo do tema (.gw-mb-*,
+   em base.css) — o valor "LG" do espaço extra abaixo da seção era 200px no
+   desktop / 100px no mobile. */
+@media (max-width: 40em) {
+	.gw-row:not(footer) {
+		padding-bottom: 100px;
+	}
+}

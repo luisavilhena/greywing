@@ -1,0 +1,50 @@
+/**
+ * Componente: Footer — última linha de conteúdo da página.
+ * Template: template-parts/content/content-footer.php
+ *
+ * 3 colunas, ocupando só a área de conteúdo (mesmo espaço de todo o resto
+ * da página — não se estende por baixo do menu).
+ */
+.gw-row.gw-footer{
+	padding-bottom: var(--gw-space-sm);
+}
+.gw-footer {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--gw-space-md);
+	padding-top: var(--gw-space-md);
+}
+.gw-footer__col:first-of-type {
+	margin-top: -25px;
+}
+
+.gw-footer__col,
+.gw-footer__col p {
+	font-size: 10px;
+	line-height: 13px;
+}
+
+.gw-footer__lead {
+	font-family: var(--gw-font-text);
+	font-weight: 500;
+	margin-bottom: var(--gw-space-2xs);
+}
+
+/* Link no meio do texto (ex.: "Important Disclosures & Terms of Use"),
+   inserido pelo editor direto no WYSIWYG — como no Figma. */
+.gw-footer__text a {
+	color: inherit;
+	font-weight: 500;
+	text-decoration: underline;
+	text-underline-offset: 0.15em;
+}
+
+@media (max-width: 40em) {
+	.gw-footer {
+		grid-template-columns: 1fr 1fr;
+		gap: var(--gw-space-sm);
+	}
+	.gw-footer__col:first-of-type {
+		margin-top: -45px;
+	}
+}

@@ -1,0 +1,128 @@
+/**
+ * Aviso de elegibilidade — popup de tela cheia, sempre carregado (aparece
+ * em toda página, ver template-parts/layout/disclaimer-gate.php).
+ *
+ * Mesma proporção de colunas do resto do site (30% / 70%), mas em tela
+ * cheia por cima de tudo, com o fundo borrado — igual ao menu mobile.
+ */
+
+.gw-disclaimer {
+	position: fixed;
+	inset: 0;
+	z-index: 200; /* acima de qualquer outro painel (menu mobile, drawers...) */
+	background-color: rgba(18, 29, 43, 0.85);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	height: 100vh;
+	overflow: hidden; /* quem rola é só o .gw-disclaimer__content-col, a coluna do logo fica fixa */
+}
+
+.gw-disclaimer.is-closed {
+	display: none;
+}
+
+.gw-disclaimer__grid {
+	display: grid;
+	grid-template-columns: var(--gw-menu-width) var(--gw-content-width);
+	grid-template-rows: 100vh;
+	height: 100vh;
+}
+
+.gw-disclaimer__logo-col {
+	padding: var(--gw-content-padding-block) clamp(1.5rem, 4vw, 3.75rem);
+}
+
+.gw-disclaimer__logo {
+	display: block;
+	width: 8.75rem;
+	height: auto;
+}
+
+.gw-disclaimer__content-col {
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE/Edge legado */
+	padding: var(--gw-content-padding-block) var(--gw-content-padding-inline);
+	max-width: 45.75rem; /* ~660px, mesma largura de texto corrido da página de Terms of Use */
+}
+
+.gw-disclaimer__content-col::-webkit-scrollbar {
+	display: none; /* Chrome, Safari */
+}
+
+.gw-disclaimer__title {
+	font-size: var(--gw-text-title-lg);
+	margin-bottom: var(--gw-space-md);
+}
+
+.gw-disclaimer__text {
+	font-size: 14px;
+	line-height: 19.2px;
+	margin-bottom: var(--gw-space-md);
+}
+
+.gw-disclaimer__text ol {
+	margin: var(--gw-space-2xs) 0;
+	padding-left: 1.25rem;
+}
+
+.gw-disclaimer__text li {
+	margin-bottom: var(--gw-space-2xs);
+}
+
+.gw-disclaimer__text a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.gw-disclaimer__actions {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gw-space-2xs);
+	max-width: 21.25rem; /* ~340px, como no Figma */
+}
+
+.gw-disclaimer__button {
+	display: block;
+	width: 100%;
+	background-color: transparent;
+	border: 0.5px solid var(--gw-color-text);
+	color: var(--gw-color-text);
+	font-family: var(--gw-font-text);
+	font-weight: 300;
+	font-size: 14px;
+	padding: var(--gw-space-xs) var(--gw-space-sm);
+	cursor: pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.gw-disclaimer__button:hover,
+.gw-disclaimer__button:focus {
+	background-color: var(--gw-color-text);
+	color: var(--gw-color-bg);
+}
+
+.gw-disclaimer__reject-message {
+	margin-top: var(--gw-space-md);
+	font-size: 14px;
+	line-height: 19.2px;
+	max-width: 21.25rem;
+}
+
+@media (max-width: 56.25em) {
+	.gw-disclaimer__grid {
+		grid-template-columns: 1fr;
+		grid-template-rows: auto 1fr; /* logo com altura natural, conteúdo ocupa o resto e rola */
+	}
+
+	.gw-disclaimer__logo-col {
+		padding-bottom: 0;
+	}
+
+	.gw-disclaimer__content-col {
+		height: 100%;
+		max-width: 100%;
+	}
+}

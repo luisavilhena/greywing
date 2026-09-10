@@ -1,0 +1,43 @@
+/**
+ * Fontes do tema Greywing.
+ *
+ * As fontes já foram instaladas no WordPress (Biblioteca de Fontes, em
+ * wp-content/uploads/fonts/) — este arquivo só declara os @font-face que
+ * apontam para esses arquivos, para poder usar `font-family` normalmente
+ * no resto do CSS (ver assets/css/base.css).
+ *
+ * Títulos → GT Sectra Display Trial
+ * Texto   → Roboto
+ */
+
+@font-face {
+	font-family: "GT Sectra Display";
+	src: url("../../../../uploads/fonts/GT-Sectra-Display-Regular.otf") format("opentype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Roboto";
+	src: url("../../../../uploads/fonts/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuaabWmWggvWl0Qn.woff2") format("woff2");
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Roboto";
+	src: url("../../../../uploads/fonts/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWub2bWmWggvWl0Qn.woff2") format("woff2");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Roboto";
+	src: url("../../../../uploads/fonts/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYjammWggvWl0Qn.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
