@@ -150,7 +150,7 @@ img {
 	--gw-space-xl: clamp(14rem, 8vw + 20vh, 20rem);
 
 	/* Respiro padrão do miolo de conteúdo (dentro dos 70%) */
-	--gw-content-padding-right: clamp(1.25rem, 16vw, 20rem);
+	--gw-content-padding-right: clamp(1.25rem, 14vw, 20rem);
 	--gw-content-padding-inline: clamp(1.25rem, 6vw, 10rem);
 	--gw-content-padding-block: clamp(2rem, 3vh, 6rem);
 
