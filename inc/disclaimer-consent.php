@@ -113,6 +113,35 @@ function greywing_disclaimer_has_valid_consent() {
 }
 
 /**
+ * Páginas que ficam de fora do aviso de elegibilidade mesmo sem a pessoa
+ * ter aceitado (ou recusado) ainda — são justamente as páginas que os
+ * links dentro do próprio texto do aviso apontam (Termos de Uso, Aviso de
+ * Privacidade): a pessoa precisa poder ler elas pra decidir se aceita ou
+ * não os critérios. Qualquer outra página continua bloqueada pelo aviso
+ * normalmente. Ver uso em greywing_disclaimer_is_exempt_page() e
+ * template-parts/layout/disclaimer-gate.php.
+ *
+ * @return string[] Slugs de página (não IDs — mais fácil de ler/editar aqui).
+ */
+function greywing_disclaimer_exempt_page_slugs() {
+	return array(
+		'important-disclosures-terms-of-use',
+		// 'privacy-notices' — o texto do aviso já linka pra "Privacy Notices",
+		// mas essa página ainda não existe no site (o link aponta pra "#" por
+		// enquanto). Adicionar o slug real aqui quando ela for criada.
+	);
+}
+
+/**
+ * A página atual é uma das isentas do aviso de elegibilidade (ver
+ * greywing_disclaimer_exempt_page_slugs())?
+ */
+function greywing_disclaimer_is_exempt_page() {
+	$slugs = greywing_disclaimer_exempt_page_slugs();
+	return ! empty( $slugs ) && is_page( $slugs );
+}
+
+/**
  * Handler AJAX chamado pelo clique em "I Confirm and Enter" ou "I Do Not
  * Meet These Criteria" (assets/js/disclaimer-gate.js). Grava a decisão no
  * banco e, se foi aceite, seta o cookie de 15 dias.

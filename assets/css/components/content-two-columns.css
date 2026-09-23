@@ -39,6 +39,24 @@
 	font-size: var(--gw-text-body);
 }
 
+/* Se uma coluna tem subtítulo e a outra não (mas as duas têm texto), o
+   texto da coluna sem subtítulo começaria mais acima que o da outra — esse
+   margin-top soma a altura que o subtítulo ocuparia (fonte + espaço abaixo
+   dele, ver .gw-two-columns__subtitle acima), pra os dois textos começarem
+   alinhados. Só entra quando existe pelo menos um subtítulo na linha
+   (:has no .gw-two-columns__cols) e só na coluna que não tem o seu
+   (:not(:has(...)) na própria .gw-two-columns__col) — com 2 colunas isso
+   já dá pra saber sozinho qual das duas é a "sem subtítulo". Só entra
+   acima de 40em — abaixo disso as colunas empilham (ver @media embaixo) e
+   esse espaço extra não faz sentido nenhum. */
+@media (min-width: 40.0625em) {
+	.gw-two-columns__cols:has(.gw-two-columns__subtitle)
+		.gw-two-columns__col:not(:has(.gw-two-columns__subtitle))
+		.gw-two-columns__text {
+		margin-top: calc(var(--gw-text-subtitle) + var(--gw-space-2xs));
+	}
+}
+
 @media (max-width: 40em) {
 	.gw-two-columns__cols {
 		grid-template-columns: 1fr;

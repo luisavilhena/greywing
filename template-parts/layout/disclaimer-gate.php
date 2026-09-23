@@ -18,6 +18,12 @@
  * aviso) tem um cookie válido — ver inc/disclaimer-consent.php — e nem
  * chega a receber esse HTML na página.
  *
+ * Exceção: as páginas que os links dentro do próprio texto do aviso
+ * apontam (Termos de Uso, Aviso de Privacidade) também não recebem esse
+ * HTML, mesmo sem cookie — a pessoa precisa poder ler essas páginas pra
+ * decidir se aceita os critérios. Ver greywing_disclaimer_is_exempt_page()
+ * em inc/disclaimer-consent.php.
+ *
  * CSS: assets/css/components/disclaimer-gate.css
  */
 
@@ -26,6 +32,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( greywing_disclaimer_has_valid_consent() ) {
+	return;
+}
+
+if ( greywing_disclaimer_is_exempt_page() ) {
 	return;
 }
 
@@ -57,23 +67,25 @@ if ( ! $title && ! $text ) {
 			<?php endif; ?>
 
 			<?php if ( $accept_label || $reject_label ) : ?>
-				<div class="gw-disclaimer__actions">
-					<?php if ( $accept_label ) : ?>
-						<button class="gw-disclaimer__button" type="button" data-gw-disclaimer-accept>
-							<?php echo esc_html( $accept_label ); ?>
-						</button>
-					<?php endif; ?>
-					<?php if ( $reject_label ) : ?>
-						<button class="gw-disclaimer__button" type="button" data-gw-disclaimer-reject>
-							<?php echo esc_html( $reject_label ); ?>
-						</button>
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
+				<div class="gw-disclaimer__actions-row">
+					<div class="gw-disclaimer__actions">
+						<?php if ( $accept_label ) : ?>
+							<button class="gw-disclaimer__button" type="button" data-gw-disclaimer-accept>
+								<?php echo esc_html( $accept_label ); ?>
+							</button>
+						<?php endif; ?>
+						<?php if ( $reject_label ) : ?>
+							<button class="gw-disclaimer__button" type="button" data-gw-disclaimer-reject>
+								<?php echo esc_html( $reject_label ); ?>
+							</button>
+						<?php endif; ?>
+					</div>
 
-			<?php if ( $reject_message ) : ?>
-				<div class="gw-disclaimer__reject-message" hidden>
-					<?php echo wp_kses_post( $reject_message ); ?>
+					<?php if ( $reject_message ) : ?>
+						<div class="gw-disclaimer__reject-message" hidden>
+							<?php echo wp_kses_post( $reject_message ); ?>
+						</div>
+					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 

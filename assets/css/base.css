@@ -138,8 +138,8 @@ img {
 	--gw-font-text: "Roboto", Arial, Helvetica, sans-serif;
 
 	/* Estrutura de 3 colunas: 30% menu + 70% conteúdo */
-	--gw-menu-width: 30%;
-	--gw-content-width: 70%;
+	--gw-menu-width: 20%;
+	--gw-content-width: 80%;
 
 	/* Espaçamentos fluidos: clamp(mínimo, ideal em vw/vh, máximo) */
 	--gw-space-2xs: clamp(0.5rem, 1vw, 0.75rem);
@@ -150,6 +150,7 @@ img {
 	--gw-space-xl: clamp(14rem, 8vw + 20vh, 20rem);
 
 	/* Respiro padrão do miolo de conteúdo (dentro dos 70%) */
+	--gw-content-padding-right: clamp(1.25rem, 16vw, 20rem);
 	--gw-content-padding-inline: clamp(1.25rem, 6vw, 10rem);
 	--gw-content-padding-block: clamp(2rem, 3vh, 6rem);
 
@@ -169,8 +170,8 @@ img {
 	--gw-text-title-lg: clamp(40px, 5vw, 60px);
 	--gw-text-title-md: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
 	--gw-text-title-sm: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
-	--gw-text-subtitle: clamp(0.95rem, 0.85rem + 0.3vw, 1.125rem);
-	--gw-text-body: clamp(14px, 0.85rem + 0.15vw, 16px);
+	--gw-text-subtitle: 18px;
+	--gw-text-body: 18px;
 }
 
 /* 3) Tipografia base ------------------------------------------------------ */
@@ -187,7 +188,7 @@ h4 {
 p {
 	font-family: var(--gw-font-text);
 	font-weight: 300;
-	line-height: 20px;
+	line-height: 24px;
 }
 .wp-block-list {
 	margin: 10px 0;

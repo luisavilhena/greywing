@@ -87,7 +87,7 @@
 	display: inline-block;
 	font-family: var(--gw-font-text);
 	font-weight: 300;
-	font-size: 1rem;
+	font-size: 20px;
 	color: var(--gw-color-text);
 	text-decoration: none;
 }
@@ -120,11 +120,12 @@
 }
 
 .gw-menu__nav .sub-menu li {
-	margin-bottom: var(--gw-space-2xs);
+	margin-bottom: 25px;
 }
 
 .gw-menu__nav .sub-menu a {
-	font-size: 0.875rem;
+	font-size: 20px;
+	line-height: 100%;
 }
 
 /* Marcado via JS (assets/js/menu.js) conforme a seção correspondente
@@ -160,12 +161,52 @@
 	display: none;
 }
 
+/* Botão hambúrguer — 3 divs (.gw-menu-toggle__bar), não imagem, pra dar pra
+   animar virando um X com CSS puro conforme o aria-expanded (setado pelo
+   assets/js/menu.js ao abrir/fechar o menu). */
 .gw-menu-toggle {
+	position: relative;
+	display: block;
+	width: 27px;
+	height: 20px;
 	background: transparent;
 	border: none;
-	padding: 0.5rem;
-	line-height: 0;
+	padding: 0;
 	cursor: pointer;
+}
+
+.gw-menu-toggle__bar {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 1.5px;
+	margin-top: -0.75px; /* metade da altura da barra — centraliza em relação ao top:50% */
+	background-color: var(--gw-color-text);
+	transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Fechado: 3 barras paralelas, acima/abaixo do centro. */
+.gw-menu-toggle__bar:nth-child(1) {
+	transform: translateY(-7px);
+}
+
+.gw-menu-toggle__bar:nth-child(3) {
+	transform: translateY(7px);
+}
+
+/* Aberto: as barras de cima e de baixo giram 45°/-45° e se encontram no
+   centro, formando um X — a do meio só desaparece. */
+.gw-menu-toggle[aria-expanded="true"] .gw-menu-toggle__bar:nth-child(1) {
+	transform: translateY(0) rotate(45deg);
+}
+
+.gw-menu-toggle[aria-expanded="true"] .gw-menu-toggle__bar:nth-child(2) {
+	opacity: 0;
+}
+
+.gw-menu-toggle[aria-expanded="true"] .gw-menu-toggle__bar:nth-child(3) {
+	transform: translateY(0) rotate(-45deg);
 }
 
 .gw-content {
@@ -188,17 +229,16 @@
    ocupar (título de largura total = largura útil de .gw-row). */
 .gw-row {
 	width: 100%;
-	padding: var(--gw-content-padding-block) var(--gw-content-padding-inline);
+	padding: var(--gw-content-padding-block) var(--gw-content-padding-right) var(--gw-content-padding-block) var(--gw-content-padding-inline);
 }
 .gw-row:not(footer){
-	min-height: 90vh;
 	/* Espaço extra abaixo de toda seção de conteúdo, antes da próxima —
 	   era um campo do ACF (Nenhum/SM/LG, por componente), agora é fixo
 	   pra todo mundo no valor "LG" que era o maior. Sobrescreve só o
 	   padding-bottom do "padding" acima (não o resto). Fora do footer:
 	   lá embaixo esse espaço extra só criaria um vão vazio depois do
 	   rodapé, sem servir pra nada. */
-	padding-bottom: 200px;
+	padding-bottom: 100px;
 }
 
 /* Abaixo de ~900px a página passa a ocupar 100% (empilhada), e o menu
@@ -320,6 +360,6 @@
    desktop / 100px no mobile. */
 @media (max-width: 40em) {
 	.gw-row:not(footer) {
-		padding-bottom: 100px;
+		padding-bottom: 70px;
 	}
 }

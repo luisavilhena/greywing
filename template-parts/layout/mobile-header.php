@@ -22,7 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</a>
 
 	<button class="gw-menu-toggle" type="button" aria-expanded="false" aria-controls="gw-menu" aria-label="Abrir menu">
-		<img src="<?php echo esc_url( GREYWING_THEME_URI . '/assets/img/hamburger.svg' ); ?>" alt="" width="27" height="17">
+		<span class="gw-menu-toggle__bar" aria-hidden="true"></span>
+		<span class="gw-menu-toggle__bar" aria-hidden="true"></span>
+		<span class="gw-menu-toggle__bar" aria-hidden="true"></span>
 	</button>
 
 </div>

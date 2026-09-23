@@ -63,9 +63,9 @@
 }
 
 .gw-track-record__stat-value {
-	font-family: var(--gw-font-text);
+	font-family: var(--gw-font-display);
 	font-weight: 400;
-	font-size: 41px;
+	font-size: 60px;
 	white-space: nowrap;
 }
 

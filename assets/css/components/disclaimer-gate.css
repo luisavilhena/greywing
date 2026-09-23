@@ -45,7 +45,7 @@
 	scrollbar-width: none; /* Firefox */
 	-ms-overflow-style: none; /* IE/Edge legado */
 	padding: var(--gw-content-padding-block) var(--gw-content-padding-inline);
-	max-width: 45.75rem; /* ~660px, mesma largura de texto corrido da página de Terms of Use */
+	max-width: 47rem; /* ~660px, mesma largura de texto corrido da página de Terms of Use */
 }
 
 .gw-disclaimer__content-col::-webkit-scrollbar {
@@ -77,9 +77,18 @@
 	text-decoration: underline;
 }
 
+/* Linha com os botões e, ao lado (não embaixo), a mensagem de "não atende
+   aos critérios" — ver .gw-disclaimer__reject-message abaixo. */
+.gw-disclaimer__actions-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 45px;
+}
+
 .gw-disclaimer__actions {
 	display: flex;
 	flex-direction: column;
+	flex-shrink: 0;
 	gap: var(--gw-space-2xs);
 	max-width: 21.25rem; /* ~340px, como no Figma */
 }
@@ -105,10 +114,17 @@
 }
 
 .gw-disclaimer__reject-message {
-	margin-top: var(--gw-space-md);
+	font-weight: 500;
 	font-size: 14px;
 	line-height: 19.2px;
 	max-width: 21.25rem;
+}
+
+/* O texto vem com <strong> (pro "Access Restricted" e o parágrafo abaixo
+   ficarem em destaque) — <strong> é 700 por padrão (ver base.css), mas
+   aqui o peso certo é 500, igual o resto do texto. */
+.gw-disclaimer__reject-message strong {
+	font-weight: 500;
 }
 
 @media (max-width: 56.25em) {
@@ -124,5 +140,11 @@
 	.gw-disclaimer__content-col {
 		height: 100%;
 		max-width: 100%;
+	}
+
+	/* No mobile não sobra espaço pra ficar lado a lado — volta a empilhar. */
+	.gw-disclaimer__actions-row {
+		flex-direction: column;
+		gap: var(--gw-space-md);
 	}
 }

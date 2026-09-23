@@ -44,7 +44,7 @@
 	background-color: rgba(18, 29, 43, 0.4);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
-	padding: var(--gw-content-padding-block) clamp(1.5rem, 4vw, 3.75rem);
+	padding: var(--gw-content-padding-block) var(--gw-content-padding-inline);
 	/* Some pra fora da tela à direita quando fechado — some "da esquerda pra
 	   direita" ao fechar, e entra "da direita pra tela" ao abrir. */
 	transform: translateX(100%);
@@ -66,32 +66,28 @@
    "vidro" do backdrop-filter (blur) — precisa de uma classe própria porque
    o fundo do painel padrão (.gw-drawer__panel, usado pelo formulário de
    contato) tem a cor sólida translúcida rgba(18, 29, 43, 0.4) por cima do
-   blur, e o Login não deve ter essa mesma cor.
-
-   Também centraliza o conteúdo (título/texto/botão) na vertical — só nesse
-   painel, não no formulário de contato (esse continua começando do topo,
-   já que o formulário sozinho pode ser mais alto que a tela).
-   "safe center": se o conteúdo for mais alto que o painel, volta a alinhar
-   pelo topo em vez de cortar o início do texto pra fora da área com scroll
-   — sem isso, centralizar + overflow-y:auto pode esconder o começo do
-   conteúdo acima do topo do scroll. */
+   blur, e o Login não deve ter essa mesma cor. */
 .gw-drawer__panel--login {
 	background-color: transparent;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: safe center;
 }
 
-/* O botão de fechar sai do fluxo (senão ele também seria "centralizado"
-   junto com o resto) e fica fixo no canto onde já estava antes — o
-   top:0/left:0 cai exatamente na borda interna do padding do painel, igual
-   à posição que ele tinha como primeiro item da coluna. */
-.gw-drawer__panel--login .gw-drawer__close {
-	position: absolute;
-	top: 0;
-	left: 0;
-	margin-bottom: 0;
+/* Alinha o começo do conteúdo do popup de Login com o começo do menu
+   (.gw-menu__nav) e do título da página — mesmo cálculo de .gw-content
+   (ver assets/css/layout.css) e do formulário de contato (ver
+   assets/css/components/content-contact-info.css). Sobrescreve só o
+   padding-top do "padding" acima (não os outros lados) — o botão de
+   fechar não conta mais pra esse espaço, já sai do fluxo (ver
+   .gw-drawer__close). */
+#gw-login-popup .gw-drawer__panel {
+	padding-top: calc(var(--gw-content-padding-block) + var(--gw-menu-logo-height) + var(--gw-menu-nav-offset));
+}
+
+@media (max-width: 56.25em) {
+	/* No mobile o menu não fica do lado do conteúdo — não faz sentido
+	   alinhar com ele (mesmo raciocínio de .gw-content no mobile). */
+	#gw-login-popup .gw-drawer__panel {
+		padding-top: var(--gw-content-padding-block);
+	}
 }
 
 /* Variação "fade": sem escurecer o resto da página (o menu, por exemplo,
@@ -123,9 +119,17 @@
 	opacity: 1;
 }
 
+/* Sempre fora do fluxo, fixo no canto do painel: o top:0/left:0 cai
+   exatamente na borda interna do padding do painel (.gw-drawer__panel já
+   é position:absolute, então é ele quem vira a referência). Assim o botão
+   nunca empurra o resto do conteúdo do painel pra baixo — cada painel
+   controla a posição do que vem depois (título/texto/formulário) do jeito
+   que precisar, independente de onde o botão de fechar está. */
 .gw-drawer__close {
 	display: block;
-	margin-bottom: var(--gw-space-md);
+	position: absolute;
+	top: 0;
+	left: 0;
 	background: transparent;
 	border: none;
 	color: var(--gw-color-text);
@@ -135,7 +139,7 @@
 }
 
 .gw-drawer__title {
-	font-size: var(--gw-text-title-md);
+	font-size: var(--gw-text-title-lg);
 	margin-bottom: var(--gw-space-sm);
 }
 

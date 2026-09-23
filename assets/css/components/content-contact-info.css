@@ -16,6 +16,25 @@
 	max-width: 50%;
 }
 
+/* Alinha o começo do "Texto acima do formulário" com o começo do menu
+   (.gw-menu__nav) e do título da página — mesmo cálculo usado em
+   .gw-content (ver assets/css/layout.css e --gw-menu-logo-height/
+   --gw-menu-nav-offset em assets/css/base.css). O botão de fechar não
+   empurra mais esse espaço (sai do fluxo — ver .gw-drawer__close em
+   assets/css/components/drawer.css), então esse margin-top sozinho já
+   posiciona o texto certinho. */
+#gw-contact-form-drawer .gw-drawer__intro {
+	margin-top: calc(var(--gw-menu-logo-height) + var(--gw-menu-nav-offset));
+}
+
+@media (max-width: 56.25em) {
+	/* No mobile o menu não fica do lado do conteúdo — não faz sentido
+	   alinhar com ele (mesmo raciocínio de .gw-content no mobile). */
+	#gw-contact-form-drawer .gw-drawer__intro {
+		margin-top: 0;
+	}
+}
+
 .gw-contact-info__title {
 	font-size: var(--gw-text-title-lg);
 }

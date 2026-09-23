@@ -26,10 +26,6 @@ if ( ! $title && ! $text && ! $button ) {
 ?>
 <div class="gw-drawer gw-drawer--fade" id="gw-login-popup">
 	<div class="gw-drawer__panel gw-drawer__panel--content-width gw-drawer__panel--login">
-		<button class="gw-drawer__close" type="button" aria-label="Fechar">
-			<span aria-hidden="true">✕</span>
-		</button>
-
 		<?php if ( $title ) : ?>
 			<h2 class="gw-drawer__title"><?php echo esc_html( $title ); ?></h2>
 		<?php endif; ?>

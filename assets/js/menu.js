@@ -16,6 +16,7 @@
 		document.body.classList.remove( 'gw-menu-is-open' );
 		if ( toggle ) {
 			toggle.setAttribute( 'aria-expanded', 'false' );
+			toggle.setAttribute( 'aria-label', 'Abrir menu' );
 		}
 	}
 
@@ -23,6 +24,7 @@
 		toggle.addEventListener( 'click', function () {
 			var isOpen = document.body.classList.toggle( 'gw-menu-is-open' );
 			toggle.setAttribute( 'aria-expanded', isOpen ? 'true' : 'false' );
+			toggle.setAttribute( 'aria-label', isOpen ? 'Fechar menu' : 'Abrir menu' );
 		} );
 
 		// Fecha o painel ao clicar em qualquer link do menu.
