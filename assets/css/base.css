@@ -170,8 +170,8 @@ img {
 	--gw-text-title-lg: clamp(40px, 5vw, 60px);
 	--gw-text-title-md: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
 	--gw-text-title-sm: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
-	--gw-text-subtitle: 18px;
-	--gw-text-body: 18px;
+	--gw-text-subtitle: 20px;
+	--gw-text-body: 20px;
 }
 
 /* 3) Tipografia base ------------------------------------------------------ */

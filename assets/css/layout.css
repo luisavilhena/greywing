@@ -80,7 +80,7 @@
 }
 
 .gw-menu__nav > ul > li {
-	margin-bottom: var(--gw-space-sm);
+	margin-bottom: 20px;
 }
 
 .gw-menu__nav a {
@@ -120,12 +120,12 @@
 }
 
 .gw-menu__nav .sub-menu li {
-	margin-bottom: 25px;
+	margin-bottom: 16px;
 }
 
 .gw-menu__nav .sub-menu a {
 	font-size: 20px;
-	line-height: 100%;
+	line-height: 110%;
 }
 
 /* Marcado via JS (assets/js/menu.js) conforme a seção correspondente
@@ -149,7 +149,7 @@
 	display: inline-block;
 	font-family: var(--gw-font-text);
 	font-weight: 300;
-	font-size: 1rem;
+	font-size: 20px;
 	color: var(--gw-color-text);
 	text-decoration: none;
 }
