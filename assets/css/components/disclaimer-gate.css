@@ -101,7 +101,7 @@
 	color: var(--gw-color-text);
 	font-family: var(--gw-font-text);
 	font-weight: 300;
-	font-size: 14px;
+	font-size: 18px;
 	padding: var(--gw-space-xs) var(--gw-space-sm);
 	cursor: pointer;
 	transition: background-color 0.2s ease, color 0.2s ease;

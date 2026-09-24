@@ -3,9 +3,28 @@
  * Template: template-parts/content/content-image-feature.php
  */
 
+/* O título começa exatamente onde começa a coluna direita do "Duas
+   colunas" — o mesmo ponto usado em todo o site pra linha divisória entre
+   as duas metades. Não é exatamente 50%: o "Duas colunas" tem um
+   column-gap (var(--gw-space-lg)) entre as colunas, então a segunda só
+   começa em 50% + metade desse gap — ver .gw-two-columns__cols em
+   content-two-columns.css.
+
+   min-width:max-content é o que evita quebra desnecessária: garante que a
+   caixa nunca fica mais estreita do que o texto precisa pra caber numa
+   linha só (ou no menor número de linhas possível) — se calc(50% - gap/2)
+   não for largura suficiente pro título numa tela mais estreita, o
+   min-width vence e a caixa cresce; como continua colada à direita
+   (margin-left:auto), ela cresce pra ESQUERDA, "comendo" o espaço que
+   seria da coluna vizinha, em vez de forçar mais uma linha de quebra. Se
+   o título for mesmo assim longo demais pra caber numa linha só (mais
+   longo que a largura toda da seção), o max-width:100% garante que ele
+   ainda quebra em vez de estourar pra fora da página — isso funciona em
+   qualquer largura de tela, sem precisar de breakpoint nenhum. */
 .gw-image-feature__title {
-	width: fit-content; /* só a largura que o texto precisar, não um valor fixo */
-	max-width: 100%; /* nunca estoura a coluna, se o título for muito longo */
+	width: calc(50% - (var(--gw-space-lg) / 2));
+	min-width: max-content;
+	max-width: 100%;
 	margin-left: auto; /* gruda na borda direita */
 	text-align: left; /* se quebrar em mais de uma linha, linhas alinhadas à esquerda */
 	font-size: var(--gw-text-title-lg);
@@ -28,6 +47,7 @@
 
 	.gw-image-feature__title {
 		width: 100%; /* some sobrescrito se o campo "Largura do título no mobile" escolher 80%/70% — ver .gw-mobile-w-* em base.css */
+		min-width: 0; /* no mobile o texto pode (e deve) quebrar normalmente — sem isso, min-width:max-content podia estourar a tela num título longo */
 		margin-left: 0;
 	}
 }
