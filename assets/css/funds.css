@@ -79,4 +79,5 @@
 }
 
 /* ---------- Seção 5: Interested in the Fund ---------- */
-.gw-interested .gw-fine{margin-top:32px;font-size:13px;opacity:.75;max-width:720px;}
+.gw-interested .gw-fine{margin-top:32px;padding-top:32px;border-top:1px solid rgba(220,215,202,.25);font-size:14px;font-style:italic;opacity:.75;}
+.gw-t-sand .gw-interested .gw-fine,.gw-t-beige .gw-interested .gw-fine,.gw-t-paper .gw-interested .gw-fine,.gw-t-white .gw-interested .gw-fine{border-top-color:rgba(18,29,43,.2);}
