@@ -16,7 +16,9 @@ if ( ! $greywing_footer_text ) {
 }
 ?>
 <footer class="gw-footer">
-	<div class="gw-wrap gw-footer__in gw-block">
-		<?php echo wp_kses_post( $greywing_footer_text ); ?>
+	<div class="gw-wrap">
+		<div class="gw-footer__in gw-block">
+			<?php echo wp_kses_post( $greywing_footer_text ); ?>
+		</div>
 	</div>
 </footer>

@@ -5,7 +5,7 @@
 
 /* ---------- Seção 1: Hero ---------- */
 .gw-hero{background-size:cover;background-position:center 58%;background-color:var(--gw-navy-deep);color:var(--gw-light);}
-.gw-hero__in{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding-top:var(--gw-hdr-h);padding-bottom:clamp(72px, 9vw, 128px);}
+.gw-hero__in{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding-top:var(--gw-hdr-h);padding-bottom:clamp(72px, 9vw, 18px);}
 .gw-hero__foot{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--gw-gap);margin-top:28px;}
 .gw-hero__sub{max-width:520px;font-size:22px;margin:0 !important;}
 .gw-hero__apply{margin:0;flex:none;}
@@ -67,7 +67,7 @@
 
 /* ---------- Seção 4: Why Greywing ---------- */
 .gw-why__figure{font-size:clamp(72px, 9vw, 136px);font-weight:500;line-height:1;margin:24px 0 0;letter-spacing:-.03em;}
-.gw-why__figure-note{font-size:18px;margin:12px 0 0;max-width:280px;}
+.gw-why__figure-note{font-size:18px;margin:12px 0 0; font-weight: 500;}
 
 /* ---------- Seção 5: Team ---------- */
 .gw-team{background:linear-gradient(160deg, var(--gw-navy) 0%, var(--gw-navy-deep) 55%, var(--gw-clay-deep) 130%);color:var(--gw-light);}
