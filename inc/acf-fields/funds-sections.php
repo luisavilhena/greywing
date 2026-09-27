@@ -145,69 +145,6 @@ function greywing_register_funds_sections() {
 									'default_value' => 'Value of USD 1,000 invested since inception, net of fees',
 								),
 								array(
-									'key'          => 'field_gwfunds3_versions',
-									'label'        => 'Chart versions (one button each)',
-									'name'         => 'chart_versions',
-									'type'         => 'repeater',
-									'layout'       => 'table',
-									'button_label' => 'Add version',
-									'instructions' => 'One row per button below the chart (e.g. "1Y", "3Y", "2024"...). Clicking a button shows that row\'s chart. The first row is shown by default.',
-									'sub_fields'   => array(
-										array(
-											'key'   => 'field_gwfunds3_version_label',
-											'label' => 'Button label',
-											'name'  => 'label',
-											'type'  => 'text',
-										),
-										array(
-											'key'           => 'field_gwfunds3_version_type',
-											'label'         => 'Chart type',
-											'name'          => 'type',
-											'type'          => 'select',
-											'choices'       => array(
-												'image' => 'Image (upload a file)',
-												'svg'   => 'SVG (paste the code)',
-											),
-											'default_value' => 'image',
-											'ui'            => 0,
-										),
-										array(
-											'key'               => 'field_gwfunds3_version_image',
-											'label'             => 'Chart image',
-											'name'              => 'image',
-											'type'              => 'image',
-											'return_format'     => 'array',
-											'mime_types'        => 'jpg,jpeg,png,webp,svg',
-											'conditional_logic' => array(
-												array(
-													array(
-														'field'    => 'field_gwfunds3_version_type',
-														'operator' => '==',
-														'value'    => 'image',
-													),
-												),
-											),
-										),
-										array(
-											'key'               => 'field_gwfunds3_version_svg',
-											'label'             => 'SVG code',
-											'name'              => 'svg_code',
-											'type'              => 'textarea',
-											'rows'              => 6,
-											'instructions'      => 'Paste the full <svg>...</svg> code here.',
-											'conditional_logic' => array(
-												array(
-													array(
-														'field'    => 'field_gwfunds3_version_type',
-														'operator' => '==',
-														'value'    => 'svg',
-													),
-												),
-											),
-										),
-									),
-								),
-								array(
 									'key'   => 'field_gwfunds3_note',
 									'label' => 'Note below the chart',
 									'name'  => 'note',
