@@ -1,6 +1,7 @@
 <?php
 /**
- * Configuração básica do tema (theme supports, image sizes, etc).
+ * Setup do tema: theme supports, menu nativo e helpers pequenos
+ * reaproveitados pelos template-parts.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,28 +14,16 @@ function greywing_theme_setup() {
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'align-wide' );
 
-	// Menu vertical fixo à esquerda (ver template-parts/layout/site-menu.php).
-	// É editado normalmente em Aparência → Menus — os itens de topo (About,
-	// Funds...) apontam pra página; os sub-itens são links personalizados
-	// pra "#âncora" dentro dessa mesma página (ver campo "Âncora" de cada
-	// componente, em inc/acf-fields/shared-fields.php).
 	register_nav_menus(
 		array(
-			'primary'    => 'Menu principal (coluna da esquerda)',
-			'invest_now' => 'Invest now (link solto, empurrado pro fim do menu)',
+			'primary' => 'Menu principal (header)',
 		)
 	);
 
-	// Tamanho de imagem usado pelos componentes que ocupam toda a largura da página de conteúdo.
 	add_image_size( 'greywing-full', 1800, 1800, false );
 }
 add_action( 'after_setup_theme', 'greywing_theme_setup' );
 
-/**
- * Libera upload de SVG na biblioteca de mídia — usado pelos ícones do
- * componente "título + zigzag" (ex.: os ícones do bloco "What We Believe").
- * Só quem já tem permissão de enviar mídia no wp-admin pode fazer isso.
- */
 function greywing_allow_svg_upload( $mimes ) {
 	$mimes['svg'] = 'image/svg+xml';
 	return $mimes;
@@ -42,85 +31,75 @@ function greywing_allow_svg_upload( $mimes ) {
 add_filter( 'upload_mimes', 'greywing_allow_svg_upload' );
 
 /**
- * Monta o atributo `id="..."` de uma linha de conteúdo a partir do campo
- * "Âncora" (ver greywing_field_anchor() em inc/acf-fields/shared-fields.php).
- * sanitize_title() normaliza o que a pessoa digitou (deixa minúsculo, troca
- * espaço por hífen, etc.) — assim o id sempre fica um slug válido pra usar
- * num link "#..." no menu.
+ * Atributo "id" pronto pra colar numa tag, a partir do campo "Âncora" de
+ * uma seção — vira o alvo de um link do menu (ex.: "#about-us").
  *
  * @param string $anchor Valor bruto do campo "Âncora".
- * @return string Atributo pronto pra colar dentro de uma tag, ex.: ' id="what-we-believe"', ou string vazia se não tiver âncora.
+ * @return string Atributo id="...", ou string vazia se não tiver âncora.
  */
 function greywing_anchor_attr( $anchor ) {
 	return $anchor ? ' id="' . esc_attr( sanitize_title( $anchor ) ) . '"' : '';
 }
 
 /**
- * Classe CSS de ordem no mobile (imagem antes do resto do conteúdo) — ver
- * greywing_field_mobile_order() em inc/acf-fields/shared-fields.php e
- * .gw-mobile-order-invert em assets/css/base.css. "normal" (ou vazio) não
- * adiciona classe nenhuma — mantém a ordem natural do HTML.
+ * Classe CSS de cor de fundo da seção — ver greywing_field_section_theme()
+ * em inc/acf-fields/shared-fields.php e as classes .gw-t-* em
+ * assets/css/base.css.
  *
- * @param string $value Valor do campo "mobile_order" ('normal' ou 'invert').
- * @return string Classe pronta pra colar na lista de classes, com espaço na frente, ou string vazia.
+ * @param string $value Valor do campo (ex.: 'navy', 'clay'...).
+ * @return string Classe pronta pra colar na lista de classes, com espaço na frente.
  */
-function greywing_mobile_order_class( $value ) {
-	return ( 'invert' === $value ) ? ' gw-mobile-order-invert' : '';
+function greywing_section_theme_class( $value ) {
+	return ' gw-t-' . sanitize_html_class( $value ?: 'navy' );
 }
 
 /**
- * Classe CSS de alinhamento da imagem no mobile — ver
- * greywing_field_mobile_align() em inc/acf-fields/shared-fields.php e
- * .gw-mobile-align-* em assets/css/base.css.
- *
- * @param string $value Valor do campo "mobile_image_align" ('left' ou 'right').
- * @return string Classe pronta pra colar na lista de classes, com espaço na frente, ou string vazia.
+ * Logo em SVG inline (não <img>) — o CSS pinta o logo com "currentColor"
+ * (branco no modal do aviso, bege no header), o que só funciona com o SVG
+ * inline no HTML, não referenciado por src.
  */
-function greywing_mobile_align_class( $value ) {
-	return $value ? ' gw-mobile-align-' . sanitize_html_class( $value ) : '';
+function greywing_logo_svg() {
+	static $svg = null;
+	if ( null === $svg ) {
+		$path = GREYWING_THEME_DIR . '/assets/img/logo.svg';
+		$svg  = file_exists( $path ) ? file_get_contents( $path ) : '';
+	}
+	echo $svg; // phpcs:ignore -- arquivo fixo do tema, não input de usuário.
 }
 
 /**
- * Classe CSS de largura no mobile — ver greywing_field_mobile_width() em
- * inc/acf-fields/shared-fields.php e .gw-mobile-w-* em assets/css/base.css.
- * "100" (ou vazio) não adiciona classe nenhuma — é a largura padrão, sem
- * essa regra.
- *
- * @param string $value Valor do campo de largura mobile ('100', '80' ou '70').
- * @return string Classe pronta pra colar na lista de classes, com espaço na frente, ou string vazia.
+ * Marca de submenu do header: WordPress chama a "sub-menu" por padrão, o
+ * CSS do layout novo espera "gw-nav__sub" (ver .gw-nav__sub em base.css).
  */
-function greywing_mobile_width_class( $value ) {
-	return ( $value && '100' !== $value ) ? ' gw-mobile-w-' . sanitize_html_class( $value ) : '';
+function greywing_nav_submenu_class( $classes ) {
+	$classes[] = 'gw-nav__sub';
+	return $classes;
 }
+add_filter( 'nav_menu_submenu_css_class', 'greywing_nav_submenu_class' );
 
 /**
- * Faz o item "Login" do menu abrir o popup (.gw-drawer#gw-login-popup, ver
- * template-parts/layout/login-popup.php) em vez de navegar.
- *
- * Convenção: em Aparência → Menus, dê ao item de menu a URL "#login-popup"
- * — este filtro troca essa URL pelo "data-gw-form-trigger" que
- * assets/js/drawer.js já sabe abrir. Assim não depende do texto do item
- * (que continua livre pra editar).
+ * aria-current="page" no link do menu ativo — o CSS usa esse atributo pra
+ * desenhar o sublinhado do item atual (ver .gw-nav>ul>li>a[aria-current] em
+ * base.css).
  */
-function greywing_login_menu_item_attributes( $atts, $item ) {
-	if ( '#login-popup' === $item->url ) {
-		$atts['href']                  = '#gw-login-popup';
-		$atts['data-gw-form-trigger']  = 'gw-login-popup';
+function greywing_nav_link_attributes( $atts, $item ) {
+	if ( in_array( 'current-menu-item', $item->classes, true ) || in_array( 'current-menu-ancestor', $item->classes, true ) ) {
+		$atts['aria-current'] = 'page';
 	}
 	return $atts;
 }
-add_filter( 'nav_menu_link_attributes', 'greywing_login_menu_item_attributes', 10, 2 );
+add_filter( 'nav_menu_link_attributes', 'greywing_nav_link_attributes', 10, 2 );
 
 /**
- * Classe extra no <body> da página de Contato — usada só pra dar a ela um
- * degradê de fundo próprio (escuro no topo → claro embaixo), diferente do
- * degradê padrão das outras páginas que não são a Home/About. Ver
- * "body.gw-page--contact" em assets/css/base.css.
+ * O item "Login" do menu ganha a classe "gw-nav__login" (ícone + texto,
+ * estilo diferente dos outros itens — ver .gw-nav__login em base.css).
+ * Identificado pelo título porque é editado em Aparência → Menus, não tem
+ * um ID fixo.
  */
-function greywing_contact_page_body_class( $classes ) {
-	if ( is_page( 'contact' ) ) {
-		$classes[] = 'gw-page--contact';
+function greywing_nav_item_classes( $classes, $item ) {
+	if ( 0 === strcasecmp( trim( $item->title ), 'login' ) ) {
+		$classes[] = 'gw-nav__login';
 	}
 	return $classes;
 }
-add_filter( 'body_class', 'greywing_contact_page_body_class' );
+add_filter( 'nav_menu_css_class', 'greywing_nav_item_classes', 10, 2 );

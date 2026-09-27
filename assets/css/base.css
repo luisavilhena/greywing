@@ -1,311 +1,223 @@
 /**
- * Base do tema Greywing.
+ * Base do tema Greywing — layout novo (scroll-stack).
  *
- * 1) Reset simples.
- * 2) Variáveis globais (cores, fontes, espaçamentos e tipografia fluida).
- *    Espaçamento e tamanhos de fonte usam clamp() com vh/vw/% para serem
- *    responsivos sem precisar de uma media query para cada ajuste fino —
- *    as media queries entram só para mudanças de estrutura (ver layout.css
- *    e cada CSS de componente).
- * 3) Tipografia base (h1–h6, p, etc.).
- * 4) Utilitários de espaço abaixo do título (.gw-mb-*), usados por vários
- *    componentes — ver greywing_field_title_spacing() em
- *    inc/acf-fields/shared-fields.php.
- * 5) Utilitários de imagem no mobile (ordem, alinhamento, largura) — ver
- *    greywing_field_mobile_order()/mobile_align()/mobile_width() em
- *    inc/acf-fields/shared-fields.php.
+ * Tudo que é global (usado em mais de uma página) mora aqui: tokens, reset,
+ * tipografia, botões/links, header, mecânica do empilhamento de seções
+ * (.gw-card) e das animações de reveal (.gw-split/.gw-rv/.gw-bar), aviso de
+ * elegibilidade e rodapé. O que é exclusivo de uma página só (hero, seção
+ * "Why Greywing", gráfico de performance...) fica no CSS daquela página
+ * (assets/css/about.css, funds.css, contact.css, login.css).
  *
- * O espaço extra abaixo da seção inteira era um campo do ACF (.gw-pb-*,
- * Nenhum/SM/LG por componente) — agora é fixo pra toda seção, direto em
- * .gw-row (ver assets/css/layout.css), no valor "LG" que era o maior.
+ * Convenção de nomes: todo seletor novo leva o prefixo "gw-" — é um tema
+ * WordPress, então evita colidir com CSS de plugin nenhum.
  */
 
-/* 1) Reset ------------------------------------------------------------- */
+:root{
+	--gw-navy:#121D2B;
+	--gw-navy-deep:#0A121C;
+	--gw-navy-mid:#1E2B3D;
+	--gw-clay:#817460;
+	--gw-clay-deep:#5B5142;
+	--gw-sand:#BEB09D;
+	--gw-beige:#DCD7CA;
+	--gw-paper:#ECE7DA;
+	--gw-light:#EEE9DE;
+	--gw-font:'Roboto', 'Helvetica Neue', Arial, sans-serif;
+	--gw-pad:clamp(24px, 5vw, 88px);
+	--gw-max:1440px;
+	--gw-hdr-h:128px;
+	--gw-gap:clamp(16px, 2.4vw, 40px);
+	--gw-ease:cubic-bezier(.19,1,.22,1);
+	box-sizing:border-box;
+	padding-top:env(safe-area-inset-top, 0px);
+	padding-bottom:env(safe-area-inset-bottom, 0px);
+}
+*,*::before,*::after{box-sizing:inherit;}
+html{scroll-padding-top:calc(env(safe-area-inset-top, 0px) + 96px);-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{margin:0;background:var(--gw-navy-deep);color:var(--gw-beige);font-family:var(--gw-font);font-size:22px;line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;}
+@media (max-width:700px){body{font-size:19px;}}
+body.gw-locked{overflow:hidden;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+button,input{font:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--gw-sand);outline-offset:4px;}
+.gw-t-light :focus-visible,.gw-t-sand :focus-visible,.gw-t-paper :focus-visible,.gw-t-beige :focus-visible{outline-color:var(--gw-navy);}
+.gw-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
 
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
+/* ---------- tipografia ---------- */
+.gw-block{text-align:left;text-wrap:pretty;}
+.gw-block p{margin:0 0 1em;}
+.gw-block p:last-child{margin-bottom:0;}
+.gw-block p + p{margin-top:0;}
+h1,h2,h3{font-family:var(--gw-font);margin:0;}
+.gw-h-display{font-size:clamp(46px, 6.6vw, 112px);font-weight:500;line-height:.98;letter-spacing:-.035em;}
+.gw-h-page{font-size:clamp(46px, 6.2vw, 104px);font-weight:500;line-height:.98;letter-spacing:-.03em;}
+.gw-h-sec{font-size:clamp(38px, 4.4vw, 68px);font-weight:700;line-height:1.02;letter-spacing:-.025em;}
+.gw-h-sub{font-size:clamp(26px, 2.2vw, 34px);font-weight:700;line-height:1.15;letter-spacing:-.01em;}
+/* a linha por cima do título ecoa a barra sobre o "ing" da marca Greywing */
+.gw-bar{position:relative;padding-top:28px;}
+.gw-bar::before{content:"";position:absolute;left:0;top:0;width:72px;height:3px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform 1.1s var(--gw-ease) .1s;}
+.gw-bar.in::before{transform:none;}
+.gw-lead-strong{font-weight:700;}
+
+/* ---------- layout base ---------- */
+.gw-wrap{max-width:var(--gw-max);margin:0 auto;padding-inline:var(--gw-pad);}
+.gw-sec{padding-block:clamp(96px, 11vw, 176px);position:relative;}
+.gw-grid12{display:grid;grid-template-columns:repeat(12, minmax(0,1fr));column-gap:var(--gw-gap);}
+.gw-col-title{grid-column:1 / span 5;}
+.gw-col-left{grid-column:1 / span 5;}
+.gw-col-body{grid-column:7 / span 6;}
+.gw-col-body.gw-al{padding-top:34px;}
+@media (max-width:900px){
+	.gw-col-title,.gw-col-left,.gw-col-body{grid-column:1 / -1;}
+	.gw-col-title{margin-bottom:40px;}
+	.gw-col-body.gw-al{padding-top:0;}
+}
+.gw-t-navy{background:var(--gw-navy);color:var(--gw-beige);}
+.gw-t-deep{background:var(--gw-navy-deep);color:var(--gw-beige);}
+.gw-t-clay{background:linear-gradient(165deg, var(--gw-clay) 0%, var(--gw-clay-deep) 72%);color:var(--gw-light);}
+.gw-t-sand{background:var(--gw-sand);color:var(--gw-navy);}
+.gw-t-beige{background:var(--gw-beige);color:var(--gw-navy);}
+.gw-t-white{background:#FFFFFF;color:var(--gw-navy);}
+.gw-t-paper{background:var(--gw-paper);color:var(--gw-navy);}
+.gw-t-dusk{background:linear-gradient(180deg, var(--gw-navy-deep) 0%, var(--gw-navy) 38%, #3b3f45 72%, var(--gw-clay) 100%);color:var(--gw-beige);}
+
+/* ---------- botões e links ---------- */
+.gw-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:56px;padding:14px 28px;border:1.5px solid currentColor;background:transparent;font-size:20px;font-weight:500;text-decoration:none;cursor:pointer;transition:background .2s, color .2s;}
+.gw-btn--on-dark{color:var(--gw-beige);}
+.gw-btn--on-dark:hover{background:var(--gw-beige);color:var(--gw-navy);border-color:var(--gw-beige);}
+.gw-btn--on-light{color:var(--gw-navy);}
+.gw-btn--on-light:hover{background:var(--gw-navy);color:var(--gw-beige);border-color:var(--gw-navy);}
+.gw-btn--solid{background:var(--gw-navy);color:var(--gw-beige);border-color:var(--gw-navy);}
+.gw-btn--solid:hover{background:var(--gw-navy-mid);}
+
+/* pill: rótulo "rola" no hover, disco da seta desliza */
+.gw-pill{position:relative;display:inline-flex;align-items:center;gap:14px;height:52px;padding:0 8px 0 26px;border-radius:999px;background:var(--gw-beige);color:var(--gw-navy);text-decoration:none;font-size:17px;font-weight:500;letter-spacing:.01em;overflow:hidden;isolation:isolate;white-space:nowrap;}
+.gw-pill::before{content:"";position:absolute;inset:0;background:var(--gw-light);transform:translateY(101%);border-radius:inherit;transition:transform .6s var(--gw-ease);z-index:-1;}
+.gw-pill:hover::before{transform:none;}
+.gw-pill__roll{display:block;height:1.3em;line-height:1.3em;overflow:hidden;}
+.gw-pill__roll span{display:block;transition:transform .6s var(--gw-ease);}
+.gw-pill:hover .gw-pill__roll span{transform:translateY(-100%);}
+.gw-pill__disc{width:36px;height:36px;border-radius:50%;background:var(--gw-navy);color:var(--gw-beige);display:grid;place-items:center;overflow:hidden;flex:none;}
+.gw-pill__disc svg{width:14px;height:14px;transition:transform .6s var(--gw-ease);}
+.gw-pill:hover .gw-pill__disc svg{animation:gw-arrowx .6s var(--gw-ease);}
+@keyframes gw-arrowx{0%{transform:none}49%{transform:translateX(160%)}50%{transform:translateX(-160%)}100%{transform:none}}
+
+.gw-alink{display:inline-flex;align-items:center;gap:12px;text-decoration:none;font-size:20px;font-weight:500;position:relative;padding:6px 0;}
+.gw-alink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:currentColor;transform-origin:right;transition:transform .5s var(--gw-ease);}
+.gw-alink:hover::after{transform:scaleX(0);}
+.gw-alink svg{width:18px;height:18px;transition:transform .5s var(--gw-ease);flex:none;}
+.gw-alink:hover svg{transform:translateX(5px);}
+.gw-alink--down:hover svg{transform:translateY(4px);}
+
+/* ---------- header ---------- */
+.gw-hdr{position:fixed;top:0;left:0;right:0;z-index:60;padding-top:env(safe-area-inset-top, 0px);color:var(--gw-beige);transition:background .35s, box-shadow .35s;}
+.gw-hdr::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,11,19,.55), rgba(6,11,19,0));pointer-events:none;transition:opacity .35s;}
+.gw-hdr.gw-solid{background:rgba(18,29,43,.97);box-shadow:0 1px 0 rgba(220,215,202,.12);}
+.gw-hdr.gw-solid::before{opacity:0;}
+.gw-hdr__in{position:relative;display:flex;align-items:center;gap:clamp(24px, 3vw, 56px);height:var(--gw-hdr-h);transition:height .35s;}
+.gw-hdr.gw-solid .gw-hdr__in{height:88px;}
+.gw-logo{display:block;color:inherit;line-height:0;}
+.gw-logo svg{width:clamp(200px, 19vw, 290px);height:auto;transition:width .35s;aspect-ratio:1200 / 282.14;}
+.gw-hdr.gw-solid .gw-logo svg{width:clamp(170px, 13vw, 200px);}
+.gw-nav{margin-left:auto;}
+.gw-nav>ul{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:clamp(24px, 3vw, 48px);}
+.gw-nav li{position:relative;}
+.gw-nav a{font-size:20px;text-decoration:none;display:inline-block;padding:10px 0;position:relative;}
+.gw-nav>ul>li>a::after{content:"";position:absolute;left:0;right:100%;bottom:4px;height:1.5px;background:currentColor;transition:right .25s;}
+.gw-nav>ul>li>a:hover::after,.gw-nav>ul>li>a[aria-current="page"]::after{right:0;}
+.gw-nav .gw-nav__login a{display:inline-flex;align-items:center;gap:8px;}
+.gw-nav .gw-nav__login svg{width:17px;height:17px;}
+.gw-nav .gw-nav__apply{display:none;}
+.gw-nav__sub{list-style:none;margin:0;padding:18px 0;position:absolute;top:100%;left:-24px;min-width:280px;background:var(--gw-navy);box-shadow:0 18px 40px rgba(0,0,0,.28);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s, transform .2s, visibility .2s;}
+.gw-nav li:hover>.gw-nav__sub,.gw-nav li:focus-within>.gw-nav__sub{opacity:1;visibility:visible;transform:none;}
+.gw-nav__sub a{display:block;padding:10px 24px;opacity:.8;}
+.gw-nav__sub a:hover{opacity:1;}
+.gw-burger{display:none;background:none;border:0;padding:12px;margin-right:-12px;cursor:pointer;}
+.gw-burger__bar{display:block;width:30px;height:1.5px;background:currentColor;margin:7px 0;transition:transform .25s, opacity .25s;}
+.gw-menu-open .gw-burger__bar:nth-child(1){transform:translateY(8.5px) rotate(45deg);}
+.gw-menu-open .gw-burger__bar:nth-child(2){opacity:0;}
+.gw-menu-open .gw-burger__bar:nth-child(3){transform:translateY(-8.5px) rotate(-45deg);}
+/* entrada: logo, menu e CTA aparecem ao carregar */
+.gw-hdr .gw-logo,.gw-hdr .gw-nav>ul>li,.gw-hdr .gw-hdr__cta,.gw-hdr .gw-burger{opacity:0;transform:translateY(-12px);transition:opacity 1s var(--gw-ease), transform 1s var(--gw-ease);}
+body.gw-ready .gw-hdr .gw-logo,body.gw-ready .gw-hdr .gw-nav>ul>li,body.gw-ready .gw-hdr .gw-hdr__cta,body.gw-ready .gw-hdr .gw-burger{opacity:1;transform:none;}
+body.gw-ready .gw-hdr .gw-nav>ul>li:nth-child(1){transition-delay:.12s;}
+body.gw-ready .gw-hdr .gw-nav>ul>li:nth-child(2){transition-delay:.19s;}
+body.gw-ready .gw-hdr .gw-nav>ul>li:nth-child(3){transition-delay:.26s;}
+body.gw-ready .gw-hdr .gw-nav>ul>li:nth-child(4){transition-delay:.33s;}
+body.gw-ready .gw-hdr .gw-hdr__cta{transition-delay:.42s;}
+@media (max-width:1100px){
+	:root{--gw-hdr-h:96px;}
+	.gw-hdr__cta{display:none;}
+	.gw-burger{display:block;}
+	.gw-nav{position:fixed;inset:0;top:0;background:var(--gw-navy);padding:calc(env(safe-area-inset-top, 0px) + 120px) var(--gw-pad) 48px;overflow:auto;opacity:0;visibility:hidden;transition:opacity .25s, visibility .25s;z-index:-1;}
+	.gw-menu-open .gw-nav{opacity:1;visibility:visible;}
+	.gw-nav>ul{flex-direction:column;align-items:flex-start;gap:28px;}
+	.gw-nav>ul>li>a{font-size:32px;font-weight:500;}
+	.gw-nav .gw-nav__apply{display:block;margin-top:12px;}
+	.gw-nav .gw-nav__apply .gw-pill{font-size:17px;}
+	.gw-nav__sub{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;background:none;padding:6px 0 0;min-width:0;}
+	.gw-nav__sub a{padding:6px 0;font-size:20px;}
+	.gw-hdr__in{display:flex;justify-content:space-between;align-items:center;gap:24px;}
+	.gw-hdr .gw-logo{order:0;}
+	.gw-burger{order:2;margin:0 -12px 0 auto;position:relative;z-index:2;}
+	.gw-logo svg{width:clamp(140px, 38vw, 200px);}
+	.gw-hdr.gw-solid .gw-hdr__in{height:76px;}
+	.gw-hdr.gw-solid .gw-logo svg{width:clamp(128px, 34vw, 170px);}
+	.gw-nav{margin-left:0;}
 }
 
-html,
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-figure {
-	margin: 0;
-	padding: 0;
+/* ---------- empilhamento de seções (o "passar por cima") ---------- */
+.gw-card{position:sticky;min-height:100vh;min-height:100svh;box-shadow:0 -24px 60px rgba(4,8,14,.35);transform-origin:50% 30%;will-change:transform;}
+.gw-card:first-child{box-shadow:none;}
+.gw-card::after{content:"";position:absolute;inset:0;background:#04080e;opacity:calc(var(--gw-p, 0) * .55);pointer-events:none;z-index:5;}
+.gw-card{transform:scale(calc(1 - var(--gw-p, 0) * .06));}
+@media (max-width:700px){.gw-card{transform:scale(calc(1 - var(--gw-p, 0) * .03));}}
+@media (prefers-reduced-motion: reduce){.gw-card{position:relative;transform:none !important;}.gw-card::after{display:none;}}
+
+/* ---------- animações de texto (reveal) ---------- */
+.gw-split .gw-w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.1em;margin-bottom:-.1em;}
+.gw-split .gw-wi{display:inline-block;transform:translateY(112%);transition:transform 1.15s var(--gw-ease);transition-delay:calc(var(--gw-i, 0) * 55ms + var(--gw-d, 0ms));}
+.gw-split.in .gw-wi{transform:none;}
+.gw-rv{opacity:0;filter:blur(10px);transform:translateY(28px);transition:opacity 1.1s var(--gw-ease), filter 1.1s var(--gw-ease), transform 1.1s var(--gw-ease);transition-delay:var(--gw-d, 0ms);}
+.gw-rv.in{opacity:1;filter:none;transform:none;}
+@media (prefers-reduced-motion: reduce){.gw-split .gw-wi,.gw-rv{transform:none !important;opacity:1 !important;filter:none !important;}}
+@media (prefers-reduced-motion: reduce){
+	*,*::before,*::after{animation-duration:.001ms !important;animation-delay:0s !important;transition-duration:.001ms !important;}
+	html{scroll-behavior:auto;}
 }
 
-html {
-	-webkit-text-size-adjust: 100%;
-	scroll-behavior: smooth; /* clicar num sub-item do menu rola suave até a seção */
-	/* Dar um background próprio ao <html> impede o navegador de "propagar"
-	   o fundo do <body> pro canvas/viewport inteiro — sem isso, o
-	   background-size em % do body é calculado de forma instável e o
-	   degradê não respeita a altura real da página. */
-	background-color: var(--gw-color-bg);
-}
+/* ---------- aviso de elegibilidade (modal compacto) ---------- */
+.gw-gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:calc(env(safe-area-inset-top, 0px) + 24px) 20px calc(env(safe-area-inset-bottom, 0px) + 24px);background:rgba(6,11,19,.38);-webkit-backdrop-filter:blur(18px) saturate(.9);backdrop-filter:blur(18px) saturate(.9);transition:opacity .6s var(--gw-ease);}
+.gw-gate.gw-closing{opacity:0;}
+.gw-gate[hidden]{display:none;}
+.gw-gate__panel:focus{outline:none;}
+.gw-gate__panel{background:var(--gw-navy);color:#fff;width:min(820px, 100%);max-height:100%;overflow:auto;padding:clamp(28px, 5vw, 64px);overscroll-behavior:contain;box-shadow:0 40px 120px rgba(0,0,0,.5);animation:gw-pop .9s var(--gw-ease) both;scrollbar-width:none;-ms-overflow-style:none;}
+.gw-gate__panel::-webkit-scrollbar{display:none;width:0;height:0;}
+.gw-gate.gw-closing .gw-gate__panel{transform:translateY(16px) scale(.98);transition:transform .6s var(--gw-ease);}
+@keyframes gw-pop{from{opacity:0;transform:translateY(28px) scale(.97);}to{opacity:1;transform:none;}}
+.gw-gate__panel .gw-block{text-align:left;}
+.gw-gate__panel .gw-logo svg{width:190px;color:#fff;}
+.gw-gate h2{font-size:clamp(30px, 3.4vw, 44px);font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:32px 0 24px;}
+.gw-gate__panel p,.gw-gate__panel li{font-size:18px;color:rgba(255,255,255,.88);}
+.gw-gate__panel strong{color:#fff;}
+.gw-gate ul{margin:0 0 1em;padding-left:1.2em;}
+.gw-gate li{margin-bottom:.55em;}
+.gw-gate__actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:36px;}
+.gw-gate__actions .gw-btn{flex:1 1 260px;}
+.gw-gate .gw-btn--solid{background:#fff;color:var(--gw-navy);border-color:#fff;}
+.gw-gate .gw-btn--solid:hover{background:var(--gw-beige);border-color:var(--gw-beige);}
+.gw-gate .gw-btn--ghost{color:#fff;background:transparent;border-color:currentColor;}
+.gw-gate .gw-btn--ghost:hover{background:#fff;color:var(--gw-navy);border-color:#fff;}
+.gw-gate__linkbtn{background:none;border:0;padding:0;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer;text-align:inherit;color:#fff;}
+.gw-gate .gw-terms-view h3{font-size:22px;font-weight:700;margin:40px 0 14px;line-height:1.25;color:#fff;}
+.gw-gate .gw-tn{display:inline-block;min-width:1.8em;}
+.gw-gate [data-view]:not(.on){display:none;}
+.gw-gate .gw-declined p{margin:0 0 1em;}
 
-body {
-	min-height: 100vh;
-	background-color: var(--gw-color-bg);
-	/* Degradê único e contínuo do início ao fim da página (não repete):
-	   background-size 100% 100% estica o degradê pela altura real do body,
-	   que é a altura de todo o conteúdo, não só da viewport. */
-	background-image: var(--gw-bg-gradient);
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-	color: var(--gw-color-text);
-	font-family: var(--gw-font-text);
-	font-weight: 300;
-	font-size: var(--gw-text-body);
-	line-height: 1.6;
-}
-
-/* Todas as páginas menos a Home/About (--gw-bg-gradient-2, sem o trecho
-   escuro do topo). "home" é a classe que o WordPress já adiciona no <body>
-   sozinho quando a página é a "front page" do site (Configurações →
-   Leitura) — não precisa de nada extra no PHP pra isso funcionar. */
-body:not(.home) {
-	background-image: var(--gw-bg-gradient-2);
-}
-
-/* Página de Contato: degradê próprio, escuro no topo → claro embaixo —
-   sobrescreve o "body:not(.home)" acima (mesma especificidade, uma classe;
-   vale por vir depois no arquivo). */
-body.gw-page--contact {
-	background-image: var(--gw-bg-gradient-contact);
-}
-
-img {
-	display: block;
-	max-width: 100%;
-	height: auto;
-}
-
-/* 2) Variáveis globais --------------------------------------------------- */
-
-:root {
-	/* Cores extraídas do Figma (Greywing_About_Desktop) */
-	--gw-color-bg: #121d2b; /* azul-marinho escuro de fundo */
-	--gw-color-text: #dcd7ca; /* creme/bege, cor de texto padrão */
-	--gw-color-muted: #beb09d; /* tom bege mais escuro, usado em destaques pontuais (ex: item de menu ativo) */
-	--gw-color-border: rgba(220, 215, 202, 0.16);
-
-	/* Degradê que reproduz a sensação do fundo do Figma (lá é uma imagem
-	   granulada escuro→claro, repetida verticalmente) sem usar imagem nenhuma. */
-	--gw-bg-gradient: linear-gradient(
-		to bottom,
-		#121D2B 0%,
-		#3a3a3c 2%,
-		#9F9282 15%,
-		#6b6058 70%,
-		#3a3a3c 85%,
-		#16202d 90%,
-		#121D2B 95%
-	);
-
-	/* Mesmo degradê, mas sem o trecho escuro do topo (0%–2%) — usado nas
-	   páginas que não são a Home/About (ver "body:not(.home)" abaixo). */
-	--gw-bg-gradient-2: linear-gradient(
-		to bottom,
-		#9F9282 15%,
-		#6b6058 70%,
-		#3a3a3c 85%,
-		#16202d 90%,
-		#121D2B 95%
-	);
-
-	/* Mesmas cores do --gw-bg-gradient-2, na ordem inversa — escuro no topo,
-	   claro embaixo. Só a página de Contato usa (ver "body.gw-page--contact"
-	   abaixo e greywing_contact_page_body_class() em inc/setup.php). */
-	--gw-bg-gradient-contact: linear-gradient(
-		to bottom,
-		#121D2B 0%,
-		#3a3a3c 15%,
-		#6b6058 30%,
-		#9F9282 85%
-	);
-
-	/* Fontes */
-	--gw-font-display: "GT Sectra Display", Georgia, "Times New Roman", serif;
-	--gw-font-text: "Roboto", Arial, Helvetica, sans-serif;
-
-	/* Estrutura de 3 colunas: 30% menu + 70% conteúdo */
-	--gw-menu-width: 20%;
-	--gw-content-width: 80%;
-
-	/* Espaçamentos fluidos: clamp(mínimo, ideal em vw/vh, máximo) */
-	--gw-space-2xs: clamp(0.5rem, 1vw, 0.75rem);
-	--gw-space-xs: clamp(0.75rem, 1.5vw, 1.25rem);
-	--gw-space-sm: clamp(1.25rem, 2.5vw, 2rem);
-	--gw-space-md: clamp(2rem, 4vw, 3rem);
-	--gw-space-lg: clamp(4rem, 4vw + 7vh, 12rem);
-	--gw-space-xl: clamp(14rem, 8vw + 20vh, 20rem);
-
-	/* Respiro padrão do miolo de conteúdo (dentro dos 70%) */
-	--gw-content-padding-right: clamp(1.25rem, 14vw, 20rem);
-	--gw-content-padding-inline: clamp(1.25rem, 6vw, 10rem);
-	--gw-content-padding-block: clamp(2rem, 3vh, 6rem);
-
-	/* Altura renderizada do logo do menu (largura 8.75rem × proporção real
-	   do arquivo, 200x47 — ver o atributo width/height da <img> em
-	   template-parts/layout/site-menu.php) e espaço entre o fim do logo e
-	   o começo do menu (.gw-menu__nav) — ver assets/css/layout.css.
-	   Somados, dão o quanto o conteúdo (.gw-content) precisa "descer" pra
-	   começar alinhado com o início do menu, não com o do logo. Valor do
-	   espaço em vh (não um número fixo) pra acompanhar a mesma lógica que
-	   já existia antes aqui (distribuído conforme a altura da tela). */
-	--gw-menu-logo-height: calc(8.75rem * 47 / 200);
-	--gw-menu-nav-offset: clamp(3rem, 22vh, 14rem);
-
-	/* Tipografia fluida — títulos grandes do Figma usam 60px/60px (font/line-height) */
-	--gw-text-title-xl: clamp(2.25rem, 1.4rem + 3vw, 5rem);
-	--gw-text-title-lg: clamp(40px, 5vw, 60px);
-	--gw-text-title-md: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
-	--gw-text-title-sm: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
-	--gw-text-subtitle: 20px;
-	--gw-text-body: 20px;
-}
-
-/* 3) Tipografia base ------------------------------------------------------ */
-
-h1,
-h2,
-h3,
-h4 {
-	font-family: var(--gw-font-display);
-	font-weight: 400;
-	line-height: 100%;
-}
-
-p {
-	font-family: var(--gw-font-text);
-	font-weight: 300;
-	line-height: 24px;
-}
-.wp-block-list {
-	margin: 10px 0;
-    padding-left: 20px;
-}
-
-@media (max-width: 40em) {
-	p {
-		line-height: 18px;
-	}
-}
-
-a {
-	color:var(--gw-color-text);
-}
-
-
-/* Todo parágrafo (em qualquer WYSIWYG do site) tem 10px de distância até o
-   próximo — regra global, não precisa repetir em cada componente. */
-p + p {
-	margin-top: 10px;
-}
-
-strong,
-b {
-	font-weight: 700;
-}
-
-/* 4) Espaço abaixo do título ---------------------------------------------
- *
- * Escolhido pelo campo "Espaço abaixo do título" de cada componente (ver
- * greywing_field_title_spacing() em inc/acf-fields/shared-fields.php).
- * Valores fixos (não fluidos) porque foram pedidos assim: um valor exato
- * pra desktop e outro pra mobile, não uma interpolação entre os dois.
- */
-
-.gw-mb-xl {
-	margin-bottom: 120px;
-}
-
-.gw-mb-lg {
-	margin-bottom: 85px;
-}
-
-.gw-mb-md {
-	margin-bottom: 60px;
-}
-
-.gw-mb-s {
-	margin-bottom: 20px;
-}
-
-@media (max-width: 40em) {
-	.gw-mb-xl {
-		margin-bottom: 30px;
-	}
-
-	.gw-mb-lg {
-		margin-bottom: 40px;
-	}
-
-	.gw-mb-md {
-		margin-bottom: 40px;
-	}
-
-	.gw-mb-s {
-		margin-bottom: 20px;
-	}
-}
-
-/* 5) Imagem no mobile: ordem, alinhamento e largura --------------------
- *
- * Usados pelos componentes com título/texto/imagem (título+texto+imagem,
- * imagem em destaque, texto+imagem dividida) — ver
- * greywing_field_mobile_order()/mobile_align()/mobile_width() em
- * inc/acf-fields/shared-fields.php. Só têm efeito abaixo de 40em: acima
- * disso cada componente usa seu próprio layout de desktop.
- *
- * .gw-mobile-order-invert exige que o pai seja flex/grid (é isso que dá
- * efeito à propriedade "order") — cada CSS de componente garante isso no
- * próprio breakpoint mobile.
- *
- * Seletor repetido (".gw-mobile-w-80.gw-mobile-w-80", não só
- * ".gw-mobile-w-80"): truque pra dobrar a especificidade sem usar
- * !important. Título/texto/imagem de alguns componentes já têm sua própria
- * regra de largura/alinhamento fixa no CSS específico deles — sem isso, uma
- * escolha explícita do editor aqui podia perder pra essa regra existente
- * dependendo só da ordem de carregamento do CSS.
- */
-
-@media (max-width: 40em) {
-	.gw-mobile-order-invert.gw-mobile-order-invert {
-		order: -1;
-	}
-
-	.gw-mobile-align-left.gw-mobile-align-left {
-		margin-right: auto;
-		margin-left: 0;
-	}
-
-	.gw-mobile-align-right.gw-mobile-align-right {
-		margin-left: auto;
-		margin-right: 0;
-	}
-
-	.gw-mobile-w-100.gw-mobile-w-100 {
-		width: 100%;
-	}
-
-	.gw-mobile-w-80.gw-mobile-w-80 {
-		width: 80%;
-	}
-
-	.gw-mobile-w-70.gw-mobile-w-70 {
-		width: 70%;
-	}
-	#special-h2 h2{
-		font-size: 34px;
-	}
-}
+/* ---------- rodapé ---------- */
+.gw-footer{position:relative;z-index:40;background:var(--gw-navy-deep);color:rgba(220,215,202,.82);font-size:13px;line-height:1.65;padding:clamp(56px, 6vw, 88px) 0 calc(env(safe-area-inset-bottom, 0px) + 40px);}
+.gw-footer__in{max-width:1000px;text-align:left;}
+.gw-footer p{margin:0 0 1em;}
+.gw-footer strong{color:var(--gw-beige);font-weight:700;}
+.gw-footer a{color:var(--gw-beige);}

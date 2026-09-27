@@ -1,11 +1,12 @@
 <?php
 /**
- * Pedaços de campo ACF reaproveitados em vários componentes.
+ * Pedaços de campo ACF reaproveitados entre as seções das páginas.
  *
- * Ficam aqui pra não repetir a mesma definição em cada arquivo de
- * /inc/acf-fields/ — qualquer ajuste no campo de título, no de texto corrido
- * ou no de espaçamento é feito uma vez só e vale pra todos os componentes
- * que usam.
+ * Layout novo: cada seção é única por página (não é mais um componente
+ * reutilizável entre páginas) — por isso não existe mais um "content_blocks"
+ * genérico. O que continua reaproveitado são só esses pedacinhos de campo
+ * (título, âncora, texto corrido, cor de fundo da seção), usados por cada
+ * arquivo de inc/acf-fields/*-sections.php.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,10 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Campo de título: textarea (não texto de uma linha só), pra dar pra
  * apertar Enter e quebrar o título em mais de uma linha.
- *
- * @param string $key   Chave única do campo (ACF exige chave única no site inteiro).
- * @param string $name  Nome do campo.
- * @param string $label Rótulo mostrado no admin.
  */
 function greywing_field_title( $key, $name = 'title', $label = 'Título' ) {
 	return array(
@@ -32,15 +29,8 @@ function greywing_field_title( $key, $name = 'title', $label = 'Título' ) {
 }
 
 /**
- * Campo de texto corrido: WYSIWYG (não textarea simples), pra dar pra
- * formatar — negrito, itálico, link no meio da frase, lista — em vez de
- * só texto puro. Barra de ferramentas básica, sem upload de mídia (esse
- * campo é só pra texto).
- *
- * @param string $key          Chave única do campo.
- * @param string $name         Nome do campo.
- * @param string $label        Rótulo mostrado no admin.
- * @param string $instructions Texto de ajuda opcional, mostrado no admin.
+ * Campo de texto corrido: WYSIWYG, pra dar pra formatar (negrito, link no
+ * meio da frase, lista) em vez de só texto puro.
  */
 function greywing_field_richtext( $key, $name = 'text', $label = 'Texto', $instructions = '' ) {
 	return array(
@@ -57,13 +47,9 @@ function greywing_field_richtext( $key, $name = 'text', $label = 'Texto', $instr
 }
 
 /**
- * Campo de âncora: dá um "id" pra linha de conteúdo, pra poder linkar um
- * item do menu direto pra essa seção (ex.: "#what-we-believe"). Fica em
- * todo componente porque qualquer um deles pode virar destino de um item
- * de menu — ver template-parts/layout/site-menu.php.
- *
- * @param string $key  Chave única do campo.
- * @param string $name Nome do campo.
+ * Campo de âncora: dá um "id" pra seção, pra poder linkar um item do menu
+ * direto pra ela (ex.: "#about-us"). Ver greywing_anchor_attr() em
+ * inc/setup.php.
  */
 function greywing_field_anchor( $key, $name = 'anchor' ) {
 	return array(
@@ -71,132 +57,33 @@ function greywing_field_anchor( $key, $name = 'anchor' ) {
 		'label'        => 'Âncora (opcional)',
 		'name'         => $name,
 		'type'         => 'text',
-		'instructions' => 'Só letras minúsculas e hífen, ex.: "what-we-believe". Preencha se algum item do menu precisar apontar pra esta linha.',
+		'instructions' => 'Só letras minúsculas e hífen, ex.: "about-us". Preencha se algum item do menu precisar apontar pra esta seção.',
 		'wrapper'      => array( 'class' => 'gw-field-anchor' ),
 	);
 }
 
 /**
- * Campo de espaçamento abaixo do título: o editor escolhe um tamanho e o
- * CSS aplica o valor certo pra desktop e mobile — ver as classes .gw-mb-*
- * em assets/css/base.css.
- *
- * @param string $key  Chave única do campo.
- * @param string $name Nome do campo.
+ * Cor de fundo da seção — as 8 opções do layout novo (ver .gw-t-* em
+ * assets/css/base.css). Reaproveitado em toda seção que precisar escolher
+ * o próprio fundo.
  */
-function greywing_field_title_spacing( $key, $name = 'title_spacing' ) {
+function greywing_field_section_theme( $key, $name = 'theme', $default_value = 'navy' ) {
 	return array(
 		'key'           => $key,
-		'label'         => 'Espaço abaixo do título',
+		'label'         => 'Cor de fundo da seção',
 		'name'          => $name,
-		'type'          => 'button_group',
+		'type'          => 'select',
 		'choices'       => array(
-			'xl' => 'XL — 120px / 60px',
-			'lg' => 'LG — 85px / 40px',
-			'md' => 'MD — 60px / 30px',
-			's'  => 'S — 20px / 20px',
-		),
-		'default_value' => 'md',
-		'layout'        => 'horizontal',
-		'instructions'  => 'Espaço entre o título e o que vem a seguir (valor de desktop / valor de mobile).',
-	);
-}
-
-/**
- * Campo de imagem alternativa pro mobile — opcional. Quando preenchido, o
- * template usa <picture> pra servir essa imagem só em telas de até 40em
- * (mobile) e a imagem normal ("desktop") em telas maiores; vazio, usa a
- * mesma imagem nos dois.
- *
- * @param string $key  Chave única do campo.
- * @param string $name Nome do campo.
- */
-function greywing_field_mobile_image( $key, $name = 'mobile_image' ) {
-	return array(
-		'key'           => $key,
-		'label'         => 'Imagem alternativa para mobile (opcional)',
-		'name'          => $name,
-		'type'          => 'image',
-		'instructions'  => 'Se vazio, usa a mesma imagem de cima também no mobile.',
-		'return_format' => 'array',
-		'preview_size'  => 'medium',
-	);
-}
-
-/**
- * Campo de ordem no mobile: a imagem sobe pra antes do resto do conteúdo
- * (título/texto) quando a seção empilha em telas pequenas, ou mantém a
- * ordem normal. Ver .gw-mobile-order-invert em assets/css/base.css.
- *
- * @param string $key           Chave única do campo.
- * @param string $name          Nome do campo.
- * @param string $default_value 'normal' ou 'invert' — qual já é o comportamento atual do componente sem esse campo (evita mudar a aparência de conteúdo já publicado ao adicionar o campo).
- */
-function greywing_field_mobile_order( $key, $name = 'mobile_order', $default_value = 'normal' ) {
-	return array(
-		'key'           => $key,
-		'label'         => 'Ordem da imagem no mobile',
-		'name'          => $name,
-		'type'          => 'button_group',
-		'choices'       => array(
-			'normal' => 'Ordem normal',
-			'invert' => 'Imagem primeiro',
+			'navy'  => 'Navy (azul-marinho escuro)',
+			'deep'  => 'Navy profundo (quase preto)',
+			'clay'  => 'Clay (degradê terroso)',
+			'sand'  => 'Sand (bege médio)',
+			'beige' => 'Beige (bege claro)',
+			'white' => 'Branco',
+			'paper' => 'Paper (bege muito claro)',
+			'dusk'  => 'Dusk (degradê navy → clay)',
 		),
 		'default_value' => $default_value,
-		'layout'        => 'horizontal',
-		'instructions'  => 'Em telas pequenas, quando o conteúdo empilha: se a imagem aparece antes ou depois do título/texto.',
-	);
-}
-
-/**
- * Campo de alinhamento no mobile (esquerda/direita) — reaproveitado pra
- * título, texto e imagem (cada um com o seu — por isso $name e $label têm
- * valor padrão pensado pro uso mais comum, imagem, mas dá pra sobrescrever).
- * Só faz diferença visual quando o elemento não ocupa 100% da largura (ver
- * greywing_field_mobile_width()). Ver .gw-mobile-align-* em assets/css/base.css.
- *
- * @param string $key   Chave única do campo.
- * @param string $name  Nome do campo.
- * @param string $label Rótulo mostrado no admin.
- */
-function greywing_field_mobile_align( $key, $name = 'mobile_image_align', $label = 'Alinhamento da imagem no mobile' ) {
-	return array(
-		'key'           => $key,
-		'label'         => $label,
-		'name'          => $name,
-		'type'          => 'button_group',
-		'choices'       => array(
-			'left'  => 'Esquerda',
-			'right' => 'Direita',
-		),
-		'default_value' => 'left',
-		'layout'        => 'horizontal',
-		'instructions'  => 'Só tem efeito visível se a largura no mobile (abaixo) for menor que 100%.',
-	);
-}
-
-/**
- * Campo de largura no mobile (100%/80%/70%) — reaproveitado pra título,
- * texto e imagem separadamente (cada elemento tem o seu, por isso $name e
- * $label são obrigatórios, não têm valor padrão). Ver .gw-mobile-w-* em
- * assets/css/base.css.
- *
- * @param string $key   Chave única do campo.
- * @param string $name  Nome do campo.
- * @param string $label Rótulo mostrado no admin (ex.: "Largura do título no mobile").
- */
-function greywing_field_mobile_width( $key, $name, $label ) {
-	return array(
-		'key'           => $key,
-		'label'         => $label,
-		'name'          => $name,
-		'type'          => 'button_group',
-		'choices'       => array(
-			'100' => '100%',
-			'80'  => '80%',
-			'70'  => '70%',
-		),
-		'default_value' => '100',
-		'layout'        => 'horizontal',
+		'ui'            => 1,
 	);
 }
