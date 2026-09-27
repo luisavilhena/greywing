@@ -80,10 +80,9 @@ function greywing_enqueue_scripts() {
 		)
 	);
 
-	// Gráfico de performance — só na página de Funds.
+	// Gráfico de performance (troca de imagem por botão) — só na página de Funds.
 	if ( is_page_template( 'page-templates/template-funds.php' ) ) {
 		wp_enqueue_script( 'greywing-performance-chart', $js . '/performance-chart.js', array(), greywing_asset_version( '/assets/js/performance-chart.js' ), true );
-		wp_localize_script( 'greywing-performance-chart', 'greywingPerformanceData', greywing_performance_chart_data() );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'greywing_enqueue_scripts' );

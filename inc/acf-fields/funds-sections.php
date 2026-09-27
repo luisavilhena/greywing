@@ -145,6 +145,31 @@ function greywing_register_funds_sections() {
 									'default_value' => 'Value of USD 1,000 invested since inception, net of fees',
 								),
 								array(
+									'key'          => 'field_gwfunds3_versions',
+									'label'        => 'Chart versions (one button each)',
+									'name'         => 'chart_versions',
+									'type'         => 'repeater',
+									'layout'       => 'table',
+									'button_label' => 'Add version',
+									'instructions' => 'One row per button below the chart (e.g. "1Y", "3Y", "2024"...). Clicking a button shows that row\'s image. The first row is shown by default.',
+									'sub_fields'   => array(
+										array(
+											'key'   => 'field_gwfunds3_version_label',
+											'label' => 'Button label',
+											'name'  => 'label',
+											'type'  => 'text',
+										),
+										array(
+											'key'           => 'field_gwfunds3_version_image',
+											'label'         => 'Chart image (SVG or image)',
+											'name'          => 'image',
+											'type'          => 'image',
+											'return_format' => 'array',
+											'mime_types'    => 'svg,jpg,jpeg,png,webp',
+										),
+									),
+								),
+								array(
 									'key'   => 'field_gwfunds3_note',
 									'label' => 'Note below the chart',
 									'name'  => 'note',
