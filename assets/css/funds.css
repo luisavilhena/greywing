@@ -53,7 +53,9 @@
 .gw-perf__range{border:1.5px solid currentColor;background:transparent;color:inherit;padding:8px 18px;font-size:15px;cursor:pointer;opacity:.6;}
 .gw-perf__range.is-active{opacity:1;background:currentColor;color:var(--gw-navy);}
 .gw-perf__chart-wrap{width:100%;}
-.gw-perf__chart-wrap img{display:block;width:100%;height:auto;}
+.gw-perf__slide{display:none;}
+.gw-perf__slide.is-active{display:block;}
+.gw-perf__slide img,.gw-perf__slide svg{display:block;width:100%;height:auto;}
 .gw-perf__note{margin-top:20px;font-size:13px;opacity:.6;max-width:640px;}
 
 /* ---------- Seção 4: Fund Information ---------- */

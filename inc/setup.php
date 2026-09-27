@@ -139,3 +139,41 @@ function greywing_nav_item_classes( $classes, $item ) {
 	return $classes;
 }
 add_filter( 'nav_menu_css_class', 'greywing_nav_item_classes', 10, 2 );
+
+/**
+ * Sanitiza código de SVG colado pelo editor (ver campo "svg_code" da Seção
+ * 3 de Funds, inc/acf-fields/funds-sections.php) antes de ecoar direto no
+ * HTML da página — wp_kses_post() sozinho não serve pra isso porque a lista
+ * padrão de tags permitidas do WordPress não inclui <svg> e companhia (some
+ * a tag inteira), então aqui a gente define a própria lista.
+ *
+ * @param string $svg_code Código bruto colado no campo.
+ * @return string SVG sanitizado, pronto pra ecoar direto no HTML.
+ */
+function greywing_kses_svg( $svg_code ) {
+	$allowed = array(
+		'svg'            => array(
+			'xmlns' => true, 'viewbox' => true, 'width' => true, 'height' => true,
+			'fill' => true, 'stroke' => true, 'class' => true, 'id' => true,
+			'preserveaspectratio' => true, 'aria-hidden' => true, 'role' => true, 'style' => true,
+		),
+		'g'              => array( 'fill' => true, 'stroke' => true, 'transform' => true, 'class' => true, 'id' => true, 'style' => true, 'opacity' => true ),
+		'path'           => array( 'd' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'stroke-linecap' => true, 'stroke-linejoin' => true, 'class' => true, 'id' => true, 'style' => true, 'opacity' => true, 'transform' => true ),
+		'rect'           => array( 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'class' => true, 'id' => true, 'style' => true, 'opacity' => true, 'transform' => true ),
+		'circle'         => array( 'cx' => true, 'cy' => true, 'r' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'class' => true, 'id' => true, 'style' => true, 'opacity' => true, 'transform' => true ),
+		'ellipse'        => array( 'cx' => true, 'cy' => true, 'rx' => true, 'ry' => true, 'fill' => true, 'stroke' => true, 'class' => true, 'id' => true, 'style' => true, 'transform' => true ),
+		'line'           => array( 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true, 'stroke' => true, 'stroke-width' => true, 'stroke-dasharray' => true, 'class' => true, 'id' => true, 'style' => true, 'transform' => true ),
+		'polyline'       => array( 'points' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'class' => true, 'id' => true, 'style' => true, 'transform' => true ),
+		'polygon'        => array( 'points' => true, 'fill' => true, 'stroke' => true, 'stroke-width' => true, 'class' => true, 'id' => true, 'style' => true, 'transform' => true ),
+		'text'           => array( 'x' => true, 'y' => true, 'dx' => true, 'dy' => true, 'fill' => true, 'font-size' => true, 'font-family' => true, 'font-weight' => true, 'text-anchor' => true, 'class' => true, 'id' => true, 'style' => true, 'transform' => true ),
+		'tspan'          => array( 'x' => true, 'y' => true, 'dx' => true, 'dy' => true, 'fill' => true, 'class' => true, 'id' => true, 'style' => true ),
+		'defs'           => array(),
+		'clippath'       => array( 'id' => true ),
+		'lineargradient' => array( 'id' => true, 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true, 'gradientunits' => true, 'gradienttransform' => true ),
+		'radialgradient' => array( 'id' => true, 'cx' => true, 'cy' => true, 'r' => true, 'gradientunits' => true, 'gradienttransform' => true ),
+		'stop'           => array( 'offset' => true, 'stop-color' => true, 'stop-opacity' => true, 'style' => true ),
+		'title'          => array(),
+		'desc'           => array(),
+	);
+	return wp_kses( $svg_code, $allowed );
+}

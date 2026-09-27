@@ -151,7 +151,7 @@ function greywing_register_funds_sections() {
 									'type'         => 'repeater',
 									'layout'       => 'table',
 									'button_label' => 'Add version',
-									'instructions' => 'One row per button below the chart (e.g. "1Y", "3Y", "2024"...). Clicking a button shows that row\'s image. The first row is shown by default.',
+									'instructions' => 'One row per button below the chart (e.g. "1Y", "3Y", "2024"...). Clicking a button shows that row\'s chart. The first row is shown by default.',
 									'sub_fields'   => array(
 										array(
 											'key'   => 'field_gwfunds3_version_label',
@@ -160,12 +160,50 @@ function greywing_register_funds_sections() {
 											'type'  => 'text',
 										),
 										array(
-											'key'           => 'field_gwfunds3_version_image',
-											'label'         => 'Chart image (SVG or image)',
-											'name'          => 'image',
-											'type'          => 'image',
-											'return_format' => 'array',
-											'mime_types'    => 'svg,jpg,jpeg,png,webp',
+											'key'           => 'field_gwfunds3_version_type',
+											'label'         => 'Chart type',
+											'name'          => 'type',
+											'type'          => 'select',
+											'choices'       => array(
+												'image' => 'Image (upload a file)',
+												'svg'   => 'SVG (paste the code)',
+											),
+											'default_value' => 'image',
+											'ui'            => 0,
+										),
+										array(
+											'key'               => 'field_gwfunds3_version_image',
+											'label'             => 'Chart image',
+											'name'              => 'image',
+											'type'              => 'image',
+											'return_format'     => 'array',
+											'mime_types'        => 'jpg,jpeg,png,webp,svg',
+											'conditional_logic' => array(
+												array(
+													array(
+														'field'    => 'field_gwfunds3_version_type',
+														'operator' => '==',
+														'value'    => 'image',
+													),
+												),
+											),
+										),
+										array(
+											'key'               => 'field_gwfunds3_version_svg',
+											'label'             => 'SVG code',
+											'name'              => 'svg_code',
+											'type'              => 'textarea',
+											'rows'              => 6,
+											'instructions'      => 'Paste the full <svg>...</svg> code here.',
+											'conditional_logic' => array(
+												array(
+													array(
+														'field'    => 'field_gwfunds3_version_type',
+														'operator' => '==',
+														'value'    => 'svg',
+													),
+												),
+											),
 										),
 									),
 								),
