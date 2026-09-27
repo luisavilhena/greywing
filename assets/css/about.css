@@ -5,9 +5,9 @@
 
 /* ---------- Seção 1: Hero ---------- */
 .gw-hero{background-size:cover;background-position:center 58%;background-color:var(--gw-navy-deep);color:var(--gw-light);}
-.gw-hero__in{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:var(--gw-hdr-h);padding-bottom:clamp(72px, 9vw, 128px);}
+.gw-hero__in{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;padding-top:var(--gw-hdr-h);padding-bottom:clamp(72px, 9vw, 128px);}
 .gw-hero__foot{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--gw-gap);margin-top:28px;}
-.gw-hero__sub{max-width:520px;font-size:22px;margin:0;}
+.gw-hero__sub{max-width:520px;font-size:22px;margin:0 !important;}
 .gw-hero__apply{margin:0;flex:none;}
 @media (max-width:900px){
 	.gw-hero__foot{flex-direction:column;align-items:flex-start;gap:20px;}
@@ -29,16 +29,16 @@
 /* ---------- Seção 2: About Us ---------- */
 .gw-about-us__grid{display:grid;grid-template-columns:repeat(12, minmax(0,1fr));grid-template-rows:auto 1fr;column-gap:var(--gw-gap);}
 .gw-about-us__title{grid-column:1 / span 5;grid-row:1;}
-.gw-about-us__media{grid-column:1 / span 5;grid-row:2;position:relative;margin-top:clamp(32px, 4vw, 56px);}
+.gw-about-us__media{grid-column:1 / span 5;grid-row:2;position:relative;padding-bottom:12%;}
 .gw-about-us__body{grid-column:7 / span 6;grid-row:2;}
-.gw-about-us__img1{display:block;margin-left:auto;width:75%;height:auto;object-fit:cover;}
-.gw-about-us__img2{position:absolute;right:calc(75% - 40px);bottom:-40px;width:45%;height:auto;object-fit:cover;box-shadow:0 24px 48px rgba(0,0,0,.35);}
+.gw-about-us__img1{display:block;width:62%;aspect-ratio:4 / 5;max-height:56vh;object-fit:cover;margin-left:auto;}
+.gw-about-us__img2{position:absolute;left:0;bottom:0;width:44%;aspect-ratio:5 / 6;max-height:34vh;object-fit:cover;box-shadow:0 30px 60px rgba(0,0,0,.35);}
 .gw-about-us__kicker{font-size:clamp(24px, 2.2vw, 32px);font-weight:500;margin:0;}
 @media (max-width:900px){
 	.gw-about-us__grid{grid-template-columns:1fr;grid-template-rows:auto;row-gap:0;}
 	.gw-about-us__title,.gw-about-us__media,.gw-about-us__body{grid-column:1;grid-row:auto;}
+	.gw-about-us__media{margin-top:32px;}
 	.gw-about-us__body{margin-top:40px;}
-	.gw-about-us__img2{bottom:-28px;}
 }
 
 /* ---------- Seção 3: Investment Philosophy ---------- */
