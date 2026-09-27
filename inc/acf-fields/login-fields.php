@@ -61,12 +61,11 @@ function greywing_register_login_fields() {
 					'type'  => 'text',
 					'default_value' => 'Access the portal',
 				),
-				array(
-					'key'   => 'field_gwlogin_note',
-					'label' => 'Texto de rodapé (abaixo do cartão)',
-					'name'  => 'note',
-					'type'  => 'textarea',
-					'rows'  => 2,
+				greywing_field_richtext(
+					'field_gwlogin_note',
+					'note',
+					'Texto de rodapé (abaixo do cartão)',
+					'Pra criar o link de e-mail (ex.: "info@greywingfunds.com"), selecione o trecho e use o botão de link da barra de ferramentas.'
 				),
 			),
 			'location' => array(

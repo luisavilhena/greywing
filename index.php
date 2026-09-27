@@ -2,10 +2,11 @@
 /**
  * Template fallback padrão do WordPress.
  *
- * A página principal do site usa page-templates/template-home.php.
- * Este arquivo só existe porque o WordPress exige um index.php no tema.
- * O tema ainda não tem header.php/footer.php (menu e footer ficam para
- * depois), então o documento HTML é montado direto aqui.
+ * A página principal do site usa page-templates/template-about.php. Este
+ * arquivo só existe porque o WordPress exige um index.php no tema — não é
+ * usado em nenhuma página real (todas têm um Template Name próprio). O tema
+ * não tem header.php/footer.php: cada page-template monta o documento HTML
+ * direto, incluindo template-parts/layout/site-header e site-footer.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

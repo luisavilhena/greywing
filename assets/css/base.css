@@ -215,6 +215,9 @@ body.gw-ready .gw-hdr .gw-hdr__cta{transition-delay:.42s;}
 .gw-gate [data-view]:not(.on){display:none;}
 .gw-gate .gw-declined p{margin:0 0 1em;}
 
+/* ---------- página simples (sem pilha de seções: Contact, Login, Termos) ---------- */
+.gw-plain{padding-top:calc(var(--gw-hdr-h) + clamp(48px, 6vw, 96px));padding-bottom:clamp(96px, 10vw, 160px);min-height:70vh;}
+
 /* ---------- rodapé ---------- */
 .gw-footer{position:relative;z-index:40;background:var(--gw-navy-deep);color:rgba(220,215,202,.82);font-size:13px;line-height:1.65;padding:clamp(56px, 6vw, 88px) 0 calc(env(safe-area-inset-bottom, 0px) + 40px);}
 .gw-footer__in{max-width:1000px;text-align:left;}

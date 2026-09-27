@@ -1,0 +1,15 @@
+/**
+ * Exclusivo da página de texto corrido (Termos de Uso) — usa o editor de
+ * blocos nativo do WordPress, não ACF. Ver page-templates/template-legal.php.
+ */
+
+.gw-legal{max-width:820px;}
+.gw-legal__body{margin-top:40px;font-size:17px;}
+.gw-legal__body h2,
+.gw-legal__body h3,
+.gw-legal__body h4{font-family:var(--gw-font);font-weight:700;font-size:19px;line-height:1.4;margin:32px 0 12px;}
+.gw-legal__body > *:first-child{margin-top:0;}
+.gw-legal__body p + p{margin-top:14px;}
+.gw-legal__body a{color:inherit;text-decoration:underline;}
+.gw-legal__body ul,
+.gw-legal__body ol{padding-left:1.3em;margin:14px 0;}

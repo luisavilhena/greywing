@@ -1,0 +1,15 @@
+/**
+ * Exclusivo da página Login.
+ */
+
+.gw-login__lead{margin-top:20px;font-size:20px;max-width:520px;}
+.gw-login__card{display:block;max-width:440px;margin-top:clamp(48px, 6vw, 80px);padding:32px;background:rgba(255,255,255,.06);border:1px solid rgba(220,215,202,.25);text-decoration:none;transition:background .25s, border-color .25s;}
+.gw-login__card:hover{background:rgba(255,255,255,.1);border-color:rgba(220,215,202,.45);}
+.gw-login__card-bar{display:flex;align-items:center;gap:8px;font-size:13px;opacity:.7;margin-bottom:24px;}
+.gw-login__card-bar svg{width:16px;height:16px;}
+.gw-login__card-kicker{display:block;font-size:14px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;}
+.gw-login__card-title{display:block;font-size:26px;font-weight:500;margin-top:8px;}
+.gw-login__card-cta{display:inline-flex;align-items:center;gap:10px;margin-top:28px;font-size:17px;font-weight:500;}
+.gw-login__card-cta svg{width:16px;height:16px;transition:transform .3s var(--gw-ease);}
+.gw-login__card:hover .gw-login__card-cta svg{transform:translateX(5px);}
+.gw-login__note{margin-top:32px;font-size:14px;opacity:.7;max-width:480px;}
