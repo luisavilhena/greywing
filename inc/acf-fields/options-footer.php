@@ -24,8 +24,8 @@ function greywing_register_footer_options() {
 	if ( function_exists( 'acf_add_options_page' ) ) {
 		acf_add_options_page(
 			array(
-				'page_title' => 'Opções do Tema',
-				'menu_title' => 'Opções do Tema',
+				'page_title' => 'Theme Options',
+				'menu_title' => 'Theme Options',
 				'menu_slug'  => 'greywing-theme-options',
 				'capability' => 'edit_theme_options',
 				'icon_url'   => 'dashicons-admin-generic',
@@ -47,8 +47,8 @@ function greywing_register_footer_options() {
 				greywing_field_richtext(
 					'field_gwftr_text',
 					'footer_text',
-					'Texto do rodapé',
-					'A primeira linha vira negrito automaticamente. Pra criar o link de "Important Disclosures & Terms of Use", selecione o trecho e use o botão de link da barra de ferramentas.'
+					'Footer text',
+					'The first line automatically becomes bold. To create the "Important Disclosures & Terms of Use" link, select the text and use the toolbar\'s link button.'
 				),
 			),
 			'location' => array(

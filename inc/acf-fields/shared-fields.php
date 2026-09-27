@@ -17,14 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Campo de título: textarea (não texto de uma linha só), pra dar pra
  * apertar Enter e quebrar o título em mais de uma linha.
  */
-function greywing_field_title( $key, $name = 'title', $label = 'Título' ) {
+function greywing_field_title( $key, $name = 'title', $label = 'Title' ) {
 	return array(
 		'key'          => $key,
 		'label'        => $label,
 		'name'         => $name,
 		'type'         => 'textarea',
 		'rows'         => 2,
-		'instructions' => 'Aperte Enter pra quebrar o título em mais de uma linha.',
+		'instructions' => 'Press Enter to break the title into more than one line.',
 	);
 }
 
@@ -32,7 +32,7 @@ function greywing_field_title( $key, $name = 'title', $label = 'Título' ) {
  * Campo de texto corrido: WYSIWYG, pra dar pra formatar (negrito, link no
  * meio da frase, lista) em vez de só texto puro.
  */
-function greywing_field_richtext( $key, $name = 'text', $label = 'Texto', $instructions = '' ) {
+function greywing_field_richtext( $key, $name = 'text', $label = 'Text', $instructions = '' ) {
 	return array(
 		'key'          => $key,
 		'label'        => $label,
@@ -54,10 +54,10 @@ function greywing_field_richtext( $key, $name = 'text', $label = 'Texto', $instr
 function greywing_field_anchor( $key, $name = 'anchor' ) {
 	return array(
 		'key'          => $key,
-		'label'        => 'Âncora (opcional)',
+		'label'        => 'Anchor (optional)',
 		'name'         => $name,
 		'type'         => 'text',
-		'instructions' => 'Só letras minúsculas e hífen, ex.: "about-us". Preencha se algum item do menu precisar apontar pra esta seção.',
+		'instructions' => 'Lowercase letters and hyphens only, e.g. "about-us". Fill this in if a menu item needs to link directly to this section.',
 		'wrapper'      => array( 'class' => 'gw-field-anchor' ),
 	);
 }
@@ -70,18 +70,18 @@ function greywing_field_anchor( $key, $name = 'anchor' ) {
 function greywing_field_section_theme( $key, $name = 'theme', $default_value = 'navy' ) {
 	return array(
 		'key'           => $key,
-		'label'         => 'Cor de fundo da seção',
+		'label'         => 'Section background color',
 		'name'          => $name,
 		'type'          => 'select',
 		'choices'       => array(
-			'navy'  => 'Navy (azul-marinho escuro)',
-			'deep'  => 'Navy profundo (quase preto)',
-			'clay'  => 'Clay (degradê terroso)',
-			'sand'  => 'Sand (bege médio)',
-			'beige' => 'Beige (bege claro)',
-			'white' => 'Branco',
-			'paper' => 'Paper (bege muito claro)',
-			'dusk'  => 'Dusk (degradê navy → clay)',
+			'navy'  => 'Navy (dark navy blue)',
+			'deep'  => 'Deep navy (near-black)',
+			'clay'  => 'Clay (earthy gradient)',
+			'sand'  => 'Sand (medium beige)',
+			'beige' => 'Beige (light beige)',
+			'white' => 'White',
+			'paper' => 'Paper (very light beige)',
+			'dusk'  => 'Dusk (navy → clay gradient)',
 		),
 		'default_value' => $default_value,
 		'ui'            => 1,

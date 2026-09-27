@@ -17,31 +17,31 @@ function greywing_register_contact_fields() {
 	acf_add_local_field_group(
 		array(
 			'key'      => 'group_gwcontact_fields',
-			'title'    => 'Página Contact',
+			'title'    => 'Contact Page',
 			'fields'   => array(
-				greywing_field_title( 'field_gwcontact_title', 'title', 'Título', ),
+				greywing_field_title( 'field_gwcontact_title', 'title', 'Title', ),
 				array(
 					'key'   => 'field_gwcontact_firm',
-					'label' => 'Nome da empresa',
+					'label' => 'Company name',
 					'name'  => 'firm',
 					'type'  => 'text',
 					'default_value' => 'Greywing Management SEZC',
 				),
 				array(
 					'key'          => 'field_gwcontact_columns',
-					'label'        => 'Colunas de contato',
+					'label'        => 'Contact columns',
 					'name'         => 'columns',
 					'type'         => 'repeater',
 					'layout'       => 'block',
-					'button_label' => 'Adicionar coluna',
+					'button_label' => 'Add column',
 					'sub_fields'   => array(
 						array(
 							'key'   => 'field_gwcontact_col_heading',
-							'label' => 'Título da coluna',
+							'label' => 'Column title',
 							'name'  => 'heading',
 							'type'  => 'text',
 						),
-						greywing_field_richtext( 'field_gwcontact_col_text', 'text', 'Texto' ),
+						greywing_field_richtext( 'field_gwcontact_col_text', 'text', 'Text' ),
 					),
 				),
 			),

@@ -28,45 +28,45 @@ function greywing_register_disclaimer_options() {
 	acf_add_local_field_group(
 		array(
 			'key'      => 'group_greywing_disclaimer_options',
-			'title'    => 'Aviso de elegibilidade (popup de tela cheia)',
+			'title'    => 'Eligibility Notice (compact modal)',
 			'fields'   => array(
 				array(
 					'key'          => 'field_gwdis_version',
-					'label'        => 'Versão do aviso',
+					'label'        => 'Notice version',
 					'name'         => 'disclaimer_version',
 					'type'         => 'text',
-					'instructions' => 'Muda sempre que o texto do aviso mudar de forma relevante (ex.: "1.0", "1.1", "2.0"). Quem já aceitou uma versão anterior vê o aviso de novo, mesmo dentro dos 15 dias do cookie — é o que garante que o consentimento salvo corresponde ao texto que a pessoa realmente leu.',
+					'instructions' => 'Change this whenever the notice text changes in a meaningful way (e.g. "1.0", "1.1", "2.0"). Anyone who already accepted an earlier version sees the notice again, even within the 15-day cookie window — this guarantees the saved consent matches the text the person actually read.',
 					'default_value' => '1.0',
 				),
 				array(
 					'key'   => 'field_gwdis_title',
-					'label' => 'Título',
+					'label' => 'Title',
 					'name'  => 'disclaimer_title',
 					'type'  => 'text',
 				),
 				greywing_field_richtext(
 					'field_gwdis_text',
 					'disclaimer_text',
-					'Texto (parágrafos, lista numerada, links...)',
-					'Pra criar a lista numerada, use o botão de lista da barra de ferramentas. Pra negrito e links, selecione o trecho e use os botões correspondentes.'
+					'Text (paragraphs, numbered list, links...)',
+					'To create the numbered list, use the toolbar\'s list button. For bold text and links, select the text and use the matching buttons.'
 				),
 				array(
 					'key'   => 'field_gwdis_accept_label',
-					'label' => 'Texto do botão de aceitar',
+					'label' => 'Accept button text',
 					'name'  => 'disclaimer_accept_label',
 					'type'  => 'text',
 				),
 				array(
 					'key'   => 'field_gwdis_reject_label',
-					'label' => 'Texto do botão de não aceitar',
+					'label' => 'Decline button text',
 					'name'  => 'disclaimer_reject_label',
 					'type'  => 'text',
 				),
 				greywing_field_richtext(
 					'field_gwdis_reject_message',
 					'disclaimer_reject_message',
-					'Mensagem ao clicar em "não aceitar"',
-					'Aparece abaixo dos botões quando a pessoa clica que não atende aos critérios.'
+					'Message shown when clicking "decline"',
+					'Shown below the buttons when the person clicks that they don\'t meet the criteria.'
 				),
 			),
 			'location' => array(

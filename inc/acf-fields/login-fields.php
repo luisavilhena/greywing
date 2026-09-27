@@ -19,44 +19,44 @@ function greywing_register_login_fields() {
 	acf_add_local_field_group(
 		array(
 			'key'      => 'group_gwlogin_fields',
-			'title'    => 'Página Login',
+			'title'    => 'Login Page',
 			'fields'   => array(
-				greywing_field_title( 'field_gwlogin_title', 'title', 'Título' ),
+				greywing_field_title( 'field_gwlogin_title', 'title', 'Title' ),
 				array(
 					'key'   => 'field_gwlogin_lead',
-					'label' => 'Texto acima do cartão',
+					'label' => 'Text above the card',
 					'name'  => 'lead',
 					'type'  => 'textarea',
 					'rows'  => 2,
 				),
 				array(
 					'key'   => 'field_gwlogin_card_url',
-					'label' => 'Link do portal',
+					'label' => 'Portal link',
 					'name'  => 'card_url',
 					'type'  => 'url',
 				),
 				array(
 					'key'   => 'field_gwlogin_card_bar',
-					'label' => 'Texto da barra do cartão (ex.: domínio do portal)',
+					'label' => 'Card bar text (e.g. portal domain)',
 					'name'  => 'card_bar',
 					'type'  => 'text',
 				),
 				array(
 					'key'   => 'field_gwlogin_card_kicker',
-					'label' => 'Rótulo pequeno do cartão',
+					'label' => 'Card small label',
 					'name'  => 'card_kicker',
 					'type'  => 'text',
 					'default_value' => 'Investor Portal',
 				),
 				array(
 					'key'   => 'field_gwlogin_card_title',
-					'label' => 'Título do cartão',
+					'label' => 'Card title',
 					'name'  => 'card_title',
 					'type'  => 'text',
 				),
 				array(
 					'key'   => 'field_gwlogin_card_cta',
-					'label' => 'Texto do botão do cartão',
+					'label' => 'Card button text',
 					'name'  => 'card_cta',
 					'type'  => 'text',
 					'default_value' => 'Access the portal',
@@ -64,8 +64,8 @@ function greywing_register_login_fields() {
 				greywing_field_richtext(
 					'field_gwlogin_note',
 					'note',
-					'Texto de rodapé (abaixo do cartão)',
-					'Pra criar o link de e-mail (ex.: "info@greywingfunds.com"), selecione o trecho e use o botão de link da barra de ferramentas.'
+					'Footer text (below the card)',
+					'To create the email link (e.g. "info@greywingfunds.com"), select the text and use the toolbar\'s link button.'
 				),
 			),
 			'location' => array(
