@@ -31,45 +31,51 @@ $as_of     = get_sub_field( 'as_of' );
 			</div>
 		<?php endif; ?>
 
-		<div class="gw-col-body gw-block">
-
 		<?php if ( $lead_1 ) : ?>
-			<p class="gw-lead-strong gw-rv"><?php echo nl2br( esc_html( $lead_1 ) ); ?></p>
-		<?php endif; ?>
-		<?php if ( $lead_2 ) : ?>
-			<p class="gw-lead-strong gw-rv"><?php echo esc_html( $lead_2 ); ?></p>
-		<?php endif; ?>
-
-		<?php if ( $stat1_num || $stat2_num ) : ?>
-			<div class="gw-track__stats">
-				<?php if ( $stat1_num ) : ?>
-					<div class="gw-track__stat gw-rv">
-						<p class="gw-track__stat-num"><?php echo esc_html( $stat1_num ); ?></p>
-						<p class="gw-track__stat-label"><?php echo esc_html( $stat1_lbl ); ?></p>
-					</div>
-				<?php endif; ?>
-				<?php if ( $stat2_num ) : ?>
-					<div class="gw-track__stat gw-rv">
-						<p class="gw-track__stat-num"><?php echo esc_html( $stat2_num ); ?></p>
-						<p class="gw-track__stat-label"><?php echo esc_html( $stat2_lbl ); ?></p>
-					</div>
-				<?php endif; ?>
+			<div class="gw-col-body gw-block">
+				<p class="gw-lead-strong gw-rv"><?php echo nl2br( esc_html( $lead_1 ) ); ?></p>
 			</div>
 		<?php endif; ?>
-
-		<?php if ( $roll3 || $roll6 || $roll12 ) : ?>
-			<div class="gw-track__rolling gw-rv">
-				<?php if ( $roll3 ) : ?><div><p class="gw-track__roll-num"><?php echo esc_html( $roll3 ); ?></p><p class="gw-track__roll-label">3 Months</p></div><?php endif; ?>
-				<?php if ( $roll6 ) : ?><div><p class="gw-track__roll-num"><?php echo esc_html( $roll6 ); ?></p><p class="gw-track__roll-label">6 Months</p></div><?php endif; ?>
-				<?php if ( $roll12 ) : ?><div><p class="gw-track__roll-num"><?php echo esc_html( $roll12 ); ?></p><p class="gw-track__roll-label">12 Months</p></div><?php endif; ?>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( $as_of ) : ?>
-			<p class="gw-track__asof"><?php echo esc_html( $as_of ); ?></p>
-		<?php endif; ?>
-
-		</div>
 
 	</div>
+
+	<?php if ( $lead_2 || $stat1_num || $stat2_num || $roll3 || $roll6 || $roll12 || $as_of ) : ?>
+		<div class="gw-track__full">
+
+			<?php if ( $lead_2 ) : ?>
+				<p class="gw-track__asof-top gw-lead-strong gw-rv"><?php echo esc_html( $lead_2 ); ?></p>
+			<?php endif; ?>
+
+			<?php if ( $stat1_num || $stat2_num ) : ?>
+				<div class="gw-track__stats">
+					<?php if ( $stat1_num ) : ?>
+						<div class="gw-track__stat gw-rv">
+							<p class="gw-track__stat-num"><?php echo esc_html( $stat1_num ); ?></p>
+							<p class="gw-track__stat-label"><?php echo esc_html( $stat1_lbl ); ?></p>
+						</div>
+					<?php endif; ?>
+					<?php if ( $stat2_num ) : ?>
+						<div class="gw-track__stat gw-rv">
+							<p class="gw-track__stat-num"><?php echo esc_html( $stat2_num ); ?></p>
+							<p class="gw-track__stat-label"><?php echo esc_html( $stat2_lbl ); ?></p>
+						</div>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( $roll3 || $roll6 || $roll12 ) : ?>
+				<div class="gw-track__rolling gw-rv">
+					<?php if ( $roll3 ) : ?><div><p class="gw-track__roll-num"><?php echo esc_html( $roll3 ); ?></p><p class="gw-track__roll-label">3 Months</p></div><?php endif; ?>
+					<?php if ( $roll6 ) : ?><div><p class="gw-track__roll-num"><?php echo esc_html( $roll6 ); ?></p><p class="gw-track__roll-label">6 Months</p></div><?php endif; ?>
+					<?php if ( $roll12 ) : ?><div><p class="gw-track__roll-num"><?php echo esc_html( $roll12 ); ?></p><p class="gw-track__roll-label">12 Months</p></div><?php endif; ?>
+				</div>
+			<?php endif; ?>
+
+			<?php if ( $as_of ) : ?>
+				<p class="gw-track__asof"><?php echo esc_html( $as_of ); ?></p>
+			<?php endif; ?>
+
+		</div>
+	<?php endif; ?>
+
 </section>
