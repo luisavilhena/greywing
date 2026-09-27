@@ -75,6 +75,7 @@ function greywing_register_about_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwabout2_anchor' ),
+								greywing_field_section_theme( 'field_gwabout2_theme', 'theme', 'navy' ),
 								greywing_field_title( 'field_gwabout2_title', 'title', 'Título' ),
 								array(
 									'key'           => 'field_gwabout2_image1',
@@ -108,6 +109,7 @@ function greywing_register_about_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwabout3_anchor' ),
+								greywing_field_section_theme( 'field_gwabout3_theme', 'theme', 'clay' ),
 								greywing_field_title( 'field_gwabout3_title', 'title', 'Título' ),
 								array(
 									'key'          => 'field_gwabout3_steps',
@@ -142,6 +144,7 @@ function greywing_register_about_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwabout4_anchor' ),
+								greywing_field_section_theme( 'field_gwabout4_theme', 'theme', 'sand' ),
 								greywing_field_title( 'field_gwabout4_title', 'title', 'Título' ),
 								array(
 									'key'   => 'field_gwabout4_figure',

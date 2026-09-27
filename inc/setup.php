@@ -54,6 +54,42 @@ function greywing_section_theme_class( $value ) {
 }
 
 /**
+ * HTML de um título que pode ter mais de uma linha (campo textarea — ver
+ * greywing_field_title()). Cada Enter no campo vira um <br>. Já escapa o
+ * texto, então o retorno pode ir direto num echo.
+ *
+ * A classe "gw-br" no <br> é o que assets/js/reveal.js procura pra não
+ * tentar quebrar a quebra de linha em "palavras" ao montar o efeito
+ * .gw-split.
+ *
+ * @param string $value Valor bruto do campo (pode ter \n).
+ * @return string HTML pronto pra ecoar dentro de um h1/h2/h3.
+ */
+function greywing_title_html( $value ) {
+	$value = trim( (string) $value );
+	if ( '' === $value ) {
+		return '';
+	}
+	$lines = preg_split( '/\r\n|\r|\n/', $value );
+	$lines = array_map( 'esc_html', $lines );
+	return implode( '<br class="gw-br">', $lines );
+}
+
+/**
+ * Marca cada <p> de um HTML (já sanitizado com wp_kses_post) com a classe
+ * "gw-rv" — o parágrafo entra com blur+fade+leve subida conforme a seção
+ * aparece na tela (ver .gw-rv em base.css e o atraso automático por
+ * parágrafo em assets/js/reveal.js, que só funciona dentro de um wrapper
+ * ".gw-block").
+ *
+ * @param string $html HTML já sanitizado (wp_kses_post).
+ * @return string Mesmo HTML, com "gw-rv" em cada <p>.
+ */
+function greywing_richtext_reveal( $html ) {
+	return str_replace( '<p>', '<p class="gw-rv">', $html );
+}
+
+/**
  * Logo em SVG inline (não <img>) — o CSS pinta o logo com "currentColor"
  * (branco no modal do aviso, bege no header), o que só funciona com o SVG
  * inline no HTML, não referenciado por src.
