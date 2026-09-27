@@ -16,6 +16,7 @@ define( 'GREYWING_THEME_DIR', get_template_directory() );
 define( 'GREYWING_THEME_URI', get_template_directory_uri() );
 
 require_once GREYWING_THEME_DIR . '/inc/setup.php';
+require_once GREYWING_THEME_DIR . '/inc/performance-data.php';
 require_once GREYWING_THEME_DIR . '/inc/enqueue.php';
 require_once GREYWING_THEME_DIR . '/inc/acf-fields.php';
 require_once GREYWING_THEME_DIR . '/inc/disclaimer-consent.php';

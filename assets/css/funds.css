@@ -1,0 +1,62 @@
+/**
+ * Exclusivo da página Funds — o que é comum (header, empilhamento, reveal,
+ * footer) já está em base.css.
+ */
+
+/* ---------- Seção 1: Hero do fundo ---------- */
+.gw-f-hero{background:var(--gw-navy-deep);}
+.gw-f-hero__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--gw-gap);align-items:center;min-height:100vh;min-height:100svh;padding-block:calc(var(--gw-hdr-h) + 48px) 64px;}
+.gw-f-hero__text .gw-kicker{font-size:22px;font-weight:500;color:var(--gw-sand);margin:20px 0 28px;}
+.gw-f-hero__media img{width:100%;height:auto;object-fit:cover;aspect-ratio:4/5;}
+@media (max-width:900px){
+	.gw-f-hero__grid{grid-template-columns:1fr;padding-block:calc(var(--gw-hdr-h) + 32px) 48px;}
+	.gw-f-hero__media{order:-1;}
+	.gw-f-hero__media img{aspect-ratio:16/10;}
+}
+
+/* ---------- Seção 2: Track Record ---------- */
+.gw-track__stats{display:grid;grid-template-columns:repeat(2, 1fr);gap:var(--gw-gap);margin:48px 0;}
+.gw-track__stat-num{font-size:clamp(48px, 5.6vw, 84px);font-weight:500;margin:0;line-height:1;letter-spacing:-.02em;}
+.gw-track__stat-label{font-size:17px;margin:10px 0 0;opacity:.82;max-width:320px;}
+.gw-track__rolling{display:grid;grid-template-columns:repeat(3, 1fr);gap:var(--gw-gap);padding-top:32px;border-top:1px solid rgba(220,215,202,.22);max-width:640px;}
+.gw-track__roll-num{font-size:clamp(28px, 2.6vw, 38px);font-weight:500;margin:0;}
+.gw-track__roll-label{font-size:15px;margin:6px 0 0;opacity:.75;}
+.gw-track__asof{margin-top:28px;font-size:15px;opacity:.7;}
+@media (max-width:700px){
+	.gw-track__stats{grid-template-columns:1fr;gap:28px;}
+	.gw-track__rolling{grid-template-columns:repeat(3, 1fr);gap:16px;}
+}
+
+/* ---------- Seção 3: Performance Graph ---------- */
+.gw-perf__sub{font-size:18px;opacity:.8;margin-top:16px;max-width:560px;}
+.gw-perf__controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin:40px 0 24px;}
+.gw-perf__ranges{display:flex;gap:8px;}
+.gw-perf__range{border:1.5px solid currentColor;background:transparent;color:inherit;padding:8px 18px;font-size:15px;cursor:pointer;opacity:.6;}
+.gw-perf__range.is-active{opacity:1;background:currentColor;}
+.gw-perf__range.is-active{color:var(--gw-navy);}
+.gw-t-navy .gw-perf__range.is-active,.gw-t-deep .gw-perf__range.is-active,.gw-t-clay .gw-perf__range.is-active,.gw-t-dusk .gw-perf__range.is-active{color:var(--gw-navy);}
+.gw-perf__legend{list-style:none;display:flex;flex-wrap:wrap;gap:20px;margin:0;padding:0;font-size:14px;}
+.gw-perf__legend-item{display:inline-flex;align-items:center;gap:8px;cursor:pointer;opacity:1;transition:opacity .2s;}
+.gw-perf__legend-item.is-off{opacity:.35;}
+.gw-perf__dot{width:10px;height:10px;border-radius:50%;flex:none;}
+.gw-perf__chart-wrap{position:relative;width:100%;aspect-ratio:960/420;}
+.gw-perf__chart-wrap svg{width:100%;height:100%;display:block;}
+.gw-perf__empty{opacity:.6;font-size:16px;padding:64px 0;text-align:center;}
+.gw-perf__tooltip{position:absolute;transform:translate(-50%, -110%);background:var(--gw-navy);color:var(--gw-beige);padding:10px 14px;font-size:13px;line-height:1.5;pointer-events:none;white-space:nowrap;box-shadow:0 12px 28px rgba(0,0,0,.3);}
+.gw-perf__meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:24px;font-size:15px;opacity:.85;}
+.gw-perf__meta strong{opacity:1;}
+.gw-perf__note{margin-top:20px;font-size:13px;opacity:.6;max-width:640px;}
+
+/* ---------- Seção 4: Fund Information ---------- */
+.gw-facts__list{margin:48px 0 0;max-width:720px;}
+.gw-facts__row{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:18px 0;border-bottom:1px solid rgba(18,29,43,.15);}
+.gw-facts__row dt{font-weight:500;margin:0;}
+.gw-facts__row dd{margin:0;text-align:right;}
+.gw-facts__download{margin-top:40px;}
+@media (max-width:700px){
+	.gw-facts__row{grid-template-columns:1fr;gap:4px;}
+	.gw-facts__row dd{text-align:left;opacity:.8;}
+}
+
+/* ---------- Seção 5: Interested in the Fund ---------- */
+.gw-interested .gw-fine{margin-top:32px;font-size:13px;opacity:.75;max-width:720px;}

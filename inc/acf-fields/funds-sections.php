@@ -58,6 +58,7 @@ function greywing_register_funds_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwfunds2_anchor' ),
+								greywing_field_section_theme( 'field_gwfunds2_theme', 'theme', 'navy' ),
 								greywing_field_title( 'field_gwfunds2_title', 'title', 'Título' ),
 								array(
 									'key'   => 'field_gwfunds2_lead1',
@@ -134,6 +135,7 @@ function greywing_register_funds_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwfunds3_anchor' ),
+								greywing_field_section_theme( 'field_gwfunds3_theme', 'theme', 'white' ),
 								greywing_field_title( 'field_gwfunds3_title', 'title', 'Título' ),
 								array(
 									'key'   => 'field_gwfunds3_sub',
@@ -159,6 +161,7 @@ function greywing_register_funds_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwfunds4_anchor' ),
+								greywing_field_section_theme( 'field_gwfunds4_theme', 'theme', 'sand' ),
 								greywing_field_title( 'field_gwfunds4_title', 'title', 'Título' ),
 								array(
 									'key'          => 'field_gwfunds4_facts',
@@ -206,6 +209,7 @@ function greywing_register_funds_sections() {
 							'display'    => 'block',
 							'sub_fields' => array(
 								greywing_field_anchor( 'field_gwfunds5_anchor' ),
+								greywing_field_section_theme( 'field_gwfunds5_theme', 'theme', 'clay' ),
 								greywing_field_title( 'field_gwfunds5_title', 'title', 'Título' ),
 								greywing_field_richtext( 'field_gwfunds5_text', 'text', 'Texto (parágrafos)' ),
 								array(
