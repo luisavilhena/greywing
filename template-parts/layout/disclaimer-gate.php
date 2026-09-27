@@ -1,30 +1,23 @@
 <?php
 /**
- * Aviso de elegibilidade — popup de tela cheia que aparece toda vez que o
- * site carrega. Coluna esquerda fixa (só o logo), coluna direita com
- * título + texto (rola se for mais alto que a tela) + 2 botões.
+ * Aviso de elegibilidade — modal compacto centralizado (layout novo).
  *
- * "I Confirm and Enter" fecha o popup (mostra a página por trás).
- * "I Do Not Meet These Criteria" revela uma mensagem abaixo dos botões,
- * sem fechar o popup.
+ * Duas views dentro do mesmo modal, alternadas por JS (sem recarregar
+ * página): "info" (padrão) e "declined" (depois de clicar em "I Do Not Meet
+ * These Criteria"). Não existe uma terceira view "terms" clonando o texto de
+ * Termos de Uso como no mockup original — lá fazia sentido porque tudo era
+ * uma página só (SPA); aqui os Termos já são uma página de verdade
+ * (/terms/), então o link "Terms of Use" dentro do texto do aviso
+ * (disclaimer_text, editável) navega direto pra ela — a própria página de
+ * Termos é isenta do gate (ver greywing_disclaimer_is_exempt_page()), então
+ * dá pra ler e voltar sem travar em lugar nenhum.
  *
- * Conteúdo vem de Opções do Tema → Aviso de elegibilidade — ver
- * inc/acf-fields/options-disclaimer.php. Comportamento: assets/js/disclaimer-gate.js.
+ * Continua usando o mesmo backend de sempre (cookie de 15 dias + tabela no
+ * banco) — só o HTML/CSS mudou. Ver inc/disclaimer-consent.php (registro) e
+ * assets/js/disclaimer-gate.js (comportamento do modal).
  *
- * Incluído nos dois templates de página, antes de tudo — cobre a tela
- * inteira, inclusive por cima do menu.
- *
- * Quem já aceitou ou recusou nos últimos 15 dias (pra versão atual do
- * aviso) tem um cookie válido — ver inc/disclaimer-consent.php — e nem
- * chega a receber esse HTML na página.
- *
- * Exceção: as páginas que os links dentro do próprio texto do aviso
- * apontam (Termos de Uso, Aviso de Privacidade) também não recebem esse
- * HTML, mesmo sem cookie — a pessoa precisa poder ler essas páginas pra
- * decidir se aceita os critérios. Ver greywing_disclaimer_is_exempt_page()
- * em inc/disclaimer-consent.php.
- *
- * CSS: assets/css/components/disclaimer-gate.css
+ * Conteúdo: Opções do Tema → Aviso de elegibilidade
+ * (inc/acf-fields/options-disclaimer.php).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -49,46 +42,48 @@ if ( ! $title && ! $text ) {
 	return;
 }
 ?>
-<div class="gw-disclaimer" id="gw-disclaimer-gate">
-	<div class="gw-disclaimer__grid">
+<div class="gw-gate" id="gw-disclaimer-gate">
+	<div class="gw-gate__panel" role="dialog" aria-modal="true" aria-labelledby="gw-gate-title" tabindex="-1">
 
-		<div class="gw-disclaimer__logo-col">
-			<img class="gw-disclaimer__logo" src="<?php echo esc_url( GREYWING_THEME_URI . '/assets/img/logo.svg' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="200" height="47">
-		</div>
+		<span class="gw-logo" aria-hidden="true"><?php greywing_logo_svg(); ?></span>
 
-		<div class="gw-disclaimer__content-col">
+		<div data-view="info" class="on gw-block">
 
 			<?php if ( $title ) : ?>
-				<h2 class="gw-disclaimer__title"><?php echo esc_html( $title ); ?></h2>
+				<h2 id="gw-gate-title"><?php echo esc_html( $title ); ?></h2>
 			<?php endif; ?>
 
 			<?php if ( $text ) : ?>
-				<div class="gw-disclaimer__text"><?php echo wp_kses_post( $text ); ?></div>
+				<?php echo wp_kses_post( $text ); ?>
 			<?php endif; ?>
 
 			<?php if ( $accept_label || $reject_label ) : ?>
-				<div class="gw-disclaimer__actions-row">
-					<div class="gw-disclaimer__actions">
-						<?php if ( $accept_label ) : ?>
-							<button class="gw-disclaimer__button" type="button" data-gw-disclaimer-accept>
-								<?php echo esc_html( $accept_label ); ?>
-							</button>
-						<?php endif; ?>
-						<?php if ( $reject_label ) : ?>
-							<button class="gw-disclaimer__button" type="button" data-gw-disclaimer-reject>
-								<?php echo esc_html( $reject_label ); ?>
-							</button>
-						<?php endif; ?>
-					</div>
-
-					<?php if ( $reject_message ) : ?>
-						<div class="gw-disclaimer__reject-message" hidden>
-							<?php echo wp_kses_post( $reject_message ); ?>
-						</div>
+				<div class="gw-gate__actions">
+					<?php if ( $accept_label ) : ?>
+						<button class="gw-btn gw-btn--solid" type="button" data-gw-disclaimer-accept>
+							<?php echo esc_html( $accept_label ); ?>
+						</button>
+					<?php endif; ?>
+					<?php if ( $reject_label ) : ?>
+						<button class="gw-btn gw-btn--ghost" type="button" data-gw-disclaimer-reject>
+							<?php echo esc_html( $reject_label ); ?>
+						</button>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>
 
+		</div>
+
+		<div data-view="declined" class="gw-block gw-declined">
+			<h2>Access Restricted</h2>
+			<?php if ( $reject_message ) : ?>
+				<?php echo wp_kses_post( $reject_message ); ?>
+			<?php endif; ?>
+			<div class="gw-gate__actions">
+				<button class="gw-btn gw-btn--ghost" type="button" data-gw-disclaimer-back>
+					Return to the criteria
+				</button>
+			</div>
 		</div>
 
 	</div>
