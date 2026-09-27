@@ -23,11 +23,15 @@ $roll12    = get_sub_field( 'rolling_12m' );
 $as_of     = get_sub_field( 'as_of' );
 ?>
 <section class="gw-card gw-sec gw-track<?php echo greywing_section_theme_class( $theme ); ?>"<?php echo greywing_anchor_attr( $anchor ); ?>>
-	<div class="gw-wrap gw-block">
+	<div class="gw-wrap gw-grid12">
 
 		<?php if ( $title ) : ?>
-			<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
+			<div class="gw-col-title">
+				<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
+			</div>
 		<?php endif; ?>
+
+		<div class="gw-col-body gw-block">
 
 		<?php if ( $lead_1 ) : ?>
 			<p class="gw-lead-strong gw-rv"><?php echo nl2br( esc_html( $lead_1 ) ); ?></p>
@@ -64,6 +68,8 @@ $as_of     = get_sub_field( 'as_of' );
 		<?php if ( $as_of ) : ?>
 			<p class="gw-track__asof"><?php echo esc_html( $as_of ); ?></p>
 		<?php endif; ?>
+
+		</div>
 
 	</div>
 </section>
