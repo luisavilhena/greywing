@@ -44,19 +44,15 @@ $pull_quote = get_sub_field( 'pull_quote' );
 			</div>
 		<?php endif; ?>
 
-		<div class="gw-grid12">
-			<div class="gw-col-title">
-				<?php if ( $subtitle ) : ?>
-					<h3 class="gw-h-sub gw-bar gw-split"><?php echo greywing_title_html( $subtitle ); ?></h3>
-				<?php endif; ?>
-				<?php if ( $text_left ) : ?>
-					<div class="gw-block"><?php echo greywing_richtext_reveal( wp_kses_post( $text_left ) ); ?></div>
-				<?php endif; ?>
-			</div>
+		<div class="gw-phil__grid">
+			<?php if ( $subtitle ) : ?>
+				<h3 class="gw-phil__subtitle gw-h-sub gw-bar gw-split no-line"><?php echo greywing_title_html( $subtitle ); ?></h3>
+			<?php endif; ?>
+			<?php if ( $text_left ) : ?>
+				<div class="gw-phil__left gw-block"><?php echo greywing_richtext_reveal( wp_kses_post( $text_left ) ); ?></div>
+			<?php endif; ?>
 			<?php if ( $text_right ) : ?>
-				<div class="gw-col-body">
-					<div class="gw-block"><?php echo greywing_richtext_reveal( wp_kses_post( $text_right ) ); ?></div>
-				</div>
+				<div class="gw-phil__right gw-block"><?php echo greywing_richtext_reveal( wp_kses_post( $text_right ) ); ?></div>
 			<?php endif; ?>
 		</div>
 

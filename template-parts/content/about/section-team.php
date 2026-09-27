@@ -15,24 +15,30 @@ $lead   = get_sub_field( 'lead' );
 $button = get_sub_field( 'button' );
 ?>
 <section class="gw-card gw-sec gw-team"<?php echo greywing_anchor_attr( $anchor ); ?>>
-	<div class="gw-wrap gw-team__in gw-block">
+	<div class="gw-wrap gw-grid12">
 
 		<?php if ( $title ) : ?>
-			<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
+			<div class="gw-col-title">
+				<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
+			</div>
 		<?php endif; ?>
 
-		<?php if ( $text ) : ?>
-			<?php echo greywing_richtext_reveal( wp_kses_post( $text ) ); ?>
-		<?php endif; ?>
+		<?php if ( $text || $lead || $button ) : ?>
+			<div class="gw-col-body gw-team__body gw-block">
+				<?php if ( $text ) : ?>
+					<?php echo greywing_richtext_reveal( wp_kses_post( $text ) ); ?>
+				<?php endif; ?>
 
-		<?php if ( $lead ) : ?>
-			<p class="gw-lead-strong gw-rv"><?php echo esc_html( $lead ); ?></p>
-		<?php endif; ?>
+				<?php if ( $lead ) : ?>
+					<p class="gw-lead-strong gw-rv"><?php echo esc_html( $lead ); ?></p>
+				<?php endif; ?>
 
-		<?php if ( $button && ! empty( $button['url'] ) ) : ?>
-			<a class="gw-btn gw-btn--on-dark gw-rv" href="<?php echo esc_url( $button['url'] ); ?>" target="<?php echo esc_attr( $button['target'] ? $button['target'] : '_self' ); ?>">
-				<?php echo esc_html( $button['title'] ? $button['title'] : 'Contact us' ); ?>
-			</a>
+				<?php if ( $button && ! empty( $button['url'] ) ) : ?>
+					<a class="gw-btn gw-btn--on-dark gw-rv" href="<?php echo esc_url( $button['url'] ); ?>" target="<?php echo esc_attr( $button['target'] ? $button['target'] : '_self' ); ?>">
+						<?php echo esc_html( $button['title'] ? $button['title'] : 'Contact us' ); ?>
+					</a>
+				<?php endif; ?>
+			</div>
 		<?php endif; ?>
 
 	</div>
