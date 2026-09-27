@@ -12,15 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 $anchor     = get_sub_field( 'anchor' );
 $theme      = get_sub_field( 'theme' );
 $title      = get_sub_field( 'title' );
-$steps      = get_sub_field( 'steps' );
 $subtitle   = get_sub_field( 'subtitle' );
 $text_left  = get_sub_field( 'text_left' );
 $text_right = get_sub_field( 'text_right' );
 $pull_quote = get_sub_field( 'pull_quote' );
-
-// "Understand. Identify. Structure. Manage." -> uma palavra-frase por vez,
-// cada uma com sua opacidade/atraso (ver .gw-step em assets/css/about.css).
-$steps_words = $steps ? preg_split( '/(?<=\.)\s+/', trim( $steps ) ) : array();
 ?>
 <section class="gw-card gw-sec gw-phil<?php echo greywing_section_theme_class( $theme ); ?>"<?php echo greywing_anchor_attr( $anchor ); ?>>
 	<div class="gw-wrap">
@@ -29,13 +24,24 @@ $steps_words = $steps ? preg_split( '/(?<=\.)\s+/', trim( $steps ) ) : array();
 			<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
 		<?php endif; ?>
 
-		<?php if ( $steps_words ) : ?>
-			<p class="gw-steps gw-block">
-				<?php foreach ( $steps_words as $i => $word ) : ?>
-					<span class="gw-step gw-rv" style="--gw-d:<?php echo esc_attr( $i * 140 ); ?>ms"><?php echo esc_html( $word ); ?></span>
-					<?php if ( 1 === $i ) : ?><br class="gw-br"><?php endif; ?>
-				<?php endforeach; ?>
-			</p>
+		<?php if ( have_rows( 'steps' ) ) : ?>
+			<div class="gw-steps">
+				<?php
+				$greywing_step_i = 0;
+				while ( have_rows( 'steps' ) ) :
+					the_row();
+					$greywing_word = get_sub_field( 'word' );
+					if ( ! $greywing_word ) {
+						continue;
+					}
+					$greywing_step_o = max( 0.35, 1 - ( $greywing_step_i * 0.15 ) );
+					?>
+					<span class="gw-step" style="--gw-i:<?php echo esc_attr( $greywing_step_i ); ?>;--gw-o:<?php echo esc_attr( $greywing_step_o ); ?>"><?php echo esc_html( $greywing_word ); ?></span>
+					<?php
+					$greywing_step_i++;
+				endwhile;
+				?>
+			</div>
 		<?php endif; ?>
 
 		<div class="gw-grid12">
@@ -55,7 +61,7 @@ $steps_words = $steps ? preg_split( '/(?<=\.)\s+/', trim( $steps ) ) : array();
 		</div>
 
 		<?php if ( $pull_quote ) : ?>
-			<p class="gw-pull gw-rv"><?php echo nl2br( esc_html( $pull_quote ) ); ?></p>
+			<p class="gw-pull gw-split"><?php echo nl2br( esc_html( $pull_quote ) ); ?></p>
 		<?php endif; ?>
 
 	</div>

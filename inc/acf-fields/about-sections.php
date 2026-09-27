@@ -113,10 +113,20 @@ function greywing_register_about_sections() {
 								greywing_field_title( 'field_gwabout3_title', 'title', 'Título' ),
 								array(
 									'key'          => 'field_gwabout3_steps',
-									'label'        => 'Passos (separados por ". ", ex.: "Understand. Identify. Structure. Manage.")',
+									'label'        => 'Passos',
 									'name'         => 'steps',
-									'type'         => 'text',
-									'default_value' => 'Understand. Identify. Structure. Manage.',
+									'type'         => 'repeater',
+									'layout'       => 'table',
+									'button_label' => 'Adicionar palavra',
+									'instructions' => 'Uma palavra (ou palavra curta, ex.: "Understand.") por linha. No layout aparecem 2 por vez, lado a lado, e entram uma de cada vez conforme a seção aparece na tela.',
+									'sub_fields'   => array(
+										array(
+											'key'   => 'field_gwabout3_step_word',
+											'label' => 'Palavra',
+											'name'  => 'word',
+											'type'  => 'text',
+										),
+									),
 								),
 								array(
 									'key'   => 'field_gwabout3_sub',
