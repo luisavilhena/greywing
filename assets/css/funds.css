@@ -68,14 +68,17 @@
 .gw-perf__note{margin-top:20px;font-size:13px;opacity:.6;max-width:640px;}
 
 /* ---------- Seção 4: Fund Information ---------- */
-.gw-facts__list{margin:48px 0 0;max-width:720px;}
-.gw-facts__row{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:18px 0;border-bottom:1px solid rgba(18,29,43,.15);}
-.gw-facts__row dt{font-weight:500;margin:0;}
-.gw-facts__row dd{margin:0;text-align:right;}
+.gw-facts__list{--gw-facts-line:rgba(18,29,43,.15);display:grid;grid-template-columns:repeat(3, 1fr);column-gap:var(--gw-gap);row-gap:0;margin:48px 0 0;}
+.gw-t-navy .gw-facts__list,.gw-t-deep .gw-facts__list,.gw-t-clay .gw-facts__list,.gw-t-dusk .gw-facts__list{--gw-facts-line:rgba(220,215,202,.25);}
+.gw-facts__row{padding:20px 0 24px;border-top:1px solid var(--gw-facts-line);}
+.gw-facts__row dt{font-weight:700;margin:0 0 8px;}
+.gw-facts__row dd{margin:0;}
 .gw-facts__download{margin-top:40px;}
-@media (max-width:700px){
-	.gw-facts__row{grid-template-columns:1fr;gap:4px;}
-	.gw-facts__row dd{text-align:left;opacity:.8;}
+@media (max-width:900px){
+	.gw-facts__list{grid-template-columns:repeat(2, 1fr);}
+}
+@media (max-width:560px){
+	.gw-facts__list{grid-template-columns:1fr;}
 }
 
 /* ---------- Seção 5: Interested in the Fund ---------- */
