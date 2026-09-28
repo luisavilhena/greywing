@@ -2,9 +2,10 @@
  * Exclusivo da página Contact.
  */
 
-.gw-contact__firm{margin-top:20px;font-size:22px;}
+.gw-contact__firm{margin-top:clamp(40px, 5vw, 64px);font-size:22px;}
 .gw-contact__cols{display:grid;grid-template-columns:repeat(3, 1fr);gap:var(--gw-gap);margin-top:clamp(56px, 7vw, 96px);}
-.gw-contact__col-heading{font-size:20px;font-weight:500;margin:0 0 20px;}
+.gw-contact__col{padding-top:24px;border-top:1px solid rgba(220,215,202,.25);}
+.gw-contact__col-heading{font-size:20px;font-weight:500;font-style:italic;margin:0 0 20px;}
 @media (max-width:900px){
 	.gw-contact__cols{grid-template-columns:1fr;gap:40px;}
 }
