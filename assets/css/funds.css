@@ -18,9 +18,13 @@
 }
 
 /* ---------- Seção 2: Track Record ---------- */
-/* .gw-track__full fica FORA do .gw-wrap (não leva max-width:1440px) — ocupa
-   a largura toda da seção, só com o gutter padrão (--gw-pad) de cada lado. */
-.gw-track__full{--gw-track-line:rgba(220,215,202,.25);padding-inline:var(--gw-pad);margin-top:56px;}
+/* .gw-track__full fica FORA do .gw-wrap (não é limitado a 1440px de largura
+   de conteúdo como o resto da página) — mas em telas bem largas o próprio
+   .gw-wrap já para de crescer e fica centralizado, então isso aqui usa o
+   mesmo max-width (+ o gutter de cada lado) pra continuar alinhado com a
+   borda esquerda do título/texto acima, em vez de colar na borda real da
+   janela nesses monitores grandes. */
+.gw-track__full{--gw-track-line:rgba(220,215,202,.25);max-width:calc(var(--gw-max) + var(--gw-pad) * 2);margin-inline:auto;padding-inline:var(--gw-pad);margin-top:56px;}
 .gw-t-sand .gw-track__full,.gw-t-beige .gw-track__full,.gw-t-paper .gw-track__full,.gw-t-white .gw-track__full{--gw-track-line:rgba(18,29,43,.2);}
 .gw-track__asof-top{text-align:right;margin:0 0 32px;}
 .gw-track__stats{display:grid;grid-template-columns:repeat(2, 1fr);border-top:1px solid var(--gw-track-line);}
