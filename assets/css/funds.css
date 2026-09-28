@@ -4,17 +4,20 @@
  */
 
 /* ---------- Seção 1: Hero do fundo ---------- */
-.gw-f-hero{background:var(--gw-navy-deep);}
-.gw-f-hero__grid{display:grid;grid-template-columns:1.15fr .85fr;column-gap:var(--gw-gap);min-height:100vh;min-height:100svh;}
-.gw-f-hero__text{align-self:center;padding-block:calc(var(--gw-hdr-h) + 48px) 64px;}
-.gw-f-hero__text .gw-kicker{font-size:22px;font-weight:500;color:var(--gw-sand);margin:20px 0 28px;}
-.gw-f-hero__media{height:100%;}
+.gw-f-hero{position:relative;background:var(--gw-navy-deep);}
+/* A imagem sai do .gw-wrap e fica presa na borda direita de verdade da
+   tela (não só da coluna) — por isso é posicionada em relação à própria
+   .gw-f-hero (que ocupa a largura toda), não ao wrap de 1440px. */
+.gw-f-hero__media{position:absolute;top:0;right:0;bottom:0;width:42%;}
 .gw-f-hero__media img{display:block;width:100%;height:100%;object-fit:cover;}
+.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;}
+.gw-f-hero__text{max-width:600px;padding-block:calc(var(--gw-hdr-h) + 48px) 64px;}
+.gw-f-hero__text .gw-kicker{font-size:22px;font-weight:500;color:var(--gw-sand);margin:20px 0 28px;}
 @media (max-width:900px){
-	.gw-f-hero__grid{grid-template-columns:1fr;grid-template-rows:auto auto;}
-	.gw-f-hero__text{padding-block:32px 48px;}
-	.gw-f-hero__media{order:-1;height:auto;}
+	.gw-f-hero__media{position:static;width:auto;}
 	.gw-f-hero__media img{height:auto;aspect-ratio:16/10;}
+	.gw-f-hero__grid{min-height:0;display:block;}
+	.gw-f-hero__text{max-width:none;padding-block:32px 48px;}
 }
 
 /* ---------- Seção 2: Track Record ---------- */

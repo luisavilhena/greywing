@@ -15,8 +15,14 @@ $text   = get_sub_field( 'text' );
 $image  = get_sub_field( 'image' );
 ?>
 <section class="gw-card gw-hero gw-f-hero">
-	<div class="gw-wrap gw-f-hero__grid">
 
+	<?php if ( $image ) : ?>
+		<div class="gw-f-hero__media gw-rv">
+			<img src="<?php echo esc_url( $image['url'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>">
+		</div>
+	<?php endif; ?>
+
+	<div class="gw-wrap gw-f-hero__grid">
 		<div class="gw-f-hero__text gw-block">
 			<?php if ( $title ) : ?>
 				<h1 class="gw-h-page gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h1>
@@ -28,12 +34,6 @@ $image  = get_sub_field( 'image' );
 				<?php echo greywing_richtext_reveal( wp_kses_post( $text ) ); ?>
 			<?php endif; ?>
 		</div>
-
-		<?php if ( $image ) : ?>
-			<div class="gw-f-hero__media gw-rv">
-				<img src="<?php echo esc_url( $image['url'] ); ?>" alt="<?php echo esc_attr( $image['alt'] ); ?>">
-			</div>
-		<?php endif; ?>
-
 	</div>
+
 </section>
