@@ -8,12 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$anchor         = get_sub_field( 'anchor' );
-$theme          = get_sub_field( 'theme' );
-$title          = get_sub_field( 'title' );
-$facts          = get_sub_field( 'facts' );
-$download_label = get_sub_field( 'download_label' );
-$download_file  = get_sub_field( 'download_file' );
+$anchor        = get_sub_field( 'anchor' );
+$theme         = get_sub_field( 'theme' );
+$title         = get_sub_field( 'title' );
+$facts         = get_sub_field( 'facts' );
+$download_link = get_sub_field( 'download_link' );
 ?>
 <section class="gw-card gw-sec gw-facts<?php echo greywing_section_theme_class( $theme ); ?>"<?php echo greywing_anchor_attr( $anchor ); ?>>
 	<div class="gw-wrap">
@@ -33,9 +32,9 @@ $download_file  = get_sub_field( 'download_file' );
 			</dl>
 		<?php endif; ?>
 
-		<?php if ( $download_file ) : ?>
-			<a class="gw-btn gw-facts__download gw-rv" href="<?php echo esc_url( $download_file ); ?>" target="_blank" rel="noopener">
-				<?php echo esc_html( $download_label ? $download_label : 'Download our latest Factsheet' ); ?>
+		<?php if ( $download_link && ! empty( $download_link['url'] ) ) : ?>
+			<a class="gw-btn gw-facts__download gw-rv" href="<?php echo esc_url( $download_link['url'] ); ?>" target="<?php echo esc_attr( $download_link['target'] ? $download_link['target'] : '_self' ); ?>" rel="noopener">
+				<?php echo esc_html( $download_link['title'] ? $download_link['title'] : 'Download our latest Factsheet' ); ?>
 				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 			</a>
 		<?php endif; ?>
