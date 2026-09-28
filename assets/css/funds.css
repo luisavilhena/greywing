@@ -73,7 +73,7 @@
 .gw-facts__row{padding:20px 0 24px;border-top:1px solid var(--gw-facts-line);}
 .gw-facts__row dt{font-weight:700;margin:0 0 8px;}
 .gw-facts__row dd{margin:0;}
-.gw-facts__download{margin-top:40px;}
+.gw-facts__download{margin-top:40px;white-space:nowrap;}
 @media (max-width:900px){
 	.gw-facts__list{grid-template-columns:repeat(2, 1fr);}
 }
@@ -82,5 +82,5 @@
 }
 
 /* ---------- Seção 5: Interested in the Fund ---------- */
-.gw-interested .gw-fine{margin-top:32px;padding-top:32px;border-top:1px solid rgba(220,215,202,.25);font-size:14px;font-style:italic;opacity:.75;}
+.gw-interested .gw-fine{margin-top:32px;padding-top:32px;border-top:1px solid rgba(220,215,202,.25);font-size:20px;font-style:italic;opacity:.75;}
 .gw-t-sand .gw-interested .gw-fine,.gw-t-beige .gw-interested .gw-fine,.gw-t-paper .gw-interested .gw-fine,.gw-t-white .gw-interested .gw-fine{border-top-color:rgba(18,29,43,.2);}

@@ -87,6 +87,7 @@ h1,h2,h3{font-family:var(--gw-font);margin:0;}
 
 /* ---------- botões e links ---------- */
 .gw-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:56px;padding:14px 28px;border:1.5px solid currentColor;background:transparent;font-size:20px;font-weight:500;text-decoration:none;cursor:pointer;transition:background .2s, color .2s;}
+.gw-btn svg{width:16px;height:16px;flex:none;}
 .gw-btn--on-dark{color:var(--gw-light);}
 .gw-btn--on-dark:hover{background:var(--gw-beige);color:var(--gw-navy);border-color:var(--gw-beige);}
 .gw-btn--on-light{color:var(--gw-navy);}
