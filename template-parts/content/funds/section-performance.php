@@ -1,15 +1,18 @@
 <?php
 /**
- * Funds — Seção 3: Performance Graph. O gráfico não é mais calculado a
- * partir de números — o editor cola o código SVG de cada versão (uma por
- * botão, ex.: "1Y"/"3Y"/"Since inception") direto no ACF (repeater
- * "chart_versions" em inc/acf-fields/funds-sections.php). Todas as versões
- * já vêm renderizadas no HTML (uma ".gw-perf__slide" por linha); clicar num
- * botão só troca qual fica visível — ver assets/js/performance-chart.js.
+ * Funds — Seção 3: Performance Graph. O editor cola o código SVG de cada
+ * versão (uma por botão, ex.: "1Y"/"3Y"/"Since inception") direto no ACF
+ * (repeater "chart_versions" em inc/acf-fields/funds-sections.php) — sem
+ * upload, sem número pra manter atualizado.
  *
- * Período/valor final/retorno anualizado (linha "meta" abaixo do gráfico)
- * também viram texto editável — antes eram calculados dos números, agora
- * não tem número nenhum pra calcular a partir.
+ * Cada versão tem sua própria legenda (cor + rótulo, também editável) — vem
+ * junto com o botão, na ordem em que as linhas foram desenhadas no SVG.
+ * A interatividade ao passar o mouse (linha-guia, pontos, cartão com os
+ * valores) não é calculada: os valores e as posições já vêm embutidos nos
+ * atributos data-* de cada .gw-perf-hit dentro do próprio SVG colado (put
+ * lá por uma ferramenta à parte, não pelo WordPress) — assets/js/performance-chart.js
+ * só lê esses atributos e monta o cartão, casando cada valor com o item da
+ * legenda na mesma posição.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,15 +42,10 @@ $chart_versions = array_values(
 <section class="gw-card gw-sec gw-perf<?php echo greywing_section_theme_class( $theme ); ?>"<?php echo greywing_anchor_attr( $anchor ); ?>>
 	<div class="gw-wrap gw-block">
 
-		<?php if ( $title ) : ?>
-			<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
-		<?php endif; ?>
-
-		<?php if ( $subtitle ) : ?>
-			<p class="gw-perf__sub gw-rv"><?php echo esc_html( $subtitle ); ?></p>
-		<?php endif; ?>
-
-		<?php if ( $chart_versions ) : ?>
+		<div class="gw-perf__head">
+			<?php if ( $title ) : ?>
+				<h2 class="gw-h-sec gw-bar gw-split"><?php echo greywing_title_html( $title ); ?></h2>
+			<?php endif; ?>
 
 			<?php if ( count( $chart_versions ) > 1 ) : ?>
 				<div class="gw-perf__ranges" id="gw-perf-ranges" role="group" aria-label="Chart period">
@@ -58,15 +56,30 @@ $chart_versions = array_values(
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
+		</div>
 
+		<?php if ( $subtitle ) : ?>
+			<p class="gw-perf__sub gw-rv"><?php echo esc_html( $subtitle ); ?></p>
+		<?php endif; ?>
+
+		<?php if ( $chart_versions ) : ?>
 			<div class="gw-perf__chart-box gw-rv" id="gw-perf-chart-box">
 				<?php foreach ( $chart_versions as $i => $version ) : ?>
 					<div class="gw-perf__slide<?php echo 0 === $i ? ' is-active' : ''; ?>" data-index="<?php echo esc_attr( $i ); ?>">
-						<?php echo greywing_kses_svg( $version['svg_code'] ); ?>
+						<?php if ( ! empty( $version['legend'] ) ) : ?>
+							<ul class="gw-perf__legend">
+								<?php foreach ( $version['legend'] as $item ) : ?>
+									<li><i style="background:<?php echo esc_attr( $item['color'] ); ?>"></i><?php echo esc_html( $item['label'] ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+						<div class="gw-perf__chart-inner">
+							<?php echo greywing_kses_svg( $version['svg_code'] ); ?>
+						</div>
 					</div>
 				<?php endforeach; ?>
+				<div class="gw-perf__tip" id="gw-perf-tip"></div>
 			</div>
-
 		<?php endif; ?>
 
 		<?php if ( $meta_period || $meta_end || $meta_ann ) : ?>

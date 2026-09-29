@@ -167,6 +167,29 @@ function greywing_register_funds_sections() {
 											'rows'         => 8,
 											'instructions' => 'Paste the full <svg>...</svg> code here.',
 										),
+										array(
+											'key'          => 'field_gwfunds3_version_legend',
+											'label'        => 'Legend (one item per line in the chart)',
+											'name'         => 'legend',
+											'type'         => 'repeater',
+											'layout'       => 'table',
+											'button_label' => 'Add legend item',
+											'instructions' => 'One row per line shown in this chart, in the same order the lines were drawn (top to bottom in the pasted SVG code usually matches). Used for the colour key below the chart and to label each line in the hover tooltip.',
+											'sub_fields'   => array(
+												array(
+													'key'   => 'field_gwfunds3_legend_color',
+													'label' => 'Colour',
+													'name'  => 'color',
+													'type'  => 'color_picker',
+												),
+												array(
+													'key'   => 'field_gwfunds3_legend_label',
+													'label' => 'Label',
+													'name'  => 'label',
+													'type'  => 'text',
+												),
+											),
+										),
 									),
 								),
 								array(

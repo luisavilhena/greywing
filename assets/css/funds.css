@@ -59,17 +59,32 @@
 }
 
 /* ---------- Seção 3: Performance Graph ---------- */
+.gw-perf__head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 24px;}
 .gw-perf__sub{font-size:18px;opacity:.8;margin-top:16px;max-width:560px;}
-.gw-perf__ranges{display:flex;flex-wrap:wrap;gap:8px;margin:40px 0 32px;}
-.gw-perf__range{border:1.5px solid currentColor;background:transparent;color:inherit;padding:8px 18px;font-size:15px;cursor:pointer;opacity:.6;}
-.gw-perf__range.is-active{opacity:1;background:currentColor;color:var(--gw-navy);}
-.gw-perf__chart-box{width:100%;}
+.gw-perf__ranges{display:flex;flex-wrap:wrap;gap:8px;}
+.gw-perf__range{border:1.5px solid currentColor;background:transparent;color:inherit;padding:10px 20px;font-size:15px;cursor:pointer;opacity:.6;transition:opacity .2s, background .2s, color .2s;}
+.gw-perf__range.is-active{opacity:1;background:currentColor;color:var(--gw-light);}
+.gw-t-navy .gw-perf__range.is-active,.gw-t-deep .gw-perf__range.is-active,.gw-t-clay .gw-perf__range.is-active,.gw-t-dusk .gw-perf__range.is-active{color:var(--gw-navy);}
+.gw-perf__chart-box{position:relative;width:100%;margin-top:40px;}
 .gw-perf__slide{display:none;}
 .gw-perf__slide.is-active{display:block;}
-.gw-perf__slide svg{display:block;width:100%;height:auto;}
+.gw-perf__legend{list-style:none;display:flex;flex-wrap:wrap;gap:18px 28px;margin:0 0 28px;padding:0;font-size:14px;opacity:.9;}
+.gw-perf__legend li{display:inline-flex;align-items:center;gap:9px;}
+.gw-perf__legend i{width:11px;height:11px;border-radius:50%;flex:none;}
+.gw-perf__chart-inner{position:relative;}
+.gw-perf__chart-inner svg{display:block;width:100%;height:auto;touch-action:pan-y;}
+.gw-perf__tip{position:absolute;top:0;left:0;transform:translate(-50%, calc(-100% - 16px));width:230px;background:#fff;color:var(--gw-navy);padding:14px 16px;font-size:13px;line-height:1.5;pointer-events:none;box-shadow:0 16px 40px rgba(0,0,0,.22);opacity:0;transition:opacity .12s;z-index:5;}
+.gw-perf__tip-date{font-weight:700;margin-bottom:8px;font-size:14px;}
+.gw-perf__tip-row{display:flex;align-items:center;gap:16px;justify-content:space-between;padding:3px 0;}
+.gw-perf__tip-row span{display:inline-flex;align-items:center;gap:8px;opacity:.75;}
+.gw-perf__tip-row i{width:9px;height:9px;border-radius:50%;flex:none;}
+.gw-perf__tip-row b{font-weight:700;}
 .gw-perf__meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:24px;font-size:15px;opacity:.85;}
 .gw-perf__meta strong{opacity:1;}
 .gw-perf__note{margin-top:20px;font-size:13px;opacity:.6;max-width:640px;}
+@media (max-width:700px){
+	.gw-perf__tip{width:200px;font-size:12px;}
+}
 
 /* ---------- Seção 4: Fund Information ---------- */
 .gw-facts__list{--gw-facts-line:rgba(18,29,43,.15);display:grid;grid-template-columns:repeat(3, 1fr);column-gap:var(--gw-gap);row-gap:0;margin:48px 0 0;}

@@ -167,7 +167,11 @@ function greywing_kses_svg( $svg_code ) {
 		),
 		'g'              => $shape_attrs,
 		'path'           => array_merge( $shape_attrs, array( 'd' => true ) ),
-		'rect'           => array_merge( $shape_attrs, array( 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true ) ),
+		// data-x/data-date/data-values/data-ys: usados pela interatividade ao
+		// passar o mouse no gráfico de performance (assets/js/performance-chart.js)
+		// — cada retângulo carrega a data + os valores já calculados daquele
+		// ponto, sem precisar de nenhum cálculo feito no navegador.
+		'rect'           => array_merge( $shape_attrs, array( 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true, 'data-x' => true, 'data-date' => true, 'data-values' => true, 'data-ys' => true ) ),
 		'circle'         => array_merge( $shape_attrs, array( 'cx' => true, 'cy' => true, 'r' => true ) ),
 		'ellipse'        => array_merge( $shape_attrs, array( 'cx' => true, 'cy' => true, 'rx' => true, 'ry' => true ) ),
 		'line'           => array_merge( $shape_attrs, array( 'x1' => true, 'y1' => true, 'x2' => true, 'y2' => true ) ),
