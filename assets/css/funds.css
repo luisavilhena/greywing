@@ -15,8 +15,8 @@
    podia — dependendo da altura da tela — empurrar o topo do bloco pra
    dentro da área reservada do header. Começando sempre no topo (logo
    abaixo do header) isso nunca acontece, não importa quanto texto tiver. */
-.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-start;padding-block:calc(var(--gw-hdr-h) + 48px) 64px;}
-.gw-f-hero__text{max-width:600px;margin-top:clamp(24px, 4vw, 56px);}
+.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-start;padding-block:calc(var(--gw-hdr-h) + 32px) 24px;}
+.gw-f-hero__text{max-width:600px;margin-top:16px;}
 .gw-f-hero__text .gw-kicker{font-size:22px;font-weight:500;color:var(--gw-sand);margin:20px 0 28px;}
 @media (max-width:900px){
 	.gw-f-hero__media{position:static;width:auto;}
