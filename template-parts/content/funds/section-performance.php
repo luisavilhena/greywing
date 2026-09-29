@@ -24,9 +24,6 @@ $theme          = get_sub_field( 'theme' );
 $title          = get_sub_field( 'title' );
 $subtitle       = get_sub_field( 'subtitle' );
 $chart_versions = get_sub_field( 'chart_versions' );
-$meta_period    = get_sub_field( 'meta_period' );
-$meta_end       = get_sub_field( 'meta_end' );
-$meta_ann       = get_sub_field( 'meta_ann' );
 $note           = get_sub_field( 'note' );
 
 // Só considera versões que realmente têm código de SVG colado.
@@ -76,17 +73,16 @@ $chart_versions = array_values(
 						<div class="gw-perf__chart-inner">
 							<?php echo greywing_kses_svg( $version['svg_code'] ); ?>
 						</div>
+						<?php if ( ! empty( $version['meta_period'] ) || ! empty( $version['meta_end'] ) || ! empty( $version['meta_ann'] ) ) : ?>
+							<div class="gw-perf__meta">
+								<?php if ( ! empty( $version['meta_period'] ) ) : ?><span><strong>Period:</strong> <?php echo esc_html( $version['meta_period'] ); ?></span><?php endif; ?>
+								<?php if ( ! empty( $version['meta_end'] ) ) : ?><span><strong>Greywing ending value:</strong> <?php echo esc_html( $version['meta_end'] ); ?></span><?php endif; ?>
+								<?php if ( ! empty( $version['meta_ann'] ) ) : ?><span><strong>Annualised return:</strong> <?php echo esc_html( $version['meta_ann'] ); ?></span><?php endif; ?>
+							</div>
+						<?php endif; ?>
 					</div>
 				<?php endforeach; ?>
 				<div class="gw-perf__tip" id="gw-perf-tip"></div>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( $meta_period || $meta_end || $meta_ann ) : ?>
-			<div class="gw-perf__meta">
-				<?php if ( $meta_period ) : ?><span><strong>Period:</strong> <?php echo esc_html( $meta_period ); ?></span><?php endif; ?>
-				<?php if ( $meta_end ) : ?><span><strong>Greywing ending value:</strong> <?php echo esc_html( $meta_end ); ?></span><?php endif; ?>
-				<?php if ( $meta_ann ) : ?><span><strong>Annualised return:</strong> <?php echo esc_html( $meta_ann ); ?></span><?php endif; ?>
 			</div>
 		<?php endif; ?>
 
