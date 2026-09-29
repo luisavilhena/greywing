@@ -10,14 +10,14 @@
    .gw-f-hero (que ocupa a largura toda), não ao wrap de 1440px. */
 .gw-f-hero__media{position:absolute;top:0;right:0;bottom:0;width:42%;}
 .gw-f-hero__media img{display:block;width:100%;height:100%;object-fit:cover;}
-.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;}
-.gw-f-hero__text{max-width:600px;padding-block:calc(var(--gw-hdr-h) + 48px) 64px;}
+.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;align-items:safe center;padding-block:calc(var(--gw-hdr-h) + 48px) 64px;}
+.gw-f-hero__text{max-width:600px;}
 .gw-f-hero__text .gw-kicker{font-size:22px;font-weight:500;color:var(--gw-sand);margin:20px 0 28px;}
 @media (max-width:900px){
 	.gw-f-hero__media{position:static;width:auto;}
 	.gw-f-hero__media img{height:auto;aspect-ratio:16/10;}
-	.gw-f-hero__grid{min-height:0;display:block;}
-	.gw-f-hero__text{max-width:none;padding-block:32px 48px;}
+	.gw-f-hero__grid{min-height:0;display:block;padding-block:32px 48px;}
+	.gw-f-hero__text{max-width:none;}
 }
 
 /* ---------- Seção 2: Track Record ---------- */
