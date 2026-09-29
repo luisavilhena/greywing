@@ -53,13 +53,6 @@ if ( ! $greywing_apply_url ) {
 			</ul>
 		</nav>
 
-		<a class="gw-hdr__cta gw-pill" href="<?php echo esc_url( $greywing_apply_url ); ?>">
-			<span class="gw-pill__roll"><span>Apply for investment</span></span>
-			<span class="gw-pill__disc" aria-hidden="true">
-				<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-			</span>
-		</a>
-
 		<button class="gw-burger" id="gw-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gw-nav">
 			<span class="gw-burger__bar"></span>
 			<span class="gw-burger__bar"></span>

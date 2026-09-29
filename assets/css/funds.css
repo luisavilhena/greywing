@@ -63,7 +63,7 @@
 .gw-perf__sub{font-size:18px;opacity:.8;margin-top:16px;max-width:560px;}
 .gw-perf__ranges{display:flex;flex-wrap:wrap;gap:8px;}
 .gw-perf__range{border:1.5px solid currentColor;background:transparent;color:inherit;padding:10px 20px;font-size:15px;cursor:pointer;opacity:.6;transition:opacity .2s, background .2s, color .2s;}
-.gw-perf__range.is-active{opacity:1;background:currentColor;color:var(--gw-light);}
+.gw-perf__range.is-active{opacity:1;color:var(--gw-beige);background-color:var(--gw-navy-deep);}
 .gw-t-navy .gw-perf__range.is-active,.gw-t-deep .gw-perf__range.is-active,.gw-t-clay .gw-perf__range.is-active,.gw-t-dusk .gw-perf__range.is-active{color:var(--gw-navy);}
 .gw-perf__chart-box{position:relative;width:100%;margin-top:40px;}
 .gw-perf__slide{display:none;}
@@ -79,11 +79,18 @@
 .gw-perf__tip-row span{display:inline-flex;align-items:center;gap:8px;opacity:.75;}
 .gw-perf__tip-row i{width:9px;height:9px;border-radius:50%;flex:none;}
 .gw-perf__tip-row b{font-weight:700;}
-.gw-perf__meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:24px;font-size:15px;opacity:.85;}
+.gw-perf__meta{display:flex;flex-wrap:wrap;gap:28px;margin-top:24px;font-size:22px;opacity:.85;}
 .gw-perf__meta strong{opacity:1;}
-.gw-perf__note{margin-top:20px;font-size:13px;opacity:.6;max-width:640px;}
+.gw-perf__note{margin-top:20px !important;font-size:13px;opacity:.6;}
 @media (max-width:700px){
 	.gw-perf__tip{width:200px;font-size:12px;}
+	.gw-perf__meta {
+		font-size: 16px;
+		gap: 10px;
+	}
+	.gw-perf__ranges {
+		margin-bottom: 30px;
+	}
 }
 
 /* ---------- Seção 4: Fund Information ---------- */
