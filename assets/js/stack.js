@@ -23,10 +23,15 @@
 	function setupCards() {
 		if ( ! stack ) return;
 		cards = Array.prototype.slice.call( stack.querySelectorAll( ':scope > .gw-card' ) );
-		var vh = window.innerHeight;
+		// top fica sempre 0 — nunca negativo. Um valor negativo aqui (pra
+		// compensar um card mais alto que a tela) prende o topo do card
+		// (título, normalmente) escondido atrás do header assim que ele gruda,
+		// inclusive ao recarregar a página já rolada pra dentro da seção. Com
+		// top:0 fixo, um card mais alto que 100vh simplesmente deixa o excesso
+		// rolar normalmente antes do próximo cobrir ele — nunca esconde o topo.
 		cards.forEach( function ( c, i ) {
 			c.style.zIndex = i + 1;
-			c.style.top = Math.min( 0, vh - c.offsetHeight ) + 'px';
+			c.style.top = '0px';
 		} );
 		onScroll();
 	}
