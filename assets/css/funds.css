@@ -8,7 +8,7 @@
 /* A imagem sai do .gw-wrap e fica presa na borda direita de verdade da
    tela (não só da coluna) — por isso é posicionada em relação à própria
    .gw-f-hero (que ocupa a largura toda), não ao wrap de 1440px. */
-.gw-f-hero__media{position:absolute;top:0;right:0;bottom:0;width:35%;}
+.gw-f-hero__media{position:absolute;top:0;right:0;bottom:0;width:38%;}
 .gw-f-hero__media img{display:block;width:100%;height:100%;object-fit:cover;}
 /* align-items:flex-start (não center) de propósito: com o texto tendo 4
    parágrafos, um título de até 104px e o kicker, centralizar verticalmente
