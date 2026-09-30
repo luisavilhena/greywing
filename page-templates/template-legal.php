@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				the_post();
 				?>
 				<div class="gw-col-title">
-					<h1 class="gw-h-page gw-bar gw-split"><?php the_title(); ?></h1>
+					<h1 class="gw-h-sec gw-bar gw-split"><?php the_title(); ?></h1>
 				</div>
 				<div class="gw-col-body gw-legal__body gw-block">
 					<?php the_content(); ?>
