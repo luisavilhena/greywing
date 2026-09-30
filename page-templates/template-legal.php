@@ -30,14 +30,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php get_template_part( 'template-parts/layout/site-header' ); ?>
 
 <main class="gw-plain gw-t-beige">
-	<div class="gw-wrap gw-legal gw-block">
+	<div class="gw-wrap gw-grid12">
 		<?php
 		if ( have_posts() ) :
 			while ( have_posts() ) :
 				the_post();
 				?>
-				<h1 class="gw-h-page gw-bar gw-split"><?php the_title(); ?></h1>
-				<div class="gw-legal__body">
+				<div class="gw-col-title">
+					<h1 class="gw-h-page gw-bar gw-split"><?php the_title(); ?></h1>
+				</div>
+				<div class="gw-col-body gw-legal__body gw-block">
 					<?php the_content(); ?>
 				</div>
 				<?php

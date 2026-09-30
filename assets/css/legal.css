@@ -3,8 +3,7 @@
  * blocos nativo do WordPress, não ACF. Ver page-templates/template-legal.php.
  */
 
-.gw-legal{max-width:820px;}
-.gw-legal__body{margin-top:40px;font-size:17px;}
+.gw-legal__body{font-size:17px;}
 .gw-legal__body h2,
 .gw-legal__body h3,
 .gw-legal__body h4{font-family:var(--gw-font);font-weight:700;font-size:19px;line-height:1.4;margin:32px 0 12px;}
