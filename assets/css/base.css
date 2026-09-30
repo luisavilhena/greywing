@@ -174,13 +174,6 @@ body.gw-ready .gw-hdr .gw-hdr__cta{transition-delay:.42s;}
 /* ---------- empilhamento de seções (o "passar por cima") ---------- */
 .gw-card{position:sticky;min-height:100vh;min-height:100svh;box-shadow:0 -24px 60px rgba(4,8,14,.35);transform-origin:50% 30%;will-change:transform;}
 .gw-card:first-child{box-shadow:none;}
-/* Card com conteúdo mais alto que a tela (marcado via JS — ver setupCards()
-   em assets/js/stack.js): sticky só mostra uma janela congelada do tamanho
-   da tela, então um card assim teria parte do conteúdo (topo ou fim,
-   dependendo de onde gruda) inacessível pra sempre. Vira position:relative
-   — rola normal, mostra tudo, só perde o efeito de "grudar" nessa seção
-   específica (as outras continuam empilhando normalmente). */
-.gw-card.gw-card--tall{position:relative;}
 .gw-card::after{content:"";position:absolute;inset:0;background:#04080e;opacity:calc(var(--gw-p, 0) * .55);pointer-events:none;z-index:5;}
 .gw-card{transform:scale(calc(1 - var(--gw-p, 0) * .06));}
 @media (max-width:700px){.gw-card{transform:scale(calc(1 - var(--gw-p, 0) * .03));}}

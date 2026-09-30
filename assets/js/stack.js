@@ -24,17 +24,15 @@
 		if ( ! stack ) return;
 		cards = Array.prototype.slice.call( stack.querySelectorAll( ':scope > .gw-card' ) );
 		var vh = window.innerHeight;
-		// Um card sticky só consegue mostrar uma "janela" congelada de si
-		// mesmo (do tamanho da tela) enquanto gruda — se o conteúdo dele for
-		// mais alto que isso, tem ou o topo ou o fim escondido pra sempre,
-		// não dá pra rolar dentro dele pra ver o resto. Então: card mais alto
-		// que a tela vira "gw-card--tall" (position:relative via CSS, ver
-		// base.css) — deixa de grudar e passa a rolar normal, mostrando tudo.
-		// Card do tamanho da tela continua sticky normalmente (nada muda).
+		// Mesma fórmula do mockup original: um card mais alto que a tela
+		// gruda com um top negativo (mostra o fim dele, não o topo). É a
+		// limitação de sempre do sticky — só não aparecia lá porque nenhuma
+		// seção deles passava de 100vh. Aceitando esse trade-off de volta
+		// (ver conversa) em troca da animação de empilhar idêntica à do
+		// mockup em toda seção, inclusive as mais altas que a tela.
 		cards.forEach( function ( c, i ) {
 			c.style.zIndex = i + 1;
-			c.style.top = '0px';
-			c.classList.toggle( 'gw-card--tall', c.offsetHeight > vh + 1 );
+			c.style.top = Math.min( 0, vh - c.offsetHeight ) + 'px';
 		} );
 		onScroll();
 	}
