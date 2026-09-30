@@ -51,7 +51,7 @@ button,input{font:inherit;color:inherit;}
 .gw-block p + p{margin-top:0;}
 h1,h2,h3{font-family:var(--gw-font);margin:0;}
 .gw-h-display{font-size:clamp(46px, 6.6vw, 112px);font-weight:500;line-height:.98;letter-spacing:-.035em;}
-.gw-h-page{font-size:clamp(46px, 6.2vw, 104px);font-weight:500;line-height:.98;letter-spacing:-.03em;}
+.gw-h-page{font-size:clamp(46px, 6vw, 104px);font-weight:500;line-height:.98;letter-spacing:-.03em;}
 .gw-h-sec{font-size:clamp(38px, 4.4vw, 68px);font-weight:700;line-height:1.02;letter-spacing:-.025em;}
 .gw-h-sub{font-size:clamp(26px, 2.2vw, 34px);font-weight:700;line-height:1.15;letter-spacing:-.01em;}
 .no-line:before {

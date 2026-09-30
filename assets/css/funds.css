@@ -8,15 +8,15 @@
 /* A imagem sai do .gw-wrap e fica presa na borda direita de verdade da
    tela (não só da coluna) — por isso é posicionada em relação à própria
    .gw-f-hero (que ocupa a largura toda), não ao wrap de 1440px. */
-.gw-f-hero__media{position:absolute;top:0;right:0;bottom:0;width:42%;}
+.gw-f-hero__media{position:absolute;top:0;right:0;bottom:0;width:35%;}
 .gw-f-hero__media img{display:block;width:100%;height:100%;object-fit:cover;}
 /* align-items:flex-start (não center) de propósito: com o texto tendo 4
    parágrafos, um título de até 104px e o kicker, centralizar verticalmente
    podia — dependendo da altura da tela — empurrar o topo do bloco pra
    dentro da área reservada do header. Começando sempre no topo (logo
    abaixo do header) isso nunca acontece, não importa quanto texto tiver. */
-.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-start;padding-block:calc(var(--gw-hdr-h) + 32px) 24px;}
-.gw-f-hero__text{max-width:700px;margin-top:16px; width: 55%}
+.gw-f-hero__grid{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-start;padding-block:calc(var(--gw-hdr-h) + 32px) 24px;     padding-top: var(--gw-hdr-h);}
+.gw-f-hero__text{max-width:700px;margin-top:16px; width: 60%}
 .gw-f-hero__text .gw-kicker{font-size:22px;font-weight:500;color:var(--gw-sand);margin:20px 0 28px;}
 @media (max-width:900px){
 	.gw-f-hero__media{position:static;width:auto;}
