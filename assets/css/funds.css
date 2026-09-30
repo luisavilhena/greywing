@@ -4,7 +4,14 @@
  */
 
 /* ---------- Seção 1: Hero do fundo ---------- */
-.gw-f-hero{position:relative;background:var(--gw-navy-deep);}
+/* top:0 !important sobrescreve o top que stack.js calcula por JS pra todo
+   .gw-card (pode ficar negativo se o conteúdo for mais alto que a tela, pra
+   bater com a animação de empilhar do mockup — ver assets/js/stack.js).
+   Essa seção já é position:relative (não sticky, por causa da imagem em
+   .gw-f-hero__media posicionada em relação a ela), então esse top negativo
+   não ajuda em nada aqui — só empurra o título pra cima, pra debaixo do
+   header, em telas baixas. Só essa seção precisa da exceção. */
+.gw-f-hero{position:relative;top:0 !important;background:var(--gw-navy-deep);}
 /* A imagem sai do .gw-wrap e fica presa na borda direita de verdade da
    tela (não só da coluna) — por isso é posicionada em relação à própria
    .gw-f-hero (que ocupa a largura toda), não ao wrap de 1440px. */
