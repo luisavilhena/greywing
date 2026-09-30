@@ -23,15 +23,18 @@
 	function setupCards() {
 		if ( ! stack ) return;
 		cards = Array.prototype.slice.call( stack.querySelectorAll( ':scope > .gw-card' ) );
-		// top fica sempre 0 — nunca negativo. Um valor negativo aqui (pra
-		// compensar um card mais alto que a tela) prende o topo do card
-		// (título, normalmente) escondido atrás do header assim que ele gruda,
-		// inclusive ao recarregar a página já rolada pra dentro da seção. Com
-		// top:0 fixo, um card mais alto que 100vh simplesmente deixa o excesso
-		// rolar normalmente antes do próximo cobrir ele — nunca esconde o topo.
+		var vh = window.innerHeight;
+		// Um card sticky só consegue mostrar uma "janela" congelada de si
+		// mesmo (do tamanho da tela) enquanto gruda — se o conteúdo dele for
+		// mais alto que isso, tem ou o topo ou o fim escondido pra sempre,
+		// não dá pra rolar dentro dele pra ver o resto. Então: card mais alto
+		// que a tela vira "gw-card--tall" (position:relative via CSS, ver
+		// base.css) — deixa de grudar e passa a rolar normal, mostrando tudo.
+		// Card do tamanho da tela continua sticky normalmente (nada muda).
 		cards.forEach( function ( c, i ) {
 			c.style.zIndex = i + 1;
 			c.style.top = '0px';
+			c.classList.toggle( 'gw-card--tall', c.offsetHeight > vh + 1 );
 		} );
 		onScroll();
 	}
