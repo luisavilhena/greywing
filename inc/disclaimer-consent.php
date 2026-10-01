@@ -185,7 +185,15 @@ function greywing_disclaimer_handle_consent() {
 				'expires'  => time() + ( GREYWING_DISCLAIMER_COOKIE_DAYS * DAY_IN_SECONDS ),
 				'path'     => '/',
 				'secure'   => is_ssl(),
-				'httponly' => true,
+				// httponly=false de propósito: o script inline em
+				// disclaimer-gate.php precisa ler esse cookie via
+				// document.cookie pra decidir, no navegador, se esconde o
+				// aviso (necessário com cache de página — servidor pode não
+				// rodar PHP de novo nessa visita). Não tem risco nisso: o
+				// valor não é um token de sessão/autenticação, só a prova
+				// de consentimento (versão + UUID), e a decisão de verdade
+				// (o registro no banco) sempre fica só no servidor.
+				'httponly' => false,
 				'samesite' => 'Lax',
 			)
 		);

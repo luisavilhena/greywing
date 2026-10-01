@@ -13,10 +13,13 @@
  * (quebrar o texto em palavras) e dispara a classe ".in" via
  * IntersectionObserver conforme cada elemento entra na tela.
  *
- * Se o aviso de elegibilidade (#gw-disclaimer-gate) estiver na página, o
- * disparo espera o evento "gw:gate-closed" (ver disclaimer-gate.js) — sem
- * isso, elementos escondidos atrás do aviso já apareceriam "revelados" (o
- * IntersectionObserver não sabe que tem um modal por cima).
+ * O aviso de elegibilidade (#gw-disclaimer-gate) agora está sempre no HTML
+ * (ver disclaimer-gate.php — motivo é cache de página), mas pode já estar
+ * escondido (gate.hidden) pelo script inline dele, se o cookie de quem está
+ * vendo já for válido. Só esperamos o evento "gw:gate-closed" quando o
+ * aviso realmente está visível — senão elementos escondidos atrás dele já
+ * apareceriam "revelados" (o IntersectionObserver não sabe que tem um modal
+ * por cima).
  */
 ( function () {
 	'use strict';
@@ -90,7 +93,8 @@
 		els.forEach( function ( e ) { io.observe( e ); } );
 	}
 
-	if ( document.getElementById( 'gw-disclaimer-gate' ) ) {
+	var gate = document.getElementById( 'gw-disclaimer-gate' );
+	if ( gate && ! gate.hidden ) {
 		document.addEventListener( 'gw:gate-closed', startReveals, { once: true } );
 	} else {
 		startReveals();

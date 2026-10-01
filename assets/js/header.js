@@ -37,11 +37,15 @@
 	}
 
 	// Entrada do header (logo/menu/CTA) — só depois que a página estiver
-	// pronta pra mostrar (ver disclaimer-gate.js / reveal.js).
+	// pronta pra mostrar (ver disclaimer-gate.js / reveal.js). O aviso de
+	// elegibilidade está sempre no HTML (cache de página), mas pode já estar
+	// escondido (gate.hidden) se o cookie de quem está vendo já for válido —
+	// só nesse caso esperamos o clique de verdade.
 	function ready() {
 		document.body.classList.add( 'gw-ready' );
 	}
-	if ( document.getElementById( 'gw-disclaimer-gate' ) ) {
+	var gate = document.getElementById( 'gw-disclaimer-gate' );
+	if ( gate && ! gate.hidden ) {
 		document.addEventListener( 'gw:gate-closed', ready, { once: true } );
 	} else {
 		ready();

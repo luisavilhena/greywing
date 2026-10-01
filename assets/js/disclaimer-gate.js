@@ -12,6 +12,12 @@
  * inc/disclaimer-consent.php. `greywingDisclaimer` (ajaxUrl/nonce) vem de
  * wp_localize_script em inc/enqueue.php.
  *
+ * O aviso agora está sempre no HTML (cache de página — ver
+ * disclaimer-gate.php), mas pode já ter sido escondido por um script inline
+ * que roda antes deste (lê o cookie na hora, sem esperar o JS do rodapé). Se
+ * isso já aconteceu (gate.hidden), não tem nada a fazer aqui — a pessoa já
+ * tinha decidido antes.
+ *
  * Ao fechar, dispara "gw:gate-closed" no document — header.js e reveal.js
  * esperam esse evento antes de começar as animações de entrada (pra elas não
  * rodarem escondidas atrás do modal).
@@ -23,7 +29,7 @@
 
 	var gate = document.getElementById( 'gw-disclaimer-gate' );
 
-	if ( ! gate ) {
+	if ( ! gate || gate.hidden ) {
 		return;
 	}
 

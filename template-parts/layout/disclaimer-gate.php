@@ -18,14 +18,21 @@
  *
  * Conteúdo: Opções do Tema → Aviso de elegibilidade
  * (inc/acf-fields/options-disclaimer.php).
+ *
+ * IMPORTANTE sobre cache de página (WP Rocket/W3TC/LiteSpeed/etc.): em
+ * produção o HTML desta página pode ser servido do cache, sem o PHP rodar de
+ * novo — então NÃO dá pra decidir aqui, no servidor, se o aviso aparece ou
+ * não com base no cookie de quem está vendo a página (isso faria todo mundo
+ * ver a versão em cache gerada pela primeira visita, aceite ou não). Por
+ * isso o aviso é SEMPRE renderizado no HTML (igual pra qualquer visitante,
+ * cacheável), e quem decide se ele fica visível é o script inline logo
+ * abaixo, rodando no navegador de cada pessoa a partir do cookie real dela.
+ * Só a isenção por página (is_exempt_page) continua decidida no servidor,
+ * porque não depende de quem está vendo — é a mesma pra todo mundo.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-}
-
-if ( greywing_disclaimer_has_valid_consent() ) {
-	return;
 }
 
 if ( greywing_disclaimer_is_exempt_page() ) {
@@ -88,3 +95,23 @@ if ( ! $title && ! $text ) {
 
 	</div>
 </div>
+<script>
+/* Resolve a visibilidade do aviso no navegador de cada visitante, a partir
+   do cookie real dela — roda inline (não espera o JS do rodapé) pra não
+   piscar o aviso na tela antes de esconder, em quem já decidiu antes.
+   Mesma lógica de leitura do cookie que greywing_disclaimer_has_valid_consent()
+   em PHP (inc/disclaimer-consent.php), só que lida no cliente porque, com
+   cache de página, o servidor pode não rodar pra essa visita. */
+( function () {
+	'use strict';
+	var gate = document.getElementById( 'gw-disclaimer-gate' );
+	if ( ! gate ) return;
+
+	var match = document.cookie.match( /(?:^|; )gw_disclaimer_consent=([^;]*)/ );
+	var cookieVersion = match ? decodeURIComponent( match[1] ).split( ':' )[0] : '';
+
+	if ( cookieVersion && cookieVersion === <?php echo wp_json_encode( greywing_disclaimer_current_version() ); ?> ) {
+		gate.hidden = true;
+	}
+} )();
+</script>
