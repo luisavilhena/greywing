@@ -13,6 +13,10 @@
  * lá por uma ferramenta à parte, não pelo WordPress) — assets/js/performance-chart.js
  * só lê esses atributos e monta o cartão, casando cada valor com o item da
  * legenda na mesma posição.
+ *
+ * Cada versão é OU um SVG colado (interativo, com legenda + tooltip) OU uma
+ * imagem PNG estática (sem legenda, sem tooltip) — campo media_type decide
+ * qual das duas é usada; nunca os dois juntos.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,11 +30,15 @@ $subtitle       = get_sub_field( 'subtitle' );
 $chart_versions = get_sub_field( 'chart_versions' );
 $note           = get_sub_field( 'note' );
 
-// Só considera versões que realmente têm código de SVG colado.
+// Só considera versões que realmente têm conteúdo (SVG colado OU imagem PNG,
+// conforme o media_type escolhido naquela linha).
 $chart_versions = array_values(
 	array_filter(
 		(array) $chart_versions,
 		function ( $version ) {
+			if ( 'image' === $version['media_type'] ) {
+				return ! empty( $version['image']['url'] );
+			}
 			return ! empty( $version['svg_code'] );
 		}
 	)
@@ -62,8 +70,9 @@ $chart_versions = array_values(
 		<?php if ( $chart_versions ) : ?>
 			<div class="gw-perf__chart-box gw-rv" id="gw-perf-chart-box">
 				<?php foreach ( $chart_versions as $i => $version ) : ?>
+					<?php $greywing_is_image = 'image' === $version['media_type']; ?>
 					<div class="gw-perf__slide<?php echo 0 === $i ? ' is-active' : ''; ?>" data-index="<?php echo esc_attr( $i ); ?>">
-						<?php if ( ! empty( $version['legend'] ) ) : ?>
+						<?php if ( ! $greywing_is_image && ! empty( $version['legend'] ) ) : ?>
 							<ul class="gw-perf__legend">
 								<?php foreach ( $version['legend'] as $item ) : ?>
 									<li><i style="background:<?php echo esc_attr( $item['color'] ); ?>"></i><?php echo esc_html( $item['label'] ); ?></li>
@@ -71,7 +80,11 @@ $chart_versions = array_values(
 							</ul>
 						<?php endif; ?>
 						<div class="gw-perf__chart-inner">
-							<?php echo greywing_kses_svg( $version['svg_code'] ); ?>
+							<?php if ( $greywing_is_image ) : ?>
+								<img src="<?php echo esc_url( $version['image']['url'] ); ?>" alt="<?php echo esc_attr( $version['image']['alt'] ? $version['image']['alt'] : $version['label'] ); ?>">
+							<?php else : ?>
+								<?php echo greywing_kses_svg( $version['svg_code'] ); ?>
+							<?php endif; ?>
 						</div>
 						<?php if ( ! empty( $version['meta_period'] ) || ! empty( $version['meta_end'] ) || ! empty( $version['meta_ann'] ) ) : ?>
 							<div class="gw-perf__meta">

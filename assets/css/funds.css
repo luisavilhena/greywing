@@ -79,7 +79,8 @@
 .gw-perf__legend li{display:inline-flex;align-items:center;gap:9px;}
 .gw-perf__legend i{width:11px;height:11px;border-radius:50%;flex:none;}
 .gw-perf__chart-inner{position:relative;}
-.gw-perf__chart-inner svg{display:block;width:100%;height:auto;touch-action:pan-y;}
+.gw-perf__chart-inner svg,.gw-perf__chart-inner img{display:block;width:100%;height:auto;}
+.gw-perf__chart-inner svg{touch-action:pan-y;}
 .gw-perf__tip{position:absolute;top:0;left:0;transform:translate(-50%, calc(-100% - 16px));width:230px;background:#fff;color:var(--gw-navy);padding:14px 16px;font-size:13px;line-height:1.5;pointer-events:none;box-shadow:0 16px 40px rgba(0,0,0,.22);opacity:0;transition:opacity .12s;z-index:5;}
 .gw-perf__tip-date{font-weight:700;margin-bottom:8px;font-size:14px;}
 .gw-perf__tip-row{display:flex;align-items:center;gap:16px;justify-content:space-between;padding:3px 0;}

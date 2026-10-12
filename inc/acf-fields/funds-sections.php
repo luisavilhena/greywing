@@ -160,21 +160,68 @@ function greywing_register_funds_sections() {
 											'type'  => 'text',
 										),
 										array(
-											'key'          => 'field_gwfunds3_version_svg',
-											'label'        => 'SVG code',
-											'name'         => 'svg_code',
-											'type'         => 'textarea',
-											'rows'         => 8,
-											'instructions' => 'Paste the full <svg>...</svg> code here.',
+											'key'           => 'field_gwfunds3_version_media',
+											'label'         => 'Chart format',
+											'name'          => 'media_type',
+											'type'          => 'button_group',
+											'choices'       => array(
+												'svg'   => 'SVG code (interactive)',
+												'image' => 'PNG image (static)',
+											),
+											'default_value' => 'svg',
+											'instructions'  => 'SVG code shows the legend and hover tooltip; a PNG image is just the picture, no legend/tooltip. Pick one.',
 										),
 										array(
-											'key'          => 'field_gwfunds3_version_legend',
-											'label'        => 'Legend (one item per line in the chart)',
-											'name'         => 'legend',
-											'type'         => 'repeater',
-											'layout'       => 'table',
-											'button_label' => 'Add legend item',
-											'instructions' => 'One row per line shown in this chart, in the same order the lines were drawn (top to bottom in the pasted SVG code usually matches). Used for the colour key below the chart and to label each line in the hover tooltip.',
+											'key'               => 'field_gwfunds3_version_svg',
+											'label'             => 'SVG code',
+											'name'              => 'svg_code',
+											'type'              => 'textarea',
+											'rows'              => 8,
+											'instructions'      => 'Paste the full <svg>...</svg> code here.',
+											'conditional_logic' => array(
+												array(
+													array(
+														'field'    => 'field_gwfunds3_version_media',
+														'operator' => '==',
+														'value'    => 'svg',
+													),
+												),
+											),
+										),
+										array(
+											'key'               => 'field_gwfunds3_version_image',
+											'label'             => 'PNG image',
+											'name'              => 'image',
+											'type'              => 'image',
+											'return_format'     => 'array',
+											'instructions'      => 'Shown instead of the SVG chart — no legend or hover tooltip for this version.',
+											'conditional_logic' => array(
+												array(
+													array(
+														'field'    => 'field_gwfunds3_version_media',
+														'operator' => '==',
+														'value'    => 'image',
+													),
+												),
+											),
+										),
+										array(
+											'key'               => 'field_gwfunds3_version_legend',
+											'label'             => 'Legend (one item per line in the chart)',
+											'name'              => 'legend',
+											'type'              => 'repeater',
+											'layout'            => 'table',
+											'button_label'      => 'Add legend item',
+											'instructions'      => 'One row per line shown in this chart, in the same order the lines were drawn (top to bottom in the pasted SVG code usually matches). Used for the colour key below the chart and to label each line in the hover tooltip. Not shown for a PNG image.',
+											'conditional_logic' => array(
+												array(
+													array(
+														'field'    => 'field_gwfunds3_version_media',
+														'operator' => '==',
+														'value'    => 'svg',
+													),
+												),
+											),
 											'sub_fields'   => array(
 												array(
 													'key'   => 'field_gwfunds3_legend_color',
